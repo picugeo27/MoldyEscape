@@ -1,6 +1,6 @@
 # MoldyEscape
 
-**Descripción de la temática del juego**: Es un videojuego en un ambiente de fantasía oscura o ciencia ficción en pixelart. 
+**Descripción de la temática del juego**: Es un videojuego de persecucción demtro de un laberinto con un ambiente de fantasía oscura o ciencia ficción dibujado en pixelart. 
 
 **Integrantes**
 
@@ -19,4 +19,4 @@
   - Blanca García Vera 
     - Correo: b.garciav.2021@alumnos.urjc.es
     - Github: bgv102
-    - 
+    
