@@ -1,12 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.86.0/phaser.min.js"></script> 
-    <script src = "src/init.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.86.0/phaser.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.86.0/phaser.min.js"></script>    
+    <script src= "src/tmp.js"></script>
 </head>
 
 <body>
-    
+    <script>
+        
+const config = {
+    type: Phaser.AUTO,
+    width: 800,
+    height: 600,
+    parent: 'game-canvas',
+    backgroundColor: '#000000',
+    physics: {
+        default: 'arcade',
+        arcade: {
+            debug: true,
+            gravity: {y:10}
+        }
+    },
+    scene: [tmp]
+};
+const game = new Phaser.Game(config);
+game.scene.start('tmp');
+    </script>
+
 </body>
 
 </html>
