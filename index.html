@@ -5,6 +5,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.86.0/phaser.min.js"></script>    
     <script src= "src/tmp.js"></script>
     <script src="src/startscreen.js"></script>
+    <script src="src/endscreen.js"></script>
 </head>
 
 <body>
@@ -23,10 +24,13 @@ const config = {
             gravity: {y:10}
         }
     },
-    scene: [StartScreen]
+    scene: [EndScreen, StartScreen]
+    //Este es el orden correcto, lo he cambiado para probar el boton de inicio
+    //scene: [StartScreen, EndScreen]
 };
 const game = new Phaser.Game(config);
-game.scene.start('StartScreen');
+//game.scene.start('StartScreen');
+game.scene.start('EndScreen');
     </script>
 
 </body>
