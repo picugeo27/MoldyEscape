@@ -1,8 +1,10 @@
 {
     "compilerOptions": {
+      "lib": ["es2016", "dom"],
+      "module": "es6",
       "target": "es6",
       "checkJs": true
     },
-    "include": ["phaser.d.ts", "./src/**/*.js"]
+    "include": ["src/types/phaser.d.ts", "./src/**/*.js"]
   }
   

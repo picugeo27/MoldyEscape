@@ -1,0 +1,1 @@
+los tipos de phaser, para que visual studio tenga autocompletado
