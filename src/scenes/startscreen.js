@@ -60,7 +60,7 @@ export class StartScreen extends Phaser.Scene{
         data.forEach(element => {   // por cada una de las animaciones
             const frames = element.frames ? this.anims.generateFrameNames(element.assetKey, {frames: element.frames}):  // buscamos que valor de frames tiene, si no tiene ninguno lo creamos
             this.anims.generateFrameNumbers(element.assetKey);                                                          // los frames los saca del json donde le ponemos el ancho y alto de cada frame
-            this.anims.create({
+            this.anims.create({         // el anims.create crea una animacion, y cogemos la informacion del json y se la asignamos a cada una de la animacion
                 key: element.key,
                 frames: frames,
                 frameRate: element.frameRate,

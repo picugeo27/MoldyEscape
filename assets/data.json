@@ -53,6 +53,11 @@
             "url": "Mapa.png"
         },
         {
+            "type": "image",
+            "key": "character",
+            "url": "Character.png"
+        },
+        {
             "type": "spritesheet",
             "key": "scout_destroy",
             "url": "scout_destroy.png",
