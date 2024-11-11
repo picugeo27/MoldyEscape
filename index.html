@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.86.0/phaser.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.86.0/phaser.min.js"></script>    
-    <script src= "src/tmp.js"></script>
-    <script src="src/startscreen.js"></script>
-    <script src="src/endscreen.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0">
+    <title> Moldy Escape</title>
+
+    <script src="src/lib/phaser.min.js"></script>
+
 </head>
 
 <body>
-    <script>
+    <div class="container" id="game-canvas"></div>
+    <script src="src/main.js" type="module"></script>
+    <script>/*
         
 const config = {
     type: Phaser.AUTO,
@@ -24,14 +26,14 @@ const config = {
             gravity: {y:10}
         }
     },
-    scene: [EndScreen, StartScreen]
+    scene: [GameScreen, EndScreen, StartScreen]
     //Este es el orden correcto, lo he cambiado para probar el boton de inicio
     //scene: [StartScreen, EndScreen]
 };
 const game = new Phaser.Game(config);
 //game.scene.start('StartScreen');
-game.scene.start('EndScreen');
-    </script>
+game.scene.start('GameScreen');
+    */</script>
 
 </body>
 

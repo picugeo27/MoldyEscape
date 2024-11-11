@@ -1,0 +1,6 @@
+Son 2 .json que sirven para cargar imágenes y spryesheer. Pongo un readme porque el json no admite comentarios y después de hacerme llorar como si estuviera cortando 2 sacos de cebollas he conseguido hacer que funcione, aunque sea para placeholder que nos facilite la vida en un futuro
+
+En el .data  (lo llame asi porque suficiente imaginación use para el código, no me queda para el nombre del documento), allí ponemos todos los elementos que necesitaremos cargar (usar como ejemplo para las imágenes). 
+El ultimo elemento es un spritesheet que estoy poniendo para probar como se ponen las animaciones
+
+En el .animation (cuidado, no os quedéis ciegos por el brillo de mi creatividad) hay cosas que definen las animaciones, es decir los frames que tienen las imaneges y cosas, creo que se entiende mas o menos cuando se ve. En cuanto al código lo comentare allí directamente porque hice una cosa que requiere maxima potencia de mis neuronas para entenderlo (no se por que funciona, hice cosas no iban cambie cosas y empezó a ir pero no entiendo por que).

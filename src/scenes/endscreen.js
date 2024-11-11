@@ -1,14 +1,6 @@
-class EndScreen extends Phaser.Scene{
+export class EndScreen extends Phaser.Scene{
     constructor(){
         super({key: 'EndScreen'});
-    }
-
-    preload() {
-        
-        this.load.image("boton_nueva_partida", "assets/placeholders/BotonNuevaPartida.png");
-        this.load.image("boton_inicio", "assets/placeholders/BotonInicio.png");
-        this.load.image("boton_ajustes", "assets/placeholders/BotonAjustes.png");
-        //this.load.image("background", "assets/placeholders/StartBackgroundPlaceholder.png");
     }
 
     create() {
