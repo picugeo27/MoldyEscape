@@ -23,6 +23,7 @@ export class StartScreen extends Phaser.Scene{
 
         var boton_local = this.add.image(675, 400, "boton_local");
         var boton_red = this.add.image(675, 400, "boton_en_red").setVisible(false);
+        boton_red.setDisplaySize(168, 55);
         
         const boton_flecha = this.add.image(780, 400, "boton_flecha").setScale(0.15)
             .setInteractive()
