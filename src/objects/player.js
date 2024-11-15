@@ -3,6 +3,7 @@
 import Phaser from "../lib/phaser.js";
 import { InputManager } from "../components/inputManager.js";
 import { Move } from "../components/move.js";
+import { Coordinates, DIRECTION } from "../types/typedef.js";
 
 export class Player extends Phaser.GameObjects.Container{
     // componentes del patron component de IV OwO
@@ -10,25 +11,38 @@ export class Player extends Phaser.GameObjects.Container{
     #keyboardInput;
     #movement;
     #sprite;
+    #coordinates;
+    #target;
+    #speed;
+    #aceleration;
 
     // Creamos el player, la escena donde aparece y la posicion
-    constructor(scene, startX = 0, startY = 0){
+    /**
+     * 
+     * @param {Phaser.Scene} scene 
+     * @param {Coordinates} coordinates 
+     */
+    
+    constructor(scene, coordinates){
         // el [] es por si le pasamos otros objetos del juego
-        super(scene, startX, startY, [])    //constructor base
+        super(scene, coordinates.getRealX(), coordinates.getRealY(), [])    //constructor base
+        
+        this.#coordinates = coordinates;
+        this.#target = new Coordinates(coordinates.x, coordinates.y);
+        this.#speed = 5;
 
         this.scene.add.existing(this);          // lo añadimos a la escena
-        this.scene.physics.add.existing(this);  // le añadimos las fisicas de phaser - todavia no me van y no se por que
+        this.scene.physics.add.existing(this);  // le añadimos las fisicas de phaser 
         this.body.setSize(20, 20);              // le ponemos el colisionador a ese tamaño
-        this.body.setOffset(-10,-5);            // esto es para mover el cubito de la colision, porque no estaba bien centrado
         this.body.setCollideWorldBounds(true);  // colision con las paredes
 
         // le añadimos el sprite
-        this.#sprite = scene.add.sprite(0,0, 'character').setScale(0.1);
+        this.#sprite = scene.add.sprite(0, 0, 'character').setScale(0.1);
         this.add([this.#sprite]);
         
         // le añadimos los componentes
         this.#keyboardInput = new InputManager(this.scene);
-        this.#movement =  new Move(this, this.#keyboardInput);
+        this.#movement =  new Move(this, coordinates, this.scene, this.#speed);
 
         //listeners
         //Baseicamente hacemos que cuando la escena use update, llame el update del player
@@ -40,9 +54,42 @@ export class Player extends Phaser.GameObjects.Container{
         }, this)
     }
 
-    update(ts,dt){
+    update(){
         //console.log(ts,dt);
         this.#keyboardInput.update();
-        this.#movement.update();
+        if (this.#keyboardInput.isMovingKeyPressed() && !this.#movement.isMoving()){
+            this.setTarget(this.#keyboardInput.getDirection());
+            // COMPROBAR QUE LAS COORDENADAS VALEN
+            this.#movement.move(this.#target, this.#aceleration);
+            
+            
+        }
+            
     }
+
+    setTarget(direction){
+        switch(direction){
+            case DIRECTION.UP:
+                this.#target.y -= 1
+                break;
+            case DIRECTION.DOWN:
+                this.#target.y += 1
+                break;
+            case DIRECTION.LEFT:
+                this.#target.x -= 1
+                break;
+            case DIRECTION.RIGHT:
+                this.#target.x += 1
+                break;
+            default:
+                return;
+        }
+        
+    }
+
+    updateCoordinates(){
+        this.#coordinates.x  = this.#target.x;
+        this.#coordinates.y = this.#target.y;
+    }
+
 }

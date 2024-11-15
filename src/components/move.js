@@ -1,28 +1,48 @@
+import { Coordinates, DIRECTION, TILE_SIZE } from "../types/typedef.js";
 
 // clase Move, para seguir usando patron command uwu x2
 export class Move{
+    
     #gameObject;        // objeto que movemos
-    #inputComponent;    // controles con los que lo movemos
     #speed;
-    constructor(gameObject, inputManager, speed = 100){
+    #isMoving;
+
+    /**@type {Phaser.Scene} */
+    #scene
+    
+    /**
+     * Creamos el move
+     * @param {Coordinates} coordinates 
+     * @param {Phaser.Scene} scene 
+     * @param {number} speed 
+     */
+
+    constructor(gameObject, coordinates, scene, speed = 5){
         this.#gameObject = gameObject;
-        this.#inputComponent = inputManager;
+        this.#scene = scene;
         this.#speed = speed;
+        this.#isMoving = false
+
+        
+    }
+    
+    isMoving(){
+        return this.#isMoving;
     }
 
-    update(){
-        this.#gameObject.body.velocity.x = 0;
-        this.#gameObject.body.velocity.y = 0;
+    move(targetPosition, aceleration = 1){
+
+        this.#isMoving = true;
         
-        if(this.#inputComponent.upDown){
-            this.#gameObject.body.velocity.y = -this.#speed;
-            console.log("Se mueve hacia arriba creo")
-        } else if (this.#inputComponent.downDown){
-            this.#gameObject.body.velocity.y = this.#speed; 
-        } else if (this.#inputComponent.leftDown){
-            this.#gameObject.body.velocity.x = -this.#speed;
-        } else if (this.#inputComponent.rightDown){
-            this.#gameObject.body.velocity.x = this.#speed;
-        }
+        this.#scene.add.tween({
+            targets: this.#gameObject,
+            x: targetPosition.getRealX(),
+            y: targetPosition.getRealY(),
+            duration: 1000/(this.#speed * aceleration),
+            onComplete: () => {
+                this.#isMoving = false;
+                this.#gameObject.updateCoordinates();
+            }
+        })
     }
 }
