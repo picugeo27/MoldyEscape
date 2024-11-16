@@ -5,7 +5,7 @@ import { InputManager } from "../components/inputManager.js";
 import { Move } from "../components/move.js";
 import { Coordinates, DIRECTION } from "../types/typedef.js";
 
-export class Player extends Phaser.GameObjects.Container{
+export class Enemy extends Phaser.GameObjects.Container{
     // componentes del patron component de IV OwO
 
     #keyboardInput;
@@ -41,7 +41,7 @@ export class Player extends Phaser.GameObjects.Container{
         this.body.setCollideWorldBounds(true);  // colision con las paredes
 
         // le añadimos el sprite
-        this.#sprite = scene.add.sprite(0, 0, 'character').setScale(0.1);
+        this.#sprite = scene.add.sprite(0, 0, 'enemy').setScale(0.1);
         this.add([this.#sprite]);
         
         // le añadimos los componentes
@@ -49,7 +49,7 @@ export class Player extends Phaser.GameObjects.Container{
         this.#movement =  new Move(this, coordinates, this.scene, this.#speed);
 
         //listeners
-        //Basicamente hacemos que cuando la escena use update, llame el update del player
+        //Baseicamente hacemos que cuando la escena use update, llame el update del player
         this.scene.events.on(Phaser.Scenes.Events.UPDATE, this.update, this);
 
         // Cuando se acaba, destruimos este enlace (como el free de pga)
@@ -61,23 +61,24 @@ export class Player extends Phaser.GameObjects.Container{
     update(){
         //console.log(ts,dt);
         this.#keyboardInput.update();
-        if (this.#keyboardInput.isMovingKeyPressedPlayer() && !this.#movement.isMoving()){
-
-            this.setTarget(this.#keyboardInput.getDirectionPlayer());
-            if(this.#keyboardInput.isTurboKeyPlayerPressed() && !this.#turboActive){
+        if (this.#keyboardInput.isMovingKeyPressedEnemy() && !this.#movement.isMoving()){
+            this.setTarget(this.#keyboardInput.getDirectionEnemy());
+            if(this.#keyboardInput.isTurboKeyEnemyPressed() && !this.#turboActive){
                 this.activateTurbo(); 
             }
             console.log(this.#scene.time)
-
+            //console.log(this.#target.x, this.#target.y)
             this.#movement.move(this.#target, this.#acceleration);
+            
+            
         }
             
     }
 
     activateTurbo(){
         this.#turboActive = true;
-        this.#acceleration = 2;
-        this.#scene.time.delayedCall(5000, this.deactivateTurbo, null, this);
+        this.#acceleration = 2.5;
+        this.#scene.time.delayedCall(6000, this.deactivateTurbo, null, this);
     }
 
     deactivateTurbo(){
@@ -111,5 +112,4 @@ export class Player extends Phaser.GameObjects.Container{
         this.#coordinates.x  = this.#target.x;
         this.#coordinates.y = this.#target.y;
     }
-
 }

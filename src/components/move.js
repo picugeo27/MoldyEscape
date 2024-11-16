@@ -33,7 +33,24 @@ export class Move{
     move(targetPosition, aceleration = 1){
 
         this.#isMoving = true;
-        
+
+        console.log(targetPosition.y);
+
+        //Comprobacion de limites del laberinto para no salirse (los numeros son los del laberinto placeholder)
+        if(targetPosition.x >= 26){
+            targetPosition.x = 25;
+        }
+        if(targetPosition.x < 1){
+            targetPosition.x = 1;
+        }
+        if(targetPosition.y >= 25){
+            targetPosition.y = 24;
+        }
+        if(targetPosition.y < 1){
+            targetPosition.y = 1;
+        }
+            
+
         this.#scene.add.tween({
             targets: this.#gameObject,
             x: targetPosition.getRealX(),

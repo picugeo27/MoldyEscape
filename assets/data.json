@@ -58,6 +58,11 @@
             "url": "Character.png"
         },
         {
+            "type": "image",
+            "key": "enemy",
+            "url": "Enemy.png"
+        },
+        {
             "type": "spritesheet",
             "key": "scout_destroy",
             "url": "scout_destroy.png",

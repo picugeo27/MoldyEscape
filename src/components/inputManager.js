@@ -2,10 +2,30 @@ import { Input } from "./input.js";
 import Phaser from "../lib/phaser.js";
 import { DIRECTION } from "../types/typedef.js";
 
-export class InputManager extends Input{
+export class InputManager{
     // es el que se encarga de manejar el input de verdad
     #cursorKeys;    
     #inputLock;
+    //Campos privados donde se guardan las teclas WASD
+    #keyW;
+    #keyA;
+    #keyS;
+    #keyD;
+    #keyG;
+    #keyM;
+    //Booleanos para comprobar si las teclas estan pulsadas o no
+    _up;
+    _down;
+    _left;
+    _right;
+    _WUp;
+    _ALeft;
+    _SDown;
+    _DRight;
+    _GTurboEnemy;
+    _MTurboPlayer;
+    //Tecla especial (?)
+    _special;
 
     // aqui se añadiran los controles del otro jugador
     // se haria añadiendo parametros para que se asignen al up down y tal, y en funcion de eso ponemos que funcione
@@ -16,8 +36,18 @@ export class InputManager extends Input{
      * @param {Phaser.Scene} scene 
      */
     constructor(scene){
-        super();
+        this.reset();
+        //Flechas de cursor para Player
         this.#cursorKeys = scene.input.keyboard.createCursorKeys() // createCursorKeys es metodo de Phaser para gestionar el input (por defecto coge flechas)
+        //WASD para Enemy
+        this.#keyW = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+        this.#keyA = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+        this.#keyS = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+        this.#keyD = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+        //Tecla para turbo del Player
+        this.#keyM = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
+        this.#keyG = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G);
+
 
     }
 
@@ -30,18 +60,56 @@ export class InputManager extends Input{
             this.reset();
             return;
         }
+        
+        this.checkPlayerKeys();
+        this.checkEnemyKeys();
+        this.checkTurboKeyEnemy();
+        this.checkTurboKeyPlayer();
+        this._special = this.#cursorKeys.space.isDown;
+    }
+
+    checkPlayerKeys(){
         this._up = this.#cursorKeys.up.isDown;
         this._down = this.#cursorKeys.down.isDown;
         this._left = this.#cursorKeys.left.isDown;
         this._right = this.#cursorKeys.right.isDown;
-        this._special = this.#cursorKeys.space.isDown;
     }
 
-    isMovingKeyPressed(){
+    checkEnemyKeys(){
+        this._WUp = this.#keyW.isDown;
+        this._ALeft = this.#keyA.isDown;
+        this._SDown = this.#keyS.isDown;
+        this._DRight = this.#keyD.isDown;
+    }
+
+    isMovingKeyPressedPlayer(){
         return (this._up | this._down | this._left | this._right)
     }
 
-    getDirection(){
+    isMovingKeyPressedEnemy(){
+        return(this._WUp | this._ALeft | this._SDown | this._DRight)
+    }
+
+    checkTurboKeyEnemy(){
+        this._GTurboEnemy = this.#keyG.isDown;
+    }
+
+    isTurboKeyEnemyPressed(){
+        return this._GTurboEnemy;
+        //return Phaser.Input.Keyboard.JustDown(this.#keyG);
+    }
+
+    checkTurboKeyPlayer(){
+        this._MTurboPlayer = this.#keyM.isDown;
+    }
+
+    isTurboKeyPlayerPressed(){
+        return this._MTurboPlayer;
+        //return Phaser.Input.Keyboard.JustDown(this.#keyG);
+    }
+
+
+    getDirectionPlayer(){
         if (this._up)
             return DIRECTION.UP;
         else if (this._down)
@@ -51,4 +119,29 @@ export class InputManager extends Input{
         else if (this._right) 
             return DIRECTION.RIGHT
     }
+
+    getDirectionEnemy(){
+        if (this._WUp)
+            return DIRECTION.UP;
+        else if (this._SDown)
+            return DIRECTION.DOWN;
+        else if (this._ALeft)
+            return DIRECTION.LEFT;
+        else if (this._DRight) 
+            return DIRECTION.RIGHT
+    }
+
+
+    reset(){
+        this._up = false;
+        this._down = false;
+        this._left = false;
+        this._right = false;
+        this._special = false;
+        this._WUp = false;
+        this._ALeft = false;
+        this._SDown = false;
+        this._DRight = false;
+    }
+
 }
