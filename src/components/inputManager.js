@@ -5,6 +5,7 @@ export class InputManager{
     // es el que se encarga de manejar el input de verdad
     #cursorKeys;    
     #inputLock;
+
     //Campos privados donde se guardan las teclas WASD
     #keyW;
     #keyA;
@@ -12,6 +13,8 @@ export class InputManager{
     #keyD;
     #keyG;
     #keyM;
+    #keyE;
+
     //Booleanos para comprobar si las teclas estan pulsadas o no
     _up;
     _down;
@@ -24,7 +27,7 @@ export class InputManager{
     _GTurboEnemy;
     _MTurboPlayer;
     //Tecla especial (?)
-    _special;
+    _trapKey;
 
     // aqui se añadiran los controles del otro jugador
     // se haria añadiendo parametros para que se asignen al up down y tal, y en funcion de eso ponemos que funcione
@@ -46,6 +49,8 @@ export class InputManager{
         //Tecla para turbo del Player
         this.#keyM = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
         this.#keyG = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.G);
+        
+        this.#keyE = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
 
 
     }
@@ -64,7 +69,7 @@ export class InputManager{
         this.checkEnemyKeys();
         this.checkTurboKeyEnemy();
         this.checkTurboKeyPlayer();
-        this._special = this.#cursorKeys.space.isDown;
+        this._trapKey = this.#keyE.isDown;
     }
 
     checkPlayerKeys(){
@@ -107,6 +112,9 @@ export class InputManager{
         //return Phaser.Input.Keyboard.JustDown(this.#keyG);
     }
 
+    isTrapPressed(){
+        return this._trapKey;
+    }
 
     getDirectionPlayer(){
         if (this._up)
@@ -136,11 +144,11 @@ export class InputManager{
         this._down = false;
         this._left = false;
         this._right = false;
-        this._special = false;
         this._WUp = false;
         this._ALeft = false;
         this._SDown = false;
         this._DRight = false;
+        this._trapKey = false;
     }
 
 }

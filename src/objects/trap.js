@@ -1,8 +1,15 @@
 import Phaser from "../lib/phaser.js";
+import { Coordinates } from "../types/typedef.js";
+
 
 export class Trap extends Phaser.GameObjects.Sprite {
-    constructor(scene, x, y) {
-        super(scene, x, y, 'trap'); // Usa la imagen 'trap' cargada
+    /**
+     * 
+     * @param {Phaser.Scene} scene 
+     * @param {Coordinates} coordinates
+     */
+    constructor(scene, coordinates) {
+        super(scene, coordinates.getRealX(), coordinates.getRealY(), 'trap'); // Usa la imagen 'trap' cargada
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
         
@@ -14,4 +21,5 @@ export class Trap extends Phaser.GameObjects.Sprite {
             this.setVisible(false);
         });
     }
+
 }

@@ -1,17 +1,21 @@
 // se puede importar un archivo de config para ajustar los valores
 
 import Phaser from "../lib/phaser.js";
-import { InputManager } from "../components/inputManager.js";
 import { Move } from "../components/move.js";
 import { Coordinates, DIRECTION } from "../types/typedef.js";
-import { Trap } from "../objects/trap.js";
+import { GameScreen } from "../scenes/gamescreen.js";
+import { InputManager } from "../components/inputManager.js";
 
 const turboTime = 6000;
 const turboCooldown = 20000;
+const trapCooldown = 20000;
+const speed = 5;
+const acelerationMultiplier = 2.5;
 
 export class Enemy extends Phaser.GameObjects.Container{
     // componentes del patron component de IV OwO
 
+    /**@type {InputManager} */
     #keyboardInput;
     #movement;
     #sprite;
@@ -21,24 +25,25 @@ export class Enemy extends Phaser.GameObjects.Container{
     #acceleration;
     #turboActive;
     #scene
-    #traps = [];
+    #trapOnCooldown;
 
     // Creamos el player, la escena donde aparece y la posicion
     /**
      * 
-     * @param {Phaser.Scene} scene 
+     * @param {GameScreen} scene 
      * @param {Coordinates} coordinates 
      */
     
-    constructor(scene, coordinates){
+    constructor(scene, coordinates, keyManager){
         // el [] es por si le pasamos otros objetos del juego
         super(scene, coordinates.getRealX(), coordinates.getRealY(), [])    //constructor base
         
         this.#scene = scene;
         this.#coordinates = coordinates;
         this.#target = new Coordinates(coordinates.x, coordinates.y);
-        this.#speed = 5;
+        this.#speed = speed;
         this.#turboActive = false;
+        this.#trapOnCooldown = false;
 
         this.scene.add.existing(this);          // lo añadimos a la escena
         this.scene.physics.add.existing(this);  // le añadimos las fisicas de phaser 
@@ -50,11 +55,8 @@ export class Enemy extends Phaser.GameObjects.Container{
         this.add([this.#sprite]);
         
         // le añadimos los componentes
-        this.#keyboardInput = new InputManager(this.scene);
+        this.#keyboardInput = keyManager;
         this.#movement =  new Move(this, coordinates, this.scene, this.#speed);
-
-        // Crear una tecla para soltar trampas
-        this.trapKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
 
         //listeners
         //Baseicamente hacemos que cuando la escena use update, llame el update del player
@@ -74,18 +76,28 @@ export class Enemy extends Phaser.GameObjects.Container{
             if(this.#keyboardInput.isTurboKeyEnemyPressed() && !this.#turboActive){
                 this.activateTurbo(); 
             }
-            //console.log(this.#scene.time)
-            //console.log(this.#target.x, this.#target.y)
+            // Comprobar que se puede ir en la direccion
+            // #scene.isWalkable(this.#target);
             this.#movement.move(this.#target, this.#acceleration);
             
-            
         }
+
+        if (this.#keyboardInput.isTrapPressed() && !this.#trapOnCooldown)
+            this.activateTrap();
             
+    }
+
+    activateTrap(){
+        this.#trapOnCooldown = true;
+        this.#scene.setTrap(this.#coordinates);
+        this.#scene.time.delayedCall(trapCooldown, () => {
+            this.#trapOnCooldown = false;
+        })
     }
 
     activateTurbo(){
         this.#turboActive = true;
-        this.#acceleration = 2.5;
+        this.#acceleration = acelerationMultiplier;
         this.#scene.time.delayedCall(turboTime, this.deactivateTurbo, null, this);
     }
 
