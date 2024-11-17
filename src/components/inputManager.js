@@ -1,3 +1,4 @@
+import { Input } from "./input.js";
 import Phaser from "../lib/phaser.js";
 import { DIRECTION } from "../types/typedef.js";
 

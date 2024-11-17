@@ -70,11 +70,6 @@
         },
 
         {
-            "type": "image",
-            "key": "button",
-            "url": "Boton.png"
-        },
-        {
             "type": "spritesheet",
             "key": "scout_destroy",
             "url": "scout_destroy.png",
