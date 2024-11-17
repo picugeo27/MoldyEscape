@@ -1,4 +1,4 @@
-export const TILE_SIZE = 24;
+const TILE_SIZE = 24;
 
 export const DIRECTION = {
   UP: 'UP',

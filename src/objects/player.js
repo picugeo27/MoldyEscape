@@ -5,6 +5,9 @@ import { InputManager } from "../components/inputManager.js";
 import { Move } from "../components/move.js";
 import { Coordinates, DIRECTION } from "../types/typedef.js";
 
+const turboTime = 5000;
+const turboCooldown = 20000;
+
 export class Player extends Phaser.GameObjects.Container{
     // componentes del patron component de IV OwO
 
@@ -20,7 +23,6 @@ export class Player extends Phaser.GameObjects.Container{
 
     // Creamos el player, la escena donde aparece y la posicion
     /**
-     * 
      * @param {Phaser.Scene} scene 
      * @param {Coordinates} coordinates 
      */
@@ -67,7 +69,7 @@ export class Player extends Phaser.GameObjects.Container{
             if(this.#keyboardInput.isTurboKeyPlayerPressed() && !this.#turboActive){
                 this.activateTurbo(); 
             }
-            console.log(this.#scene.time)
+            //console.log(this.#scene.time)
 
             this.#movement.move(this.#target, this.#acceleration);
         }
@@ -77,12 +79,12 @@ export class Player extends Phaser.GameObjects.Container{
     activateTurbo(){
         this.#turboActive = true;
         this.#acceleration = 2;
-        this.#scene.time.delayedCall(5000, this.deactivateTurbo, null, this);
+        this.#scene.time.delayedCall(turboTime, this.deactivateTurbo, null, this);
     }
 
     deactivateTurbo(){
         this.#acceleration = 1;
-        this.#scene.time.delayedCall(20000, ()=>{
+        this.#scene.time.delayedCall(turboCooldown, ()=>{
             this.#turboActive = false;
         }, null, this);
     }

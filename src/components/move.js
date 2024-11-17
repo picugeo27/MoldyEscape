@@ -1,4 +1,4 @@
-import { Coordinates, DIRECTION, TILE_SIZE } from "../types/typedef.js";
+import { Coordinates, DIRECTION } from "../types/typedef.js";
 
 // clase Move, para seguir usando patron command uwu x2
 export class Move{
@@ -33,8 +33,6 @@ export class Move{
     move(targetPosition, aceleration = 1){
 
         this.#isMoving = true;
-
-        console.log(targetPosition.y);
 
         //Comprobacion de limites del laberinto para no salirse (los numeros son los del laberinto placeholder)
         if(targetPosition.x >= 26){
