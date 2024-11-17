@@ -6,6 +6,9 @@ import { Move } from "../components/move.js";
 import { Coordinates, DIRECTION } from "../types/typedef.js";
 import { Trap } from "../objects/trap.js";
 
+const turboTime = 6000;
+const turboCooldown = 20000;
+
 export class Enemy extends Phaser.GameObjects.Container{
     // componentes del patron component de IV OwO
 
@@ -71,7 +74,7 @@ export class Enemy extends Phaser.GameObjects.Container{
             if(this.#keyboardInput.isTurboKeyEnemyPressed() && !this.#turboActive){
                 this.activateTurbo(); 
             }
-            console.log(this.#scene.time)
+            //console.log(this.#scene.time)
             //console.log(this.#target.x, this.#target.y)
             this.#movement.move(this.#target, this.#acceleration);
             
@@ -83,12 +86,12 @@ export class Enemy extends Phaser.GameObjects.Container{
     activateTurbo(){
         this.#turboActive = true;
         this.#acceleration = 2.5;
-        this.#scene.time.delayedCall(6000, this.deactivateTurbo, null, this);
+        this.#scene.time.delayedCall(turboTime, this.deactivateTurbo, null, this);
     }
 
     deactivateTurbo(){
         this.#acceleration = 1;
-        this.#scene.time.delayedCall(20000, ()=>{
+        this.#scene.time.delayedCall(turboCooldown, ()=>{
             this.#turboActive = false;
         }, null, this);
     }
