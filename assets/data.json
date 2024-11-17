@@ -62,6 +62,13 @@
             "key": "enemy",
             "url": "Enemy.png"
         },
+
+        {
+            "type": "image",
+            "key": "trap",
+            "url": "trampa.png"
+        },
+
         {
             "type": "spritesheet",
             "key": "scout_destroy",

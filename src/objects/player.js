@@ -47,6 +47,7 @@ export class Player extends Phaser.GameObjects.Container{
         // le añadimos los componentes
         this.#keyboardInput = new InputManager(this.scene);
         this.#movement =  new Move(this, coordinates, this.scene, this.#speed);
+        
 
         //listeners
         //Basicamente hacemos que cuando la escena use update, llame el update del player
