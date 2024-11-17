@@ -4,6 +4,7 @@ import Phaser from "../lib/phaser.js";
 import { InputManager } from "../components/inputManager.js";
 import { Move } from "../components/move.js";
 import { Coordinates, DIRECTION } from "../types/typedef.js";
+import { Trap } from "../objects/trap.js";
 
 export class Enemy extends Phaser.GameObjects.Container{
     // componentes del patron component de IV OwO
@@ -17,6 +18,7 @@ export class Enemy extends Phaser.GameObjects.Container{
     #acceleration;
     #turboActive;
     #scene
+    #traps = [];
 
     // Creamos el player, la escena donde aparece y la posicion
     /**
@@ -47,6 +49,9 @@ export class Enemy extends Phaser.GameObjects.Container{
         // le añadimos los componentes
         this.#keyboardInput = new InputManager(this.scene);
         this.#movement =  new Move(this, coordinates, this.scene, this.#speed);
+
+        // Crear una tecla para soltar trampas
+        this.trapKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
 
         //listeners
         //Baseicamente hacemos que cuando la escena use update, llame el update del player
