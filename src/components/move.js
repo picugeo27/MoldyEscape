@@ -5,7 +5,6 @@ import { Coordinates, DIRECTION } from "../types/typedef.js";
 export class Move{
     
     #gameObject;        // objeto que movemos
-    #speed;
     #isMoving;
 
     /**@type {GameScreen} */
@@ -14,13 +13,11 @@ export class Move{
     /**
      * Creamos el move
      * @param {GameScreen} scene 
-     * @param {number} speed 
      */
 
-    constructor(gameObject, scene, speed = 5){
+    constructor(gameObject, scene){
         this.#gameObject = gameObject;
         this.#scene = scene;
-        this.#speed = speed;
         this.#isMoving = false
 
         
@@ -30,14 +27,14 @@ export class Move{
         return this.#isMoving;
     }
 
-    move(targetPosition, aceleration = 1){
+    move(targetPosition, speed, aceleration = 1){
 
         this.#isMoving = true;
         this.#scene.add.tween({
             targets: this.#gameObject,
             x: targetPosition.getRealX(),
             y: targetPosition.getRealY(),
-            duration: 1000/(this.#speed * aceleration),
+            duration: 1000/(speed * aceleration),
             onComplete: () => {
                 this.#isMoving = false;
                 this.#gameObject.updateCoordinates();

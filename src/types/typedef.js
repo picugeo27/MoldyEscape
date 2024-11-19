@@ -19,10 +19,10 @@ export class Coordinates{
   }
 
   getRealX(){
-    return this.x * TILE_SIZE;
+    return this.x * TILE_SIZE + TILE_SIZE/2;
   }
 
   getRealY (){
-    return this.y * TILE_SIZE;
+    return this.y * TILE_SIZE + TILE_SIZE/2;
   }
 }

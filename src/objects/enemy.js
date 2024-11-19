@@ -1,143 +1,56 @@
 // se puede importar un archivo de config para ajustar los valores
 
-import Phaser from "../lib/phaser.js";
-import { Move } from "../components/move.js";
-import { Coordinates, DIRECTION } from "../types/typedef.js";
+import { Coordinates } from "../types/typedef.js";
 import { GameScreen } from "../scenes/gamescreen.js";
-import { InputManager } from "../components/inputManager.js";
+import { Character } from "./character.js";
 
-const turboTime = 6000;
-const turboCooldown = 20000;
 const trapCooldown = 20000;
-const speed = 5;
-const acelerationMultiplier = 2.5;
 
-export class Enemy extends Phaser.GameObjects.Container{
-    // componentes del patron component de IV OwO
+export class Enemy extends Character{
 
-    /**@type {InputManager} */
-    #keyboardInput;
-    #movement;
-    #sprite;
-    #coordinates;
-    #target;
-    #speed;
-    #acceleration;
-    #turboActive;
-    /**@type {GameScreen} */
-    #scene
     #trapOnCooldown;
 
-    // Creamos el player, la escena donde aparece y la posicion
     /**
-     * 
      * @param {GameScreen} scene 
      * @param {Coordinates} coordinates 
      */
     
     constructor(scene, coordinates, keyManager){
-        // el [] es por si le pasamos otros objetos del juego
-        super(scene, coordinates.getRealX(), coordinates.getRealY(), [])    //constructor base
-        
-        this.#scene = scene;
-        this.#coordinates = coordinates;
-        this.#target = new Coordinates(coordinates.x, coordinates.y);
-        this.#speed = speed;
-        this.#turboActive = false;
+        super(scene, coordinates, keyManager);    //constructor de character
+        this._speed = 6;
         this.#trapOnCooldown = false;
 
-        this.scene.add.existing(this);          // lo añadimos a la escena
-        this.scene.physics.add.existing(this);  // le añadimos las fisicas de phaser 
-        this.body.setSize(20, 20);              // le ponemos el colisionador a ese tamaño
-        this.body.setCollideWorldBounds(true);  // colision con las paredes
-
         // le añadimos el sprite
-        this.#sprite = scene.add.sprite(0, 0, 'enemy').setScale(0.1);
-        this.add([this.#sprite]);
+        this._sprite = scene.add.sprite(0, 0, 'enemy').setScale(0.1);
+        this.add([this._sprite]);
         
-        // le añadimos los componentes
-        this.#keyboardInput = keyManager;
-        this.#movement =  new Move(this, this.#scene, this.#speed);
-
-        //listeners
-        //Baseicamente hacemos que cuando la escena use update, llame el update del player
-        this.scene.events.on(Phaser.Scenes.Events.UPDATE, this.update, this);
-
-        // Cuando se acaba, destruimos este enlace (como el free de pga)
-        this.once(Phaser.GameObjects.Events.DESTROY, () => {
-            this.scene.events.off(Phaser.Scenes.Events.UPDATE, this.update, this);
-        }, this)
     }
 
     update(){
-        //console.log(ts,dt);
-        this.#keyboardInput.update();
-        if (this.#keyboardInput.isMovingKeyPressedEnemy() && !this.#movement.isMoving()){
-            this.setTarget(this.#keyboardInput.getDirectionEnemy());
-            if(this.#keyboardInput.isTurboKeyEnemyPressed() && !this.#turboActive){
+       
+        if (this._keyboardInput.isMovingKeyPressedEnemy() && !this._movement.isMoving()){
+
+            this.setTarget(this._keyboardInput.getDirectionEnemy());
+            if(this._keyboardInput.isTurboKeyEnemyPressed() && !this._turboActive){
                 this.activateTurbo(); 
             }
-             if (this.#scene.isWalkable(this.#target))
-                this.#movement.move(this.#target, this.#acceleration)
-            else{
+            if (this._scene.isWalkable(this._target))
+                this._movement.move(this._target, this._speed, this._acceleration);
+            else {
                 this.resetTarget();
             }
-            
         }
-
-        if (this.#keyboardInput.isTrapPressed() && !this.#trapOnCooldown)
+        if (this._keyboardInput.isTrapPressed() && !this.#trapOnCooldown)
             this.activateTrap();
-            
+       
     }
 
     activateTrap(){
         this.#trapOnCooldown = true;
-        this.#scene.setTrap(this.#coordinates);
-        this.#scene.time.delayedCall(trapCooldown, () => {
+        this._scene.setTrap(this._coordinates);
+        this._scene.time.delayedCall(trapCooldown, () => {
             this.#trapOnCooldown = false;
         })
     }
 
-    activateTurbo(){
-        this.#turboActive = true;
-        this.#acceleration = acelerationMultiplier;
-        this.#scene.time.delayedCall(turboTime, this.deactivateTurbo, null, this);
-    }
-
-    deactivateTurbo(){
-        this.#acceleration = 1;
-        this.#scene.time.delayedCall(turboCooldown, ()=>{
-            this.#turboActive = false;
-        }, null, this);
-    }
-
-    setTarget(direction){
-        switch(direction){
-            case DIRECTION.UP:
-                this.#target.y -= 1
-                break;
-            case DIRECTION.DOWN:
-                this.#target.y += 1
-                break;
-            case DIRECTION.LEFT:
-                this.#target.x -= 1
-                break;
-            case DIRECTION.RIGHT:
-                this.#target.x += 1
-                break;
-            default:
-                return;
-        }
-        
-    }
-
-    resetTarget(){
-        this.#target.x = this.#coordinates.x;
-        this.#target.y = this.#coordinates.y;
-    }
-
-    updateCoordinates(){
-        this.#coordinates.x  = this.#target.x;
-        this.#coordinates.y = this.#target.y;
-    }
 }
