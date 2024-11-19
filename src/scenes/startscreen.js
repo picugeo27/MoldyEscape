@@ -6,6 +6,7 @@ export class StartScreen extends Phaser.Scene{
     preload() {
         this.load.pack('image_pack', "assets/data.json");
         this.load.json('animation_pack', 'assets/animation.json');
+        this.load.json('maps_pack', 'assets/maps.json');
         // AHORA TODO SE CARGA EN EL PACK
    }
 

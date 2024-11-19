@@ -11,27 +11,50 @@ export class GameScreen extends Phaser.Scene{
         super({key: 'GameScreen'});
     }
 
+    /** @type {Phaser.Tilemaps.TilemapLayer}*/
+    #colliderLayer = null;
     /**@type {Coordinates} */
     #playerCoordinates = new Coordinates(5,5);
-    #enemyCoordinates = new Coordinates(20,20);
+    /**@type {Coordinates} */
+    #enemyCoordinates = new Coordinates(10,10);
+    /**@type {InputManager} */
     #keyManager;
+
     #buttons;
     #traps;
 
     #pushedButtons = 0;
     
+    /**@type {Player} */
     #player;
+    /**@type {Enemy} */
     #enemy;
+
+    preload(mapValue){
+        const tileMapData = this.cache.json.get('maps_pack');
+
+        tileMapData.maps.forEach(element => { 
+            this.load.tilemapTiledJSON(element.key, element.path, );
+        });
+    }
+
     create(){
         this.endGame.bind(this);
-        this.add.image(0,0, 'game_background').setOrigin(0,0).setScale(0.6);
         
+        const map = this.make.tilemap({key: 'Laboratorio', tileHeight: 24, tileWidth: 24});
+        const tileset = map.addTilesetImage("Lab", "lab_tiles");
+        const layer = map.createLayer("Fondo", tileset, 0, 0);
+        this.#colliderLayer = map.createLayer("Borders", tileset, 0, 0);
+        console.log(this.#colliderLayer.getTileAt(0, 0).index);
         this.#keyManager = new InputManager(this);
 
         this.#player = new Player(this, this.#playerCoordinates, this.#keyManager);
         this.#enemy = new Enemy(this, this.#enemyCoordinates, this.#keyManager);
         
         this.physics.add.overlap(this.#player, this.#enemy, this.enemyWin.bind(this));
+
+        
+
 
         /** @type {Phaser.GameObjects.Group} */
         this.#buttons  = this.physics.add.group();
@@ -47,7 +70,6 @@ export class GameScreen extends Phaser.Scene{
         /** @type {Phaser.GameObjects.Group} */
         this.#traps = this.physics.add.group();
 
-        
         //this.#cursorKeys = this.input.keyboard.createCursorKeys();
         //console.log(this.#cursorKeys)
         // invocar una animacion
@@ -94,4 +116,13 @@ export class GameScreen extends Phaser.Scene{
         this.scene.start('EndScreen');
     }
 
+    /**
+     * 
+     * @param {Coordinates} coordinates 
+     */
+    isWalkable(coordinates){
+
+        const tile = this.#colliderLayer.getTileAt(coordinates.x,coordinates.y);
+        return tile == null || tile.index == 0;
+    }
 }

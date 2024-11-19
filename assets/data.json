@@ -79,8 +79,18 @@
             "key": "scout_destroy",
             "url": "scout_destroy.png",
             "frameConfig": { "frameWidth": 64, "frameHeight": 64 }
-          }
+        }
       ]
+    },
+    {
+        "path": "assets/Tileset",
+        "files": [
+            {
+                "type": "image",
+                "key": "lab_tiles",
+                "url": "tileset24.png"
+            }
+        ]
     }
     
   ]

@@ -24,6 +24,7 @@ export class Enemy extends Phaser.GameObjects.Container{
     #speed;
     #acceleration;
     #turboActive;
+    /**@type {GameScreen} */
     #scene
     #trapOnCooldown;
 
@@ -56,7 +57,7 @@ export class Enemy extends Phaser.GameObjects.Container{
         
         // le añadimos los componentes
         this.#keyboardInput = keyManager;
-        this.#movement =  new Move(this, coordinates, this.scene, this.#speed);
+        this.#movement =  new Move(this, this.#scene, this.#speed);
 
         //listeners
         //Baseicamente hacemos que cuando la escena use update, llame el update del player
@@ -76,9 +77,11 @@ export class Enemy extends Phaser.GameObjects.Container{
             if(this.#keyboardInput.isTurboKeyEnemyPressed() && !this.#turboActive){
                 this.activateTurbo(); 
             }
-            // Comprobar que se puede ir en la direccion
-            // #scene.isWalkable(this.#target);
-            this.#movement.move(this.#target, this.#acceleration);
+             if (this.#scene.isWalkable(this.#target))
+                this.#movement.move(this.#target, this.#acceleration)
+            else{
+                this.resetTarget();
+            }
             
         }
 
@@ -126,6 +129,11 @@ export class Enemy extends Phaser.GameObjects.Container{
                 return;
         }
         
+    }
+
+    resetTarget(){
+        this.#target.x = this.#coordinates.x;
+        this.#target.y = this.#coordinates.y;
     }
 
     updateCoordinates(){

@@ -1,0 +1,8 @@
+{
+    "maps": [
+        {
+            "key": "Laboratorio",
+            "path": "assets/Mapas/Lab.json"
+        }
+    ]
+}

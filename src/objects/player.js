@@ -4,6 +4,7 @@ import Phaser from "../lib/phaser.js";
 import { InputManager } from "../components/inputManager.js";
 import { Move } from "../components/move.js";
 import { Coordinates, DIRECTION } from "../types/typedef.js";
+import { GameScreen } from "../scenes/gamescreen.js";
 
 const turboTime = 5000;
 const turboCooldown = 20000;
@@ -24,11 +25,12 @@ export class Player extends Phaser.GameObjects.Container{
     #speed;
     #acceleration;
     #turboActive;
-    #scene
+    /**@type {GameScreen} */
+    #scene;
 
     // Creamos el player, la escena donde aparece y la posicion
     /**
-     * @param {Phaser.Scene} scene 
+     * @param {GameScreen} scene 
      * @param {Coordinates} coordinates 
      */
     
@@ -54,7 +56,7 @@ export class Player extends Phaser.GameObjects.Container{
         
         // le añadimos los componentes
         this.#keyboardInput = keyboardInput;
-        this.#movement =  new Move(this, coordinates, this.scene, this.#speed);
+        this.#movement =  new Move(this, scene, this.#speed);
         
 
         //listeners
@@ -76,9 +78,12 @@ export class Player extends Phaser.GameObjects.Container{
             if(this.#keyboardInput.isTurboKeyPlayerPressed() && !this.#turboActive){
                 this.activateTurbo(); 
             }
-            //console.log(this.#scene.time)
-
-            this.#movement.move(this.#target, this.#acceleration);
+            if (this.#scene.isWalkable(this.#target))
+                this.#movement.move(this.#target, this.#acceleration);
+            else {
+                this.resetTarget();
+                console.log("No me muevo")
+            }
         }
             
     }
@@ -123,6 +128,11 @@ export class Player extends Phaser.GameObjects.Container{
                 return;
         }
         
+    }
+
+    resetTarget(){
+        this.#target.x = this.#coordinates.x;
+        this.#target.y = this.#coordinates.y;
     }
 
     updateCoordinates(){
