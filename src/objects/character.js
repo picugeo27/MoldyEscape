@@ -7,7 +7,7 @@ import { GameScreen } from "../scenes/gamescreen.js";
 const turboTime = 5000;
 const turboCooldown = 20000;
 const speed = 5;
-const acelerationMultiplier = 2;
+const accelerationMultiplier = 2;
 
 export class Character extends Phaser.GameObjects.Container{
      /**@type {InputManager} */
@@ -21,6 +21,8 @@ export class Character extends Phaser.GameObjects.Container{
      _turboActive;
      /**@type {GameScreen} */
      _scene;
+     _turboSound;
+     _wrongButton;
  
      // Creamos el player, la escena donde aparece y la posicion
      /**
@@ -48,7 +50,11 @@ export class Character extends Phaser.GameObjects.Container{
         // le añadimos los componentes
         this._keyboardInput = keyboardInput;
         this._movement =  new Move(this, scene);
-        
+
+        //Sonidos
+        //Sonido para el turbo
+        this._turboSound = this._scene.sound.add('turbo_whoosh', {volume:1})
+        this._wrongButton = this._scene.sound.add('boton_erroneo', {volume:1})
 
         //listeners
         //Basicamente hacemos que cuando la escena use update, llame el update del player
@@ -66,8 +72,17 @@ export class Character extends Phaser.GameObjects.Container{
 
             this.setTarget(this._keyboardInput.getDirectionPlayer());
             if(this._keyboardInput.isTurboKeyPlayerPressed() && !this._turboActive){
-                this.activateTurbo(); 
+                this._turboSound.play();
+                this._scene.time.delayedCall(500, ()=>{
+                    this.activateTurbo(); 
+                }, null, this);
+                
             }
+            //Si el turbo esta activo o en cooldown, al pulsar la tecla da error
+            else if(this._keyboardInput.isTurboKeyPlayerPressed() && this._turboActive){
+                this._wrongButton.play();
+            }
+
             if (this._scene.isWalkable(this._target))
                 this._movement.move(this._target, this._speed, this._acceleration);
             else {
@@ -78,9 +93,9 @@ export class Character extends Phaser.GameObjects.Container{
             
     }
 
-    activateTurbo(){
+    activateTurbo(){ 
+        this._acceleration = accelerationMultiplier;
         this._turboActive = true;
-        this._acceleration = acelerationMultiplier;
         this._scene.time.delayedCall(turboTime, this.deactivateTurbo, null, this);
     }
 

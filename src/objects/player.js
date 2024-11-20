@@ -5,7 +5,7 @@ import { GameScreen } from "../scenes/gamescreen.js";
 import { Character } from "./character.js";
 
 const slowTime = 5000;
-const slowAmmount = 0.5;
+const slowAmount = 0.5;
 
 export class Player extends Character{
 
@@ -24,12 +24,12 @@ export class Player extends Character{
     }
 
     slow(){
-        this._acceleration -= slowAmmount;
+        this._acceleration -= slowAmount;
         this._scene.time.delayedCall(slowTime, this.deactivateSlow, null, this);
     }
 
     deactivateSlow(){
-        this._acceleration += slowAmmount;
+        this._acceleration += slowAmount;
     }
 
 }

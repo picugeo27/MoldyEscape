@@ -11,6 +11,16 @@
             "type": "audio",
             "key": "boton_flecha_click",
             "url": "button_arrow_click.mp3"
+        },
+        {
+          "type": "audio",
+          "key": "turbo_whoosh",
+          "url": "fast_whoosh.mp3"
+        },
+        {
+          "type": "audio",
+          "key": "boton_erroneo",
+          "url": "wrong_button.mp3"
         }
       ]
     }
