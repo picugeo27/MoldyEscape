@@ -9,6 +9,7 @@ export class CreditsScreen extends Phaser.Scene{
     create() {
         //Creación del background
         const background = this.add.image(0, 0, 'credits_background').setOrigin(0, 0).setScale(1);
+        const boton_click = this.sound.add('boton_click', {volume:1});
         // Crear un rectángulo semi-transparente encima de la imagen
         //const overlay = this.add.rectangle(0, 0, this.scale.width, this.scale.height, 0x000000, 0.5);
 
@@ -39,12 +40,9 @@ export class CreditsScreen extends Phaser.Scene{
             0xffffff
         ).setOrigin(0.5); // Centrar el rectángulo
 
-        const messageText = this.add.text(
-            this.scale.width / 2,      // Centro en X
-            400,  // Parte inferior de la pantalla
-            "",                       // Texto vacío inicialmente
+        const messageText = this.add.text(this.scale.width / 2, 400, "",
             {
-                color: '#000000',     // Texto en negro
+                color: '#000000',
                 fontSize: 24,
                 align: 'center'
             }
@@ -93,9 +91,12 @@ export class CreditsScreen extends Phaser.Scene{
         const boton_inicio = this.add.image(400, 550, "boton_inicio")
              .setInteractive()
              .on('pointerdown', () => {
-                 this.scene.stop("CreditsScreen");
-                 this.scene.start("StartScreen");
-         });
+                boton_click.play();
+                this.time.delayedCall(1000, () => {
+                    this.scene.stop("CreditsScreen");
+                    this.scene.start("StartScreen");
+                })
+            });
         
     }
 

@@ -1,0 +1,18 @@
+[
+    {
+      "path": "assets/sonidos",
+      "files": [
+        {
+            "type": "audio",
+            "key": "boton_click",
+            "url": "button_click.mp3"
+        },
+        {
+            "type": "audio",
+            "key": "boton_flecha_click",
+            "url": "button_arrow_click.mp3"
+        }
+      ]
+    }
+    
+  ]
