@@ -13,6 +13,8 @@ export class GameScreen extends Phaser.Scene{
 
     /** @type {Phaser.Tilemaps.TilemapLayer}*/
     #colliderLayer = null;
+    /** @type {Phaser.Tilemaps.TilemapLayer}*/
+    #doorLayer = null;
     /**@type {Coordinates} */
     #playerCoordinates = new Coordinates(5,5);
     /**@type {Coordinates} */
@@ -46,9 +48,10 @@ export class GameScreen extends Phaser.Scene{
         // Creamos el tilemap y las capas
         const map = this.make.tilemap({key: 'Laboratorio', tileHeight: 24, tileWidth: 24});
         const tileset = map.addTilesetImage("Lab", "lab_tiles");
-        const layer = map.createLayer("Fondo", tileset, 0, 0);              //Capa de fondo
-        this.#colliderLayer = map.createLayer("Borders", tileset, 0, 0);    //Capa de colliders
-        
+        const backgroundLayer = map.createLayer("Fondo", tileset, 0, 0);     //Capa de fondo
+        this.#colliderLayer = map.createLayer("Paredes", tileset, 0, 0);    //Capa de colliders
+        this.#doorLayer = map.createLayer("Puertas", tileset, 0, 0);    //Capa de puertas
+
         // Creamos key manager, jugador, enemigo y su colision
         this.#keyManager = new InputManager(this);      
 
