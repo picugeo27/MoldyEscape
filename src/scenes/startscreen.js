@@ -18,7 +18,7 @@ export class StartScreen extends Phaser.Scene{
              .setInteractive()
              .on('pointerdown', () => {
                  //this.sound.play("select");
-                 this.scene.stop("IntroScreen");
+                 this.scene.stop("StartScreen");
                  this.scene.start("GameScreen");
          });
 
@@ -34,12 +34,19 @@ export class StartScreen extends Phaser.Scene{
             .setInteractive()
             .on('pointerdown', () => this.switchBoton(boton_local, boton_red));
         const boton_ajustes = this.add.image(675, 475, "boton_ajustes").setScale(0.95)
-        .setInteractive()
-        .on('pointerdown', () => {
-            this.scene.stop("IntroScreen");
-            this.scene.start("EndScreen")});
+            .setInteractive()
+            .on('pointerdown', () => {
+                this.scene.stop("StartScreen");
+                this.scene.start("EndScreen")});
 
-        const boton_creditos = this.add.image(675, 550, "boton_creditos").setScale(0.9);
+        const boton_creditos = this.add.image(675, 550, "boton_creditos").setScale(0.9)
+            .setInteractive()
+            .on('pointerdown', () => {
+                //this.sound.play("select");
+                this.scene.stop("StartScreen");
+                this.scene.start("CreditsScreen");
+        });
+
         this.#createAnimations();
     }
 

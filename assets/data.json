@@ -49,6 +49,11 @@
         },
         {
             "type": "image",
+            "key": "credits_background",
+            "url": "CreditsBackgroundPlaceholder.png"
+        },
+        {
+            "type": "image",
             "key": "game_background",
             "url": "Mapa.png"
         },

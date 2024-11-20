@@ -7,6 +7,11 @@ export const DIRECTION = {
   RIGHT: 'RIGHT'
 }
 
+export const SIZE_CANVAS = {
+  WIDTH: 800,
+  HEIGHT: 600
+}
+
 export class Coordinates{
   /**
    * 
