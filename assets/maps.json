@@ -1,7 +1,12 @@
 {
     "maps": [
         {
-            "key": "Laboratorio",
+            "key": "Laboratorio1",
+            "path": "assets/Mapas/lab1.json"
+        },
+
+        {
+            "key": "Laboratorio2",
             "path": "assets/Mapas/lab2.json"
         }
     ]
