@@ -1,91 +1,89 @@
 [
     {
-      "path": "assets/placeholders",
-      "files": [
-        {
-            "type": "image",
-            "key": "boton_jugar",
-            "url": "BotonJugar.png"
-        },
-        {
-            "type": "image",
-            "key": "boton_ajustes",
-            "url": "BotonAjustes.png"
-        },
-        {
-            "type": "image",
-            "key": "boton_creditos",
-            "url": "BotonCreditos.png"
-        },
-        {
-            "type": "image",
-            "key": "boton_local",
-            "url": "BotonLocal.png"
-        },
-        {
-            "type": "image",
-            "key": "boton_en_red",
-            "url": "BotonEnRed.png"
-        },
-        {
-            "type": "image",
-            "key": "boton_flecha",
-            "url": "BotonFlecha.png"
-        },
-        {
-            "type": "image",
-            "key": "boton_nueva_partida",
-            "url": "BotonNuevaPartida.png"
-        },
-        {
-            "type": "image",
-            "key": "boton_inicio",
-            "url": "BotonInicio.png"
-        },
-        {
-            "type": "image",
-            "key": "start_background",
-            "url": "StartBackgroundPlaceholder.png"
-        },
-        {
-            "type": "image",
-            "key": "credits_background",
-            "url": "CreditsBackgroundPlaceholder.png"
-        },
-        {
-            "type": "image",
-            "key": "game_background",
-            "url": "Mapa.png"
-        },
-        {
-            "type": "image",
-            "key": "character",
-            "url": "Character.png"
-        },
-        {
-            "type": "image",
-            "key": "enemy",
-            "url": "Enemy.png"
-        },
-
-        {
-            "type": "image",
-            "key": "trap",
-            "url": "trampa.png"
-        },
-
-        {
-            "type": "image",
-            "key": "button",
-            "url": "Boton.png"
-        },
-        {
-            "type": "spritesheet",
-            "key": "scout_destroy",
-            "url": "scout_destroy.png",
-            "frameConfig": { "frameWidth": 64, "frameHeight": 64 }
-        }
-      ]
+        "path": "assets/placeholders",
+        "files": [
+            {
+                "type": "image",
+                "key": "boton_jugar",
+                "url": "BotonJugar.png"
+            },
+            {
+                "type": "image",
+                "key": "boton_ajustes",
+                "url": "BotonAjustes.png"
+            },
+            {
+                "type": "image",
+                "key": "boton_creditos",
+                "url": "BotonCreditos.png"
+            },
+            {
+                "type": "image",
+                "key": "boton_local",
+                "url": "BotonLocal.png"
+            },
+            {
+                "type": "image",
+                "key": "boton_en_red",
+                "url": "BotonEnRed.png"
+            },
+            {
+                "type": "image",
+                "key": "boton_flecha",
+                "url": "BotonFlecha.png"
+            },
+            {
+                "type": "image",
+                "key": "boton_nueva_partida",
+                "url": "BotonNuevaPartida.png"
+            },
+            {
+                "type": "image",
+                "key": "boton_inicio",
+                "url": "BotonInicio.png"
+            },
+            {
+                "type": "image",
+                "key": "start_background",
+                "url": "StartBackgroundPlaceholder.png"
+            },
+            {
+                "type": "image",
+                "key": "credits_background",
+                "url": "CreditsBackgroundPlaceholder.png"
+            },
+            {
+                "type": "image",
+                "key": "game_background",
+                "url": "Mapa.png"
+            },
+            {
+                "type": "image",
+                "key": "character",
+                "url": "Character.png"
+            },
+            {
+                "type": "image",
+                "key": "enemy",
+                "url": "Enemy.png"
+            },
+            {
+                "type": "image",
+                "key": "trap",
+                "url": "trampa.png"
+            },
+            {
+                "type": "image",
+                "key": "button",
+                "url": "Boton.png"
+            },
+            {
+                "type": "spritesheet",
+                "key": "scout_destroy",
+                "url": "scout_destroy.png",
+                "frameConfig": { "frameWidth": 64, "frameHeight": 64 }
+            }
+        ]
     },
     {
         "path": "assets/Tileset",
@@ -96,7 +94,75 @@
                 "url": "tilesetNew.png"
             }
         ]
+    },
+    {
+        "path": "assets/Animaciones/Cientifica",
+        "files": [
+            {
+                "type": "spritesheet",
+                "key": "CWalkIdle",
+                "url": "Cient-Idle-Sheet.png",
+                "frameConfig": { "frameWidth": 100, "frameHeight": 40 }
+            },
+            {
+                "type": "spritesheet",
+                "key": "CWalkB",
+                "url": "Cient-WalkB-Sheet.png",
+                "frameConfig": { "frameWidth": 192, "frameHeight": 40 }
+            },
+            {
+                "type": "spritesheet",
+                "key": "CWalkF",
+                "url": "Cient-WalkF-Sheet.png",
+                "frameConfig": { "frameWidth": 192, "frameHeight": 40 }
+            },
+            {
+                "type": "spritesheet",
+                "key": "CWalkL",
+                "url": "Cient-WalkL-Sheet.png",
+                "frameConfig": { "frameWidth": 192, "frameHeight": 40 }
+            },
+            {
+                "type": "spritesheet",
+                "key": "CWalkR",
+                "url": "Cient-WalkR-Sheet.png",
+                "frameConfig": { "frameWidth": 192, "frameHeight": 40 }
+            }
+        ]
+    },
+    {
+        "path": "assets/Animaciones/Fungo",
+        "files": [
+            {
+                "type": "spritesheet",
+                "key": "FWalkIdle",
+                "url": "Fungo-Idle-Sheet.png",
+                "frameConfig": { "frameWidth": 100, "frameHeight": 40 }
+            },
+            {
+                "type": "spritesheet",
+                "key": "FWalkB",
+                "url": "Fungo-WalkB-Sheet.png",
+                "frameConfig": { "frameWidth": 192, "frameHeight": 40 }
+            },
+            {
+                "type": "spritesheet",
+                "key": "FWalkF",
+                "url": "Fungo-WalkF-Sheet.png",
+                "frameConfig": { "frameWidth": 192, "frameHeight": 40 }
+            },
+            {
+                "type": "spritesheet",
+                "key": "FWalkL",
+                "url": "Fungo-WalkL-Sheet.png",
+                "frameConfig": { "frameWidth": 192, "frameHeight": 40 }
+            },
+            {
+                "type": "spritesheet",
+                "key": "FWalkR",
+                "url": "Fungo-WalkR-Sheet.png",
+                "frameConfig": { "frameWidth": 192, "frameHeight": 40 }
+            }
+        ]
     }
-    
-  ]
-  
+]

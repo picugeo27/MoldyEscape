@@ -4,6 +4,7 @@ import { Move } from "../components/move.js";
 import { Coordinates, DIRECTION } from "../types/typedef.js";
 import { GameScreen } from "../scenes/gamescreen.js";
 
+
 const turboTime = 5000;
 const turboCooldown = 20000;
 const speed = 5;
@@ -64,6 +65,15 @@ export class Character extends Phaser.GameObjects.Container{
         this.once(Phaser.GameObjects.Events.DESTROY, () => {
             this.scene.events.off(Phaser.Scenes.Events.UPDATE, this.update, this);
         }, this)
+
+
+        // Listener para el update
+        this.scene.events.on(Phaser.Scenes.Events.UPDATE, this.update, this);
+
+        // Destructor cuando se elimina el objeto
+        this.once(Phaser.GameObjects.Events.DESTROY, () => {
+            this.scene.events.off(Phaser.Scenes.Events.UPDATE, this.update, this);
+        }, this);
     }
 
     update(){
@@ -90,7 +100,6 @@ export class Character extends Phaser.GameObjects.Container{
                 console.log("No me muevo")
             }
         }
-            
     }
 
     activateTurbo(){ 
