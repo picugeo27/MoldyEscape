@@ -39,9 +39,24 @@ export class GameScreen extends Phaser.Scene{
         tileMapData.maps.forEach(element => { 
             this.load.tilemapTiledJSON(element.key, element.path, );
         });
+
+        //Cargar Sprites Personajes
+        this.load.spritesheet('Cient-Idle-Sheet', 'assets/Animaciones/Cientifica/Cient-Idle-Sheet.png', { frameWidth: 25, frameHeight: 40 });
+        this.load.spritesheet('Cient-WalkB-Sheet', 'assets/Animaciones/Cientifica/Cient-WalkB-Sheet.png', { frameWidth: 32, frameHeight: 40 });
+        this.load.spritesheet('Cient-WalkF-Sheet', 'assets/Animaciones/Cientifica/Cient-WalkF-Sheet.png', { frameWidth: 32, frameHeight: 40 });
+        this.load.spritesheet('Cient-WalkL-Sheet', 'assets/Animaciones/Cientifica/Cient-WalkL-Sheet.png', { frameWidth: 32, frameHeight: 40 });
+        this.load.spritesheet('Cient-WalkR-Sheet', 'assets/Animaciones/Cientifica/Cient-WalkR-Sheet.png', { frameWidth: 32, frameHeight: 40 });
+
+        this.load.spritesheet('Fungo-Idle-Sheet', 'assets/Animaciones/Fungo/Fungo-Idle-Sheet.png', { frameWidth: 25, frameHeight: 40 });
+        this.load.spritesheet('Fungo-WalkB-Sheet', 'assets/Animaciones/Fungo/Fungo-WalkB-Sheet.png', { frameWidth: 32, frameHeight: 40 });
+        this.load.spritesheet('Fungo-WalkF-Sheet', 'assets/Animaciones/Fungo/Fungo-WalkF-Sheet.png', { frameWidth: 32, frameHeight: 40 });
+        this.load.spritesheet('Fungo-WalkL-Sheet', 'assets/Animaciones/Fungo/Fungo-WalkL-Sheet.png', { frameWidth: 32, frameHeight: 40 });
+        this.load.spritesheet('Fungo-WalkR-Sheet', 'assets/Animaciones/Fungo/Fungo-WalkR-Sheet.png', { frameWidth: 32, frameHeight: 40 });
     }
 
     create(){
+
+        
         // Metodo que cambia de escena cuando se acabe, independientemente del resultado
         this.endGame.bind(this);
         
@@ -56,6 +71,7 @@ export class GameScreen extends Phaser.Scene{
         this.#keyManager = new InputManager(this);      
 
         this.#player = new Player(this, this.#playerCoordinates, this.#keyManager);
+        this.#player.update();
         this.#enemy = new Enemy(this, this.#enemyCoordinates, this.#keyManager);
         
         this.physics.add.overlap(this.#player, this.#enemy, this.enemyWin.bind(this));
