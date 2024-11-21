@@ -23,7 +23,7 @@ export class Player extends Character{
     
         // Definir las animaciones en el constructor
         this._scene.anims.create({
-            key: 'CWaLkIdle', 
+            key: 'CWalkIdle', 
             frames: this._scene.anims.generateFrameNumbers('Cient-Idle-Sheet', { start: 0, end: 3 }), 
             frameRate: 8, 
             repeat: -1 

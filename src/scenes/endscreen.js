@@ -7,22 +7,27 @@ export class EndScreen extends Phaser.Scene{
 
     //Si es true, es que la cientifica ha ganado, sino ha ganado la seta
     #playerIsWinner;
+    _victorySound;
 
     create() {
         //Los botones tienen colores distintos espero que me perdoneis xd
 
+        this._victorySound = this.sound.add('end_victory', {volume:1})
+        this._victorySound.play();
         const arte_seta = this.add.image(0, 0, 'arte_seta').setOrigin(0, 0).setScale(0.9);
         const arte_cientifica = this.add.image(400,5, 'arte_cientifica').setOrigin(0, 0).setScale(1);
 
         if(this.#playerIsWinner){
             arte_seta.setTint(0x333333);
+            this.add.text(35, 400, 'MONSTRUO PIERDE', { color: '#ffffff', fontSize: 30, stroke: '#df5fa8', strokeThickness: 4});
+            this.add.text(460, 400, 'CIENTÍFICA GANA', { color: '#ffffff', fontSize: 30, stroke: '#df5fa8', strokeThickness: 4});
         }
         else{
             arte_cientifica.setTint(0x333333);
+            this.add.text(50, 400, 'MONSTRUO GANA', { color: '#ffffff', fontSize: 30, stroke: '#df5fa8', strokeThickness: 4});
+            this.add.text(450, 400, 'CIENTÍFICA PIERDE', { color: '#ffffff', fontSize: 30, stroke: '#df5fa8', strokeThickness: 4});
         }
 
-        const game_over_text = this.add.text(225, 50, 'Game Over', { color: '#ffffff', fontSize: 70, stroke: '#df5fa8', strokeThickness: 4});
-        const extra_text = this.add.text(270, 150, 'Try Again!', { color: '#ffffff', fontSize: 55, stroke: '#df5fa8', strokeThickness: 4});
         const boton_inicio = this.add.image(200, 550, "boton_inicio")
              .setInteractive()
              .on('pointerdown', () => {
