@@ -11,7 +11,7 @@ const game = new Phaser.Game({
     width: SIZE_CANVAS.WIDTH,
     height: SIZE_CANVAS.HEIGHT,
     parent: 'game-canvas',
-    backgroundColor: '#000000',
+    backgroundColor: '#97c6e0',
     physics: {
         default: 'arcade',
         arcade: {
@@ -21,9 +21,9 @@ const game = new Phaser.Game({
     },
 });
 
-game.scene.add('GameScreen', GameScreen);
-game.scene.add('StartScreen', StartScreen);
-game.scene.add('EndScreen', EndScreen, false, game);
+//game.scene.add('GameScreen', GameScreen);
+game.scene.add('StartScreen', StartScreen, false, game);
+game.scene.add('EndScreen', EndScreen);//, false, game);
 game.scene.add('CreditsScreen', CreditsScreen);
 game.scene.start('StartScreen');
 

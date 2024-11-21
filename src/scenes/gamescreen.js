@@ -25,12 +25,17 @@ export class GameScreen extends Phaser.Scene{
     #buttons;
     #traps;
 
+    //Boolean que indica si es el player quien ha ganado
+    #playerIsWinner
+
     #pushedButtons = 0;
     
     /**@type {Player} */
     #player;
     /**@type {Enemy} */
     #enemy;
+
+    _pressButtonSound;
 
     // este metodo carga el tileset, el map value es porque facilita poner mas mapas (solo habria que decirle cual queremos)
     preload(mapValue){
@@ -58,7 +63,7 @@ export class GameScreen extends Phaser.Scene{
 
         
         // Metodo que cambia de escena cuando se acabe, independientemente del resultado
-        this.endGame.bind(this);
+        //this.endGame.bind(this);
         
         // Creamos el tilemap y las capas
         const map = this.make.tilemap({key: 'Laboratorio1', tileHeight: 24, tileWidth: 24});    //1 para mapa 1, 2 para mapa 2
@@ -74,6 +79,7 @@ export class GameScreen extends Phaser.Scene{
         this.#player.update();
         this.#enemy = new Enemy(this, this.#enemyCoordinates, this.#keyManager);
         
+        //this.physics.add.overlap(this.#player, this.#enemy, this.enemyWin);
         this.physics.add.overlap(this.#player, this.#enemy, this.enemyWin.bind(this));
 
         // aqui llamamos el metodo que crea los botones, lo separe para que create no sea tan grande
@@ -81,6 +87,8 @@ export class GameScreen extends Phaser.Scene{
         
         /** @type {Phaser.GameObjects.Group} */
         this.#traps = this.physics.add.group();
+
+        this._pressButtonSound = this.sound.add('take_button', {volume:1})
 
         // ejemplo para invocar una animacion
         // this.add.sprite(100, 100, 'boton_inicio').play('explotion');
@@ -107,17 +115,25 @@ export class GameScreen extends Phaser.Scene{
     // que hacer cuando gana el jugador
     playerWin(){
         console.log("Player gana");
-        this.endGame();
+        this.scene.remove('GameScreen');
+        //const playerIsWinner = true;
+        this.scene.start('EndScreen', {playerIsWinner: true});
+        //this.endGame();
     }
 
     // que hacer cuando gana el monstruo
     enemyWin(){
         console.log("Enemigo gana");
-        this.endGame();
+        this.scene.remove('GameScreen');
+        //const playerIsWinner = false;
+        this.scene.start('EndScreen', {playerIsWinner: false});
+        //this.endGame();
     }
+
 
     // Cuando se pulsa un boton que se hace (no podemos quitar ese player que no se usa porque sino por como se invoca el player desaparece)
     pushButton = (player, element) =>{
+        this._pressButtonSound.play();
         element.destroy();
         this.#pushedButtons +=1;
         if (this.#pushedButtons >= buttonsToWin)
@@ -137,10 +153,14 @@ export class GameScreen extends Phaser.Scene{
             trap.destroy();
         })
     }
-    endGame(){
+
+    /*
+    endGame(player, playerIsWinner){
+        //console.log("Player gana");
         this.scene.remove('GameScreen');
-        this.scene.start('EndScreen');
+        this.scene.start('EndScreen', playerIsWinner);
     }
+    */
 
     /**
      * 

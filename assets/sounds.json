@@ -21,6 +21,16 @@
           "type": "audio",
           "key": "boton_erroneo",
           "url": "wrong_button.mp3"
+        },
+        {
+          "type": "audio",
+          "key": "take_button",
+          "url": "take_button.mp3"
+        },
+        {
+          "type": "audio",
+          "key": "set_trap",
+          "url": "set_trap.mp3"
         }
       ]
     }

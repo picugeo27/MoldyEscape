@@ -78,6 +78,16 @@
                 "url": "Boton.png"
             },
             {
+                "type": "image",
+                "key": "arte_seta",
+                "url": "seta_art.png"
+            },
+            {
+                "type": "image",
+                "key": "arte_cientifica",
+                "url": "cientifica_art.png"
+            },
+            {
                 "type": "spritesheet",
                 "key": "scout_destroy",
                 "url": "scout_destroy.png",

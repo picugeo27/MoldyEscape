@@ -1,3 +1,5 @@
+import { GameScreen } from "./gamescreen.js";
+
 export class StartScreen extends Phaser.Scene{
     constructor(){
         super({key: 'StartScreen'});
@@ -87,6 +89,11 @@ export class StartScreen extends Phaser.Scene{
         });
 
         this.#createAnimations();
+    }
+
+
+    init(data){
+        this.scene.add('GameScreen', GameScreen);
     }
 
     update() {}
