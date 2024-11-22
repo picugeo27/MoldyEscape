@@ -23,6 +23,7 @@ export class StartScreen extends Phaser.Scene{
                  boton_click.play();
                  this.time.delayedCall(1000, () => {
                     this.scene.stop("StartScreen");
+                    this.scene.add('GameScreen', GameScreen);
                     this.scene.start("GameScreen");
                 })
          });
@@ -72,10 +73,10 @@ export class StartScreen extends Phaser.Scene{
             .setInteractive()
             .on('pointerdown', () => {
                 boton_click.play();
-                // this.time.delayedCall(1000, () => {
-                //     this.scene.stop("StartScreen");
-                //     this.scene.start("EndScreen");
-                // })
+                this.time.delayedCall(1000, () => {
+                    this.scene.stop("StartScreen");
+                    this.scene.start("SettingsScreen");
+                })
             });
 
         const boton_creditos = this.add.image(675, 550, "boton_creditos").setScale(0.9)
@@ -93,7 +94,7 @@ export class StartScreen extends Phaser.Scene{
 
 
     init(data){
-        this.scene.add('GameScreen', GameScreen);
+        
     }
 
     update() {}
