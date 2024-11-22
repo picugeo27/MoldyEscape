@@ -19,6 +19,9 @@ const game = new Phaser.Game({
             gravity: { y: 0, x: 0 },
             debug: true,
         }
+    },
+    scale:{
+        autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
     }
 });
 

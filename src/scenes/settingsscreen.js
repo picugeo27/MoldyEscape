@@ -9,19 +9,26 @@ export class SettingsScreen extends Phaser.Scene{
 
     create() {
         
+        //Sonidos
+        const boton_click = this.sound.add('boton_click', {volume:1});
+
+
         const sliderX = 400; // Posición x del slider
         const sliderY = 200; // Posición Y del slider
         const sliderWidth = 400; // Ancho del slider
         const sliderHeight = 30; // Alto del slider
 
+        this.add.image(125, 170, 'altavoz_mute').setOrigin(0, 0).setScale(0.05);
+        this.add.image(615, 170, 'altavoz').setOrigin(0, 0).setScale(0.06);
+
         // Barra del slider
         const sliderBar = this.add.rectangle(sliderX, sliderY, sliderWidth, sliderHeight, 0xaaaaaa);
 
         // Handler del slider
-        const handle = this.add.rectangle(sliderX, sliderY, 40, 40, 0xff0000).setInteractive();
+        const handle = this.add.rectangle(sliderX, sliderY, 40, 40, 0xdf5fa8).setInteractive();
 
         // Texto con el porcentaje del volumen
-        const volumeText = this.add.text(320, sliderY - 50, 'Volume: 50%', { fontSize: '24px', color: '#ffffff' });
+        const volumeText = this.add.text(320, sliderY - 50, 'Volumen: 50%', { color: '#ffffff', fontSize: '24px', stroke: '#df5fa8', strokeThickness: 4 });
 
 
         //El datamanager de Phaser (registry) almacena la configuración del volumen y la mantiene durante la sesión de juego
@@ -40,7 +47,7 @@ export class SettingsScreen extends Phaser.Scene{
         const maxX = sliderX + sliderWidth / 2;
         handle.x = minX + volume * sliderWidth;
         this.sound.volume = volume;
-        volumeText.setText(`Volume: ${(volume * 100).toFixed(0)}%`);
+        volumeText.setText(`Volumen: ${(volume * 100).toFixed(0)}%`);
 
         this.input.setDraggable(handle); //Hacer que se pueda deslizar el handler por la barra
 
@@ -51,15 +58,32 @@ export class SettingsScreen extends Phaser.Scene{
                 const newVolume = (handle.x - minX) / sliderWidth;
                 this.sound.volume = newVolume;
                 this.registry.set('volume', newVolume);
-                volumeText.setText(`Volume: ${(newVolume * 100).toFixed(0)}%`);
+                volumeText.setText(`Volumen: ${(newVolume * 100).toFixed(0)}%`);
             }
         });
+
+        const boton_full_screen = this.add.image(400, 400, "boton_fullscreen")
+             .setInteractive()
+             .on('pointerdown', () => {
+                boton_click.play();
+                this.time.delayedCall(1000, () => {
+                if(this.scale.isFullscreen){
+                    this.scale.stopFullscreen();
+                }
+                else{
+                    this.scale.startFullscreen();
+                }  
+            })        
+         });
 
         const boton_inicio = this.add.image(200, 550, "boton_inicio")
              .setInteractive()
              .on('pointerdown', () => {
+                boton_click.play();
+                this.time.delayedCall(1000, () => {
                  this.scene.stop("SettingsScreen");
                  this.scene.start("StartScreen");
+            }) 
          });
         
     }
