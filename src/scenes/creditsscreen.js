@@ -91,8 +91,8 @@ export class CreditsScreen extends Phaser.Scene{
             });
         });
         
-        const boton_inicio = this.add.image(400, 550, "boton_inicio");
-        setupButton(boton_inicio, () => {
+        const boton_atras = this.add.image(400, 550, "boton_volver");
+        setupButton(boton_atras, () => {
             boton_click.play();
             this.cameras.main.fadeOut(500,0,0,0);
             this.cameras.main.once('camerafadeoutcomplete', () => {

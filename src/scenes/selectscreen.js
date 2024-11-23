@@ -27,11 +27,13 @@ export class SelectScreen extends Phaser.Scene{
     create() {
         this.add.image(0, 0, 'credits_background').setOrigin(0, 0).setScale(1);
 
+        this.add.text(115, 40, 'SELECCIONA UN NIVEL', { color: '#ffffff', fontSize: 50, stroke: '#df5fa8', strokeThickness: 4});
+
         const boton_click = this.sound.add('boton_click', {volume:1});
         const boton_flecha_click = this.sound.add('boton_flecha_click', {volume:1});
         
         const boton_jugar = this.add.image(400, 550, "boton_jugar").setScale(0.95); 
-        const boton_atras = this.add.image(100, 550, "boton_creditos");
+        const boton_atras = this.add.image(100, 550, "boton_volver");
 
         this.#selectedMap = this.add.image(this.scale.width/2 , this.scale.height/2, this.#mapList[this.#indexSelectedMap]).setScale(0.6);
         

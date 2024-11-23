@@ -44,6 +44,11 @@
             },
             {
                 "type": "image",
+                "key": "boton_volver",
+                "url": "BotonVolver.png"
+            },
+            {
+                "type": "image",
                 "key": "boton_fullscreen",
                 "url": "BotonFullScreen.png"
             },
