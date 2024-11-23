@@ -4,7 +4,7 @@ export class SettingsScreen extends Phaser.Scene{
     }
 
     preload() {
-
+        this.cameras.main.fadeIn(500,0,0,0);
     }
 
     create() {

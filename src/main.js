@@ -15,7 +15,7 @@ const game = new Phaser.Game({
     parent: 'game-canvas',
     backgroundColor: '#97c6e0',
     scale:{
-        //mode: Phaser.Scale.FIT,
+        mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH
     },
     physics: {
@@ -25,9 +25,6 @@ const game = new Phaser.Game({
             debug: true,
         }
     },
-    scale:{
-        autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
-    }
 });
 
 game.scene.add('StartScreen', StartScreen);
