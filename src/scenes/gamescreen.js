@@ -35,39 +35,33 @@ export class GameScreen extends Phaser.Scene{
     /**@type {Enemy} */
     #enemy;
 
+    #mapUsed;
+    #mapKey;
+
     _pressButtonSound;
 
-    // este metodo carga el tileset, el map value es porque facilita poner mas mapas (solo habria que decirle cual queremos)
-    preload(mapValue){
+    init(data){
+        this.mapValue = data.data;
+        console.log('MapValue recibido:', this.mapValue);
+    }
+    preload(){
         const tileMapData = this.cache.json.get('maps_pack');
+        if (this.mapValue == undefined)
+            this.mapValue = 1;
+        console.log(tileMapData.maps[this.mapValue]);
 
-        tileMapData.maps.forEach(element => { 
-            this.load.tilemapTiledJSON(element.key, element.path, );
-        });
+        this.load.tilemapTiledJSON(tileMapData.maps[this.mapValue].key, tileMapData.maps[this.mapValue].path);
+        this.#mapKey = tileMapData.maps[this.mapValue].key;
+        this.#mapUsed = tileMapData.maps[this.mapValue].name;
 
-        //Cargar Sprites Personajes
-        this.load.spritesheet('Cient-Idle-Sheet', 'assets/Animaciones/Cientifica/Cient-Idle-Sheet.png', { frameWidth: 25, frameHeight: 40 });
-        this.load.spritesheet('Cient-WalkB-Sheet', 'assets/Animaciones/Cientifica/Cient-WalkB-Sheet.png', { frameWidth: 32, frameHeight: 40 });
-        this.load.spritesheet('Cient-WalkF-Sheet', 'assets/Animaciones/Cientifica/Cient-WalkF-Sheet.png', { frameWidth: 32, frameHeight: 40 });
-        this.load.spritesheet('Cient-WalkL-Sheet', 'assets/Animaciones/Cientifica/Cient-WalkL-Sheet.png', { frameWidth: 32, frameHeight: 40 });
-        this.load.spritesheet('Cient-WalkR-Sheet', 'assets/Animaciones/Cientifica/Cient-WalkR-Sheet.png', { frameWidth: 32, frameHeight: 40 });
-
-        this.load.spritesheet('Fungo-Idle-Sheet', 'assets/Animaciones/Fungo/Fungo-Idle-Sheet.png', { frameWidth: 25, frameHeight: 40 });
-        this.load.spritesheet('Fungo-WalkB-Sheet', 'assets/Animaciones/Fungo/Fungo-WalkB-Sheet.png', { frameWidth: 32, frameHeight: 40 });
-        this.load.spritesheet('Fungo-WalkF-Sheet', 'assets/Animaciones/Fungo/Fungo-WalkF-Sheet.png', { frameWidth: 32, frameHeight: 40 });
-        this.load.spritesheet('Fungo-WalkL-Sheet', 'assets/Animaciones/Fungo/Fungo-WalkL-Sheet.png', { frameWidth: 32, frameHeight: 40 });
-        this.load.spritesheet('Fungo-WalkR-Sheet', 'assets/Animaciones/Fungo/Fungo-WalkR-Sheet.png', { frameWidth: 32, frameHeight: 40 });
+        this.cameras.main.fadeIn(500,0,0,0);
     }
 
     create(){
 
-        
-        // Metodo que cambia de escena cuando se acabe, independientemente del resultado
-        //this.endGame.bind(this);
-        
         // Creamos el tilemap y las capas
-        const map = this.make.tilemap({key: 'Laboratorio1', tileHeight: 24, tileWidth: 24});    //1 para mapa 1, 2 para mapa 2
-        const tileset = map.addTilesetImage("Lab1", "lab_tiles");   //1 para mapa 1, 2 para mapa 2
+        const map = this.make.tilemap({key: this.#mapKey, tileHeight: 24, tileWidth: 24});    //1 para mapa 1, 2 para mapa 2
+        const tileset = map.addTilesetImage(this.#mapUsed, "lab_tiles");   //1 para mapa 1, 2 para mapa 2
         const backgroundLayer = map.createLayer("Fondo", tileset, 0, 0);     //Capa de fondo
         this.#colliderLayer = map.createLayer("Paredes", tileset, 0, 0);    //Capa de colliders
         this.#doorLayer = map.createLayer("Puertas", tileset, 0, 0);    //Capa de puertas
@@ -76,7 +70,6 @@ export class GameScreen extends Phaser.Scene{
         this.#keyManager = new InputManager(this);      
 
         this.#player = new Player(this, this.#playerCoordinates, this.#keyManager);
-        this.#player.update();
         this.#enemy = new Enemy(this, this.#enemyCoordinates, this.#keyManager);
         
         //this.physics.add.overlap(this.#player, this.#enemy, this.enemyWin);
@@ -90,8 +83,6 @@ export class GameScreen extends Phaser.Scene{
 
         this._pressButtonSound = this.sound.add('take_button', {volume:1})
 
-        // ejemplo para invocar una animacion
-        // this.add.sprite(100, 100, 'boton_inicio').play('explotion');
     }
 
     createButtons(){
@@ -117,7 +108,7 @@ export class GameScreen extends Phaser.Scene{
         console.log("Player gana");
         this.scene.remove('GameScreen');
         //const playerIsWinner = true;
-        this.scene.start('EndScreen', {playerIsWinner: true});
+        this.scene.start('EndScreen', {playerIsWinner: true, map: this.mapValue});
         //this.endGame();
     }
 
@@ -126,7 +117,7 @@ export class GameScreen extends Phaser.Scene{
         console.log("Enemigo gana");
         this.scene.remove('GameScreen');
         //const playerIsWinner = false;
-        this.scene.start('EndScreen', {playerIsWinner: false});
+        this.scene.start('EndScreen', {playerIsWinner: false, map: this.mapValue});
         //this.endGame();
     }
 

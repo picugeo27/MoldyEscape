@@ -31,3 +31,26 @@ export class Coordinates{
     return this.y * TILE_SIZE + TILE_SIZE/2;
   }
 }
+
+export function setupButton(button, onClick){
+
+  button.setInteractive();
+
+  button.on('pointerover', () => {
+      button.postFX.addShine(0.8,0.05,1);
+  });
+
+  button.on('pointerout', () => {
+      button.setScale(0.95);
+      button.postFX.clear();
+  });
+
+  button.on('pointerup', () => {
+    button.setScale(button.scale+=0.05);
+});
+
+  button.on('pointerdown', () => {
+    button.setScale(button.scale-=0.05);
+    onClick()
+  });
+}

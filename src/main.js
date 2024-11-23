@@ -1,11 +1,12 @@
 import Phaser from "./lib/phaser.js";
 
-import { GameScreen } from "./scenes/gamescreen.js";
 import { StartScreen } from "./scenes/startscreen.js";
 import { EndScreen } from "./scenes/endscreen.js";
 import { CreditsScreen } from "./scenes/creditsscreen.js";
 import { SIZE_CANVAS } from "./types/typedef.js";
+import { SelectScreen } from "./scenes/selectscreen.js";
 import { SettingsScreen } from "./scenes/settingsscreen.js";
+
 
 const game = new Phaser.Game({
     type: Phaser.AUTO,
@@ -13,6 +14,10 @@ const game = new Phaser.Game({
     height: SIZE_CANVAS.HEIGHT,
     parent: 'game-canvas',
     backgroundColor: '#97c6e0',
+    scale:{
+        //mode: Phaser.Scale.FIT,
+        autoCenter: Phaser.Scale.CENTER_BOTH
+    },
     physics: {
         default: 'arcade',
         arcade: {
@@ -25,9 +30,9 @@ const game = new Phaser.Game({
     }
 });
 
-//game.scene.add('GameScreen', GameScreen);
-game.scene.add('StartScreen', StartScreen, false, game);
-game.scene.add('EndScreen', EndScreen);//, false, game);
+game.scene.add('StartScreen', StartScreen);
+game.scene.add('SelectScreen', SelectScreen);
+game.scene.add('EndScreen', EndScreen);
 game.scene.add('CreditsScreen', CreditsScreen);
 game.scene.add('SettingsScreen', SettingsScreen);
 game.scene.start('StartScreen');
