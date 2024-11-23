@@ -24,6 +24,11 @@
         },
         {
           "type": "audio",
+          "key": "boton_hover",
+          "url": "hover_button.mp3"
+        },
+        {
+          "type": "audio",
           "key": "take_button",
           "url": "take_button.mp3"
         },
@@ -31,6 +36,16 @@
           "type": "audio",
           "key": "set_trap",
           "url": "set_trap.mp3"
+        },
+        {
+          "type": "audio",
+          "key": "game_music",
+          "url": "game_music.mp3"
+        },
+        {
+          "type": "audio",
+          "key": "menu_music",
+          "url": "menu_music.mp3"
         },
         {
           "type": "audio",

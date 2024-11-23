@@ -18,6 +18,9 @@ export class EndScreen extends Phaser.Scene{
     create() {
         //Los botones tienen colores distintos espero que me perdoneis xd
 
+        const menuMusic = this.registry.get('menuMusic');
+        this.registry.remove('menuMusic');
+
         this._victorySound = this.sound.add('end_victory', {volume:1})
         this._victorySound.play();
         const arte_seta = this.add.image(0, 0, 'arte_seta').setOrigin(0, 0).setScale(0.9);
@@ -55,12 +58,14 @@ export class EndScreen extends Phaser.Scene{
             })
         })
             
-        const boton_ajustes = this.add.image(600, 550, "boton_ajustes").setScale(0.95)
-             .setInteractive()
-             .on('pointerdown', () => {
-                 this.scene.stop("EndScreen");
-                 this.scene.start("StartScreen");
-         });
+        const boton_ajustes = this.add.image(600, 550, "boton_ajustes").setScale(0.95);
+        setupButton(boton_ajustes, () => {
+            this.cameras.main.fadeOut(500,0,0,0);
+            this.cameras.main.once('camerafadeoutcomplete', () => {
+                this.scene.stop("EndScreen");
+                this.scene.start("SettingsScreen");
+            })
+        })
         
          this.victoryParticle();
     }

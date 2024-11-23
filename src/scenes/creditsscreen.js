@@ -11,12 +11,14 @@ export class CreditsScreen extends Phaser.Scene{
 
     create() {
         //Creación del background
-        const background = this.add.image(0, 0, 'credits_background').setOrigin(0, 0).setScale(1);
+        this.add.image(0, 0, 'credits_background').setOrigin(0, 0).setScale(1);
         const boton_click = this.sound.add('boton_click', {volume:1});
-        // Crear un rectángulo semi-transparente encima de la imagen
-        //const overlay = this.add.rectangle(0, 0, this.scale.width, this.scale.height, 0x000000, 0.5);
+        const boton_hover = this.sound.add('boton_hover', {volume:1});
+        
 
-        const credits_text = this.add.text(300, 20, 'CRÉDITOS', { color: '#ffffff', fontSize: 50, stroke: '#df5fa8', strokeThickness: 4});
+        this.registry.get('menuMusic');
+
+        this.add.text(300, 20, 'CRÉDITOS', { color: '#ffffff', fontSize: 50, stroke: '#df5fa8', strokeThickness: 4});
 
          // Datos de la lista
         const items = [
@@ -61,6 +63,9 @@ export class CreditsScreen extends Phaser.Scene{
             const text = this.add.text(startX, startY + index * lineHeight, item,
                 { color: '#ffffff', fontSize: 40, stroke: '#df5fa8', strokeThickness: 4})
             .setInteractive()
+            .on('pointerover', () => {
+                boton_hover.play();    
+            });
             text.on('pointerover', () => text.setStyle({ stroke: '#f39c12' }))
             text.on('pointerout', () => text.setStyle({ stroke: '#df5fa8' }))
             text.on('pointerdown', () => {
@@ -74,16 +79,16 @@ export class CreditsScreen extends Phaser.Scene{
 
                 switch(item){
                     case("Blanca García Vera"):
-                        messageText.setText("Blanca");
+                        messageText.setText("Necesito prácticas para febrero help me");
                         break;
                     case("George Picu Hordoan"):
-                        messageText.setText("George");
+                        messageText.setText("No cotilleen ni critiquen... sin mí");
                         break;
                     case("Unai Retes Corada"):
-                        messageText.setText("Unai");
+                        messageText.setText("Sigo en Arcane 2x7");
                         break;
                     case("Candela Jiménez González"):
-                        messageText.setText("Candela");
+                        messageText.setText("Que alguien me contrate quiero");
                         break;
                     default:
                         messageText.setText("Profe merecemos un 10");
@@ -96,8 +101,8 @@ export class CreditsScreen extends Phaser.Scene{
             boton_click.play();
             this.cameras.main.fadeOut(500,0,0,0);
             this.cameras.main.once('camerafadeoutcomplete', () => {
-            this.scene.stop("CreditsScreen");
-            this.scene.start("StartScreen");
+                this.scene.stop("CreditsScreen");
+                this.scene.start("StartScreen");
             })
         });
         

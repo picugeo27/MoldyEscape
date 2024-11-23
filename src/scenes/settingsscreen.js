@@ -15,6 +15,21 @@ export class SettingsScreen extends Phaser.Scene{
         const boton_click = this.sound.add('boton_click', {volume:1});
 
 
+        // Crear un rectángulo semi-transparente encima de la imagen
+        const overlay = this.add.rectangle(630, 550, 360, 160, 0x000000, 0.5);
+
+        this.add.text(460, 490, 'IMPORTANTE\n Los cambios en los ajustes\n se guardan\nautomáticamente\n durante la misma sesión\n',
+             { color: '#ffffff', fontSize: 20, stroke: '#df5fa8', align:'center'});//, strokeThickness: 4});
+
+
+        let menuMusic = this.registry.get('menuMusic');
+        if (!menuMusic) {
+            // Si no existe, crearlo y guardarlo en el registro
+            menuMusic = this.sound.add('menu_music', {loop:true, volume:0.5});
+            menuMusic.play();
+            this.registry.set('menuMusic', menuMusic);
+        }
+
         const sliderX = 400; // Posición x del slider
         const sliderY = 200; // Posición Y del slider
         const sliderWidth = 400; // Ancho del slider
@@ -65,7 +80,7 @@ export class SettingsScreen extends Phaser.Scene{
         });
 
         
-        const boton_full_screen = this.add.image(400, 400, "boton_fullscreen");
+        const boton_full_screen = this.add.image(400, 350, "boton_fullscreen");
         const boton_atras = this.add.image(200, 550, "boton_volver");
 
 

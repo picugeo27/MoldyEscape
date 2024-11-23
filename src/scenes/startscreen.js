@@ -6,6 +6,8 @@ export class StartScreen extends Phaser.Scene{
         super({key: 'StartScreen'});
     }
 
+
+
     preload() {
         this.load.pack('image_pack', "assets/data.json");
         this.load.json('maps_pack', 'assets/maps.json');
@@ -19,6 +21,16 @@ export class StartScreen extends Phaser.Scene{
         const boton_click = this.sound.add('boton_click', {volume:1});
         const boton_flecha_click = this.sound.add('boton_flecha_click', {volume:1});
 
+
+        let menuMusic = this.registry.get('menuMusic');
+
+        if (!menuMusic) {
+            // Si no existe, crearlo y guardarlo en el registro
+            menuMusic = this.sound.add('menu_music', {loop:true, volume:0.5});
+            menuMusic.play();
+            this.registry.set('menuMusic', menuMusic);
+        }
+
         const boton_jugar = this.add.image(400, 550, "boton_jugar").setScale(0.95);
         const boton_ajustes = this.add.image(675, 475, "boton_ajustes").setScale(0.95);
         const boton_creditos = this.add.image(675, 550, "boton_creditos").setScale(0.9);        
@@ -27,8 +39,8 @@ export class StartScreen extends Phaser.Scene{
             boton_click.play();
             this.cameras.main.fadeOut(500,0,0,0);
             this.cameras.main.once('camerafadeoutcomplete', () => {
-            this.scene.stop("StartScreen");
-            this.scene.start("SelectScreen");
+                this.scene.stop("StartScreen");
+                this.scene.start("SelectScreen");
             });
                
         })
@@ -37,8 +49,8 @@ export class StartScreen extends Phaser.Scene{
             boton_click.play();
             this.cameras.main.fadeOut(500,0,0,0);
             this.cameras.main.once('camerafadeoutcomplete', () => {
-            this.scene.stop("StartScreen");
-            this.scene.start("SettingsScreen");
+                this.scene.stop("StartScreen");
+                this.scene.start("SettingsScreen");
             });
         })
 
@@ -50,8 +62,8 @@ export class StartScreen extends Phaser.Scene{
             boton_click.play();
             this.cameras.main.fadeOut(500,0,0,0);
             this.cameras.main.once('camerafadeoutcomplete', () => {
-            this.scene.stop("StartScreen");
-            this.scene.start("CreditsScreen");
+                this.scene.stop("StartScreen");
+                this.scene.start("CreditsScreen");
             });
             });
     
@@ -64,7 +76,7 @@ export class StartScreen extends Phaser.Scene{
         var boton_red = this.add.image(675, 400, "boton_en_red").setVisible(false)
             .setInteractive()
             .on('pointerdown', () => {
-                console.log("No sopportado todavía");
+                console.log("No soportado todavía");
             });
 
         boton_red.setDisplaySize(165, 50);
