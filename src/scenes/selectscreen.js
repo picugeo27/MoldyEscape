@@ -29,6 +29,8 @@ export class SelectScreen extends Phaser.Scene{
 
         this.add.text(115, 40, 'SELECCIONA UN NIVEL', { color: '#ffffff', fontSize: 50, stroke: '#df5fa8', strokeThickness: 4});
 
+        const menuMusic = this.registry.get('menuMusic');
+
         const boton_click = this.sound.add('boton_click', {volume:1});
         const boton_flecha_click = this.sound.add('boton_flecha_click', {volume:1});
         
@@ -41,9 +43,10 @@ export class SelectScreen extends Phaser.Scene{
             boton_click.play();
             this.cameras.main.fadeOut(500,0,0,0);
             this.cameras.main.once('camerafadeoutcomplete', () => {
-            this.scene.stop("SelectScreen");
-            this.scene.add('GameScreen', GameScreen);
-            this.scene.start("GameScreen", {data: this.#indexSelectedMap});
+                menuMusic.stop();
+                this.scene.stop("SelectScreen");
+                this.scene.add('GameScreen', GameScreen);
+                this.scene.start("GameScreen", {data: this.#indexSelectedMap});
             });
                
         })

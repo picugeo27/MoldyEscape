@@ -25,9 +25,6 @@ export class GameScreen extends Phaser.Scene{
     #buttons;
     #traps;
 
-    //Boolean que indica si es el player quien ha ganado
-    #playerIsWinner
-
     #pushedButtons = 0;
     
     /**@type {Player} */
@@ -39,6 +36,7 @@ export class GameScreen extends Phaser.Scene{
     #mapKey;
 
     _pressButtonSound;
+    _gameMusic;
 
     init(data){
         this.mapValue = data.data;
@@ -83,7 +81,9 @@ export class GameScreen extends Phaser.Scene{
         /** @type {Phaser.GameObjects.Group} */
         this.#traps = this.physics.add.group();
 
-        this._pressButtonSound = this.sound.add('take_button', {volume:1})
+        this._pressButtonSound = this.sound.add('take_button', {volume:1});
+        this._gameMusic = this.sound.add('game_music', {loop:true, volume:1});
+        this._gameMusic.play();
 
     }
 
@@ -109,6 +109,7 @@ export class GameScreen extends Phaser.Scene{
     // que hacer cuando gana el jugador
     playerWin(){
         console.log("Player gana");
+        this._gameMusic.stop();
         this.scene.remove('GameScreen');
         //const playerIsWinner = true;
         this.scene.start('EndScreen', {playerIsWinner: true, map: this.mapValue});
@@ -118,6 +119,7 @@ export class GameScreen extends Phaser.Scene{
     // que hacer cuando gana el monstruo
     enemyWin(){
         console.log("Enemigo gana");
+        this._gameMusic.stop();
         this.scene.remove('GameScreen');
         //const playerIsWinner = false;
         this.scene.start('EndScreen', {playerIsWinner: false, map: this.mapValue});
