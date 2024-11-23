@@ -162,31 +162,31 @@
                 "type": "spritesheet",
                 "key": "Fungo-Idle-Sheet",
                 "url": "Fungo-Idle-Sheet.png",
-                "frameConfig": { "frameWidth": 100, "frameHeight": 40 }
+                "frameConfig": { "frameWidth": 29, "frameHeight": 36 }
             },
             {
                 "type": "spritesheet",
                 "key": "Fungo-WalkB-Sheet",
                 "url": "Fungo-WalkB-Sheet.png",
-                "frameConfig": { "frameWidth": 192, "frameHeight": 40 }
+                "frameConfig": { "frameWidth": 29, "frameHeight": 36 }
             },
             {
                 "type": "spritesheet",
                 "key": "Fungo-WalkF-Sheet",
                 "url": "Fungo-WalkF-Sheet.png",
-                "frameConfig": { "frameWidth": 192, "frameHeight": 40 }
+                "frameConfig": { "frameWidth": 29, "frameHeight": 36 }
             },
             {
                 "type": "spritesheet",
                 "key": "Fungo-WalkL-Sheet",
                 "url": "Fungo-WalkL-Sheet.png",
-                "frameConfig": { "frameWidth": 192, "frameHeight": 40 }
+                "frameConfig": { "frameWidth": 29, "frameHeight": 36 }
             },
             {
                 "type": "spritesheet",
                 "key": "Fungo-WalkR-Sheet",
                 "url": "Fungo-WalkR-Sheet.png",
-                "frameConfig": { "frameWidth": 192, "frameHeight": 40 }
+                "frameConfig": { "frameWidth": 29, "frameHeight": 36 }
             }
         ]
     }

@@ -44,9 +44,10 @@ export class GameScreen extends Phaser.Scene{
         this.mapValue = data.data;
         console.log('MapValue recibido:', this.mapValue);
     }
+
     preload(){
         const tileMapData = this.cache.json.get('maps_pack');
-        if (this.mapValue == undefined)
+        if (this.mapValue != 0 && this.mapValue != 1)
             this.mapValue = 1;
         console.log(tileMapData.maps[this.mapValue]);
 

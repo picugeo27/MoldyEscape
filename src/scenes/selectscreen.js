@@ -12,10 +12,13 @@ export class SelectScreen extends Phaser.Scene{
 
     preload() {
         this.cameras.main.fadeIn(500,0,0,0);
-
+        console.log(this.#mapList)
         this.cache.json.get('maps_pack').preview.forEach((element) =>{
-            this.load.image(element.key,element.url);
-            this.#mapList.push(element.key);
+            if (!this.#mapList.includes(element.key)){
+                this.load.image(element.key,element.url);
+                this.#mapList.push(element.key);
+            }
+            
         })
 
 
@@ -75,7 +78,6 @@ export class SelectScreen extends Phaser.Scene{
     nextMap(){
         this.#indexSelectedMap = (this.#indexSelectedMap + 1) % this.#mapList.length;
         this.#selectedMap.setTexture(this.#mapList[this.#indexSelectedMap]);
-
     }
 
 }
