@@ -99,7 +99,7 @@ export class GameScreen extends Phaser.Scene{
         ]
         // se crean los botones y la colision con el personaje
         buttonsPosition.forEach((coordinates, index) => {
-            this.#buttons[index] = this.#buttons.create(coordinates.getRealX(), coordinates.getRealY(), 'button').setScale(0.1)
+            this.#buttons[index] = this.#buttons.create(coordinates.getRealX(), coordinates.getRealY(), 'button').setScale(1)
             this.physics.add.overlap(this.#player, this.#buttons[index], this.pushButton)
         });
 
@@ -127,7 +127,9 @@ export class GameScreen extends Phaser.Scene{
     // Cuando se pulsa un boton que se hace (no podemos quitar ese player que no se usa porque sino por como se invoca el player desaparece)
     pushButton = (player, element) =>{
         this._pressButtonSound.play();
-        element.destroy();
+        //element.destroy();
+        element.setFrame(1);
+        element.body.enable = false;
         this.#pushedButtons +=1;
         if (this.#pushedButtons >= buttonsToWin)
             this.playerWin();

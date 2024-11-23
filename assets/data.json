@@ -84,11 +84,6 @@
             },
             {
                 "type": "image",
-                "key": "button",
-                "url": "Boton.png"
-            },
-            {
-                "type": "image",
                 "key": "arte_seta",
                 "url": "seta_art.png"
             },
@@ -106,13 +101,8 @@
                 "type": "image",
                 "key": "altavoz_mute",
                 "url": "Speaker_Icon_Mute.png"
-            },
-            {
-                "type": "spritesheet",
-                "key": "scout_destroy",
-                "url": "scout_destroy.png",
-                "frameConfig": { "frameWidth": 64, "frameHeight": 64 }
             }
+
         ]
     },
     {
@@ -194,5 +184,20 @@
                 "frameConfig": { "frameWidth": 29, "frameHeight": 36 }
             }
         ]
+    },
+
+    
+    {
+        "path": "assets/Interactuables",
+        "files": [
+            {
+                "type": "spritesheet",
+                "key": "button",
+                "url": "Lever.png",
+                "frameConfig": { "frameWidth": 24, "frameHeight": 24 }
+            }
+        ]
     }
+
+   
 ]
