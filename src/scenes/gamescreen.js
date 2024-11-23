@@ -46,6 +46,7 @@ export class GameScreen extends Phaser.Scene{
     }
 
     preload(){
+        this.load.image('particle', 'assets/Interactuables/particula.png');
         const tileMapData = this.cache.json.get('maps_pack');
         if (this.mapValue != 0 && this.mapValue != 1)
             this.mapValue = 1;
@@ -127,8 +128,9 @@ export class GameScreen extends Phaser.Scene{
     // Cuando se pulsa un boton que se hace (no podemos quitar ese player que no se usa porque sino por como se invoca el player desaparece)
     pushButton = (player, element) =>{
         this._pressButtonSound.play();
-        //element.destroy();
+        //particulas
         element.setFrame(1);
+        this.leverParticle(element.x, element.y);
         element.body.enable = false;
         this.#pushedButtons +=1;
         if (this.#pushedButtons >= buttonsToWin)
@@ -166,5 +168,19 @@ export class GameScreen extends Phaser.Scene{
 
         const tile = this.#colliderLayer.getTileAt(coordinates.x,coordinates.y);
         return tile == null || tile.index == 0;
+    }
+
+    leverParticle(leverX, leverY){
+        const particleDuration = 500;
+        const emitter = this.add.particles(leverX, leverY,'particle',{
+            angle: { min: 0, max: 360 },
+            speed: { min: 50, max: 100 },
+            lifespan: 200,
+            gravityY: 200,
+            quantity: 1,
+         })
+         this.time.delayedCall(particleDuration, ()=> {
+            emitter.stop();
+         })
     }
 }
