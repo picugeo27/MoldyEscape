@@ -1,3 +1,4 @@
+import { setupButton } from "../types/typedef.js";
 import { GameScreen } from "./gamescreen.js";
 
 export class EndScreen extends Phaser.Scene{
@@ -8,6 +9,11 @@ export class EndScreen extends Phaser.Scene{
     //Si es true, es que la cientifica ha ganado, sino ha ganado la seta
     #playerIsWinner;
     _victorySound;
+    _mapValue;
+
+    preload(){
+        this.load.image('particle', 'assets/placeholders/brillo.png');
+    }
 
     create() {
         //Los botones tienen colores distintos espero que me perdoneis xd
@@ -28,19 +34,27 @@ export class EndScreen extends Phaser.Scene{
             this.add.text(450, 400, 'CIENTÍFICA PIERDE', { color: '#ffffff', fontSize: 30, stroke: '#df5fa8', strokeThickness: 4});
         }
 
-        const boton_inicio = this.add.image(200, 550, "boton_inicio")
-             .setInteractive()
-             .on('pointerdown', () => {
-                 this.scene.stop("EndScreen");
-                 this.scene.start("StartScreen");
-         });
-        const boton_nueva_partida = this.add.image(400, 550, "boton_nueva_partida")
-             .setInteractive()
-             .on('pointerdown', () => {
-                 this.scene.stop("EndScreen");
-                 this.scene.add('GameScreen', GameScreen);
-                 this.scene.start("GameScreen");
-         });
+        const boton_inicio = this.add.image(200, 550, "boton_inicio");
+        setupButton(boton_inicio, () => {
+
+            this.cameras.main.fadeOut(500,0,0,0);
+            this.cameras.main.once('camerafadeoutcomplete', () => {
+                this.scene.stop("EndScreen");
+                this.scene.start("StartScreen");
+            })
+            
+    });
+
+        const boton_nueva_partida = this.add.image(400, 550, "boton_nueva_partida");
+        setupButton(boton_nueva_partida, () => {
+            this.cameras.main.fadeOut(500,0,0,0);
+            this.cameras.main.once('camerafadeoutcomplete', () => {
+                this.scene.stop("EndScreen");
+                this.scene.add('GameScreen', GameScreen);
+                this.scene.start("GameScreen", {data: this._mapValue});
+            })
+        })
+            
         const boton_ajustes = this.add.image(600, 550, "boton_ajustes").setScale(0.95)
              .setInteractive()
              .on('pointerdown', () => {
@@ -48,16 +62,26 @@ export class EndScreen extends Phaser.Scene{
                  this.scene.start("StartScreen");
          });
         
+         this.victoryParticle();
     }
 
-    // Para reiniciar la escena GAME
-    ///**@param {boolean} data */
     init(data){
-        console.log('se recibe: ', data)
-        //data.scene.add('GameScreen', GameScreen);
         this.#playerIsWinner = data.playerIsWinner;
+        this._mapValue = data.map;
+        console.log(data.map)
     }
 
-    update() {}
-
+    victoryParticle(){
+        const particleDuration = 5000;
+        const emitter = this.add.particles(this.scale.width/2, this.scale.height/2,'particle',{
+            angle: { min: 240, max: 300 },
+            speed: { min: 200, max: 300 },
+            lifespan: 3500,
+            gravityY: 200,
+            quantity: 2,
+         })
+         this.time.delayedCall(particleDuration, ()=> {
+            emitter.stop();
+         })
+    }
 }

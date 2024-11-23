@@ -1,6 +1,6 @@
 // se puede importar un archivo de config para ajustar los valores
 
-import { Coordinates, DIRECTION } from "../types/typedef.js";
+import { Coordinates } from "../types/typedef.js";
 import { GameScreen } from "../scenes/gamescreen.js";
 import { Character } from "./character.js";
 
@@ -64,12 +64,17 @@ export class Enemy extends Character{
 
     update(){
        
+        if(this._keyboardInput.isTurboKeyEnemyPressed() && !this._turboActive){
+            this.activateTurbo(); 
+        }
+        else if(this._keyboardInput.isTurboKeyEnemyPressed() && this._turboActive && !this._wrongButton.isPlaying && !this._turboSound.isPlaying){
+            this._wrongButton.play();
+        }
+
         if (this._keyboardInput.isMovingKeyPressedEnemy() && !this._movement.isMoving()){
 
             this.setTarget(this._keyboardInput.getDirectionEnemy());
-            if(this._keyboardInput.isTurboKeyEnemyPressed() && !this._turboActive){
-                this.activateTurbo(); 
-            }
+            
             if (this._scene.isWalkable(this._target))
                 this._movement.move(this._target, this._speed, this._acceleration);
             else {

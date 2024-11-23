@@ -1,9 +1,12 @@
-import { SIZE_CANVAS } from "../types/typedef.js";
-import { GameScreen } from "./gamescreen.js";
+import { setupButton } from "../types/typedef.js";
 
 export class CreditsScreen extends Phaser.Scene{
     constructor(){
         super({key: 'CreditsScreen'});
+    }
+
+    preload(){
+        this.cameras.main.fadeIn(500,0,0,0);
     }
 
     create() {
@@ -88,15 +91,15 @@ export class CreditsScreen extends Phaser.Scene{
             });
         });
         
-        const boton_inicio = this.add.image(400, 550, "boton_inicio")
-             .setInteractive()
-             .on('pointerdown', () => {
-                boton_click.play();
-                this.time.delayedCall(1000, () => {
-                    this.scene.stop("CreditsScreen");
-                    this.scene.start("StartScreen");
-                })
-            });
+        const boton_inicio = this.add.image(400, 550, "boton_inicio");
+        setupButton(boton_inicio, () => {
+            boton_click.play();
+            this.cameras.main.fadeOut(500,0,0,0);
+            this.cameras.main.once('camerafadeoutcomplete', () => {
+            this.scene.stop("CreditsScreen");
+            this.scene.start("StartScreen");
+            })
+        });
         
     }
 

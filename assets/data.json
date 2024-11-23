@@ -110,33 +110,33 @@
         "files": [
             {
                 "type": "spritesheet",
-                "key": "CWalkIdle",
+                "key": "Cient-Idle-Sheet",
                 "url": "Cient-Idle-Sheet.png",
-                "frameConfig": { "frameWidth": 100, "frameHeight": 40 }
+                "frameConfig": { "frameWidth": 25, "frameHeight": 40 }
             },
             {
                 "type": "spritesheet",
-                "key": "CWalkB",
+                "key": "Cient-WalkB-Sheet",
                 "url": "Cient-WalkB-Sheet.png",
-                "frameConfig": { "frameWidth": 192, "frameHeight": 40 }
+                "frameConfig": { "frameWidth": 32, "frameHeight": 40 }
             },
             {
                 "type": "spritesheet",
-                "key": "CWalkF",
+                "key": "Cient-WalkF-Sheet",
                 "url": "Cient-WalkF-Sheet.png",
-                "frameConfig": { "frameWidth": 192, "frameHeight": 40 }
+                "frameConfig": { "frameWidth": 32, "frameHeight": 40 }
             },
             {
                 "type": "spritesheet",
-                "key": "CWalkL",
+                "key": "Cient-WalkL-Sheet",
                 "url": "Cient-WalkL-Sheet.png",
-                "frameConfig": { "frameWidth": 192, "frameHeight": 40 }
+                "frameConfig": { "frameWidth": 32, "frameHeight": 40 }
             },
             {
                 "type": "spritesheet",
-                "key": "CWalkR",
+                "key": "Cient-WalkR-Sheet",
                 "url": "Cient-WalkR-Sheet.png",
-                "frameConfig": { "frameWidth": 192, "frameHeight": 40 }
+                "frameConfig": { "frameWidth": 32, "frameHeight": 40 }
             }
         ]
     },
@@ -145,31 +145,31 @@
         "files": [
             {
                 "type": "spritesheet",
-                "key": "FWalkIdle",
+                "key": "Fungo-Idle-Sheet",
                 "url": "Fungo-Idle-Sheet.png",
                 "frameConfig": { "frameWidth": 100, "frameHeight": 40 }
             },
             {
                 "type": "spritesheet",
-                "key": "FWalkB",
+                "key": "Fungo-WalkB-Sheet",
                 "url": "Fungo-WalkB-Sheet.png",
                 "frameConfig": { "frameWidth": 192, "frameHeight": 40 }
             },
             {
                 "type": "spritesheet",
-                "key": "FWalkF",
+                "key": "Fungo-WalkF-Sheet",
                 "url": "Fungo-WalkF-Sheet.png",
                 "frameConfig": { "frameWidth": 192, "frameHeight": 40 }
             },
             {
                 "type": "spritesheet",
-                "key": "FWalkL",
+                "key": "Fungo-WalkL-Sheet",
                 "url": "Fungo-WalkL-Sheet.png",
                 "frameConfig": { "frameWidth": 192, "frameHeight": 40 }
             },
             {
                 "type": "spritesheet",
-                "key": "FWalkR",
+                "key": "Fungo-WalkR-Sheet",
                 "url": "Fungo-WalkR-Sheet.png",
                 "frameConfig": { "frameWidth": 192, "frameHeight": 40 }
             }

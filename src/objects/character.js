@@ -78,20 +78,20 @@ export class Character extends Phaser.GameObjects.Container{
 
     update(){
         this._keyboardInput.update();
+
+        if(this._keyboardInput.isTurboKeyPlayerPressed() && !this._turboActive){
+            this.activateTurbo(); 
+            
+        }
+        //Si el turbo esta activo o en cooldown, al pulsar la tecla da error
+        else if(this._keyboardInput.isTurboKeyPlayerPressed() && this._turboActive && !this._wrongButton.isPlaying && !this._turboSound.isPlaying){
+            this._wrongButton.play();
+        }
+
         if (this._keyboardInput.isMovingKeyPressedPlayer() && !this._movement.isMoving()){
 
             this.setTarget(this._keyboardInput.getDirectionPlayer());
-            if(this._keyboardInput.isTurboKeyPlayerPressed() && !this._turboActive){
-                this._turboSound.play();
-                this._scene.time.delayedCall(500, ()=>{
-                    this.activateTurbo(); 
-                }, null, this);
-                
-            }
-            //Si el turbo esta activo o en cooldown, al pulsar la tecla da error
-            else if(this._keyboardInput.isTurboKeyPlayerPressed() && this._turboActive){
-                this._wrongButton.play();
-            }
+            
 
             if (this._scene.isWalkable(this._target))
                 this._movement.move(this._target, this._speed, this._acceleration);
@@ -103,6 +103,7 @@ export class Character extends Phaser.GameObjects.Container{
     }
 
     activateTurbo(){ 
+        this._turboSound.play();
         this._acceleration = accelerationMultiplier;
         this._turboActive = true;
         this._scene.time.delayedCall(turboTime, this.deactivateTurbo, null, this);
