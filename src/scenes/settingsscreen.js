@@ -1,3 +1,5 @@
+import { setupButton } from "../types/typedef.js";
+
 export class SettingsScreen extends Phaser.Scene{
     constructor(){
         super({key: 'SettingsScreen'});
@@ -62,29 +64,32 @@ export class SettingsScreen extends Phaser.Scene{
             }
         });
 
-        const boton_full_screen = this.add.image(400, 400, "boton_fullscreen")
-             .setInteractive()
-             .on('pointerdown', () => {
-                boton_click.play();
-                this.time.delayedCall(1000, () => {
+        
+        const boton_full_screen = this.add.image(400, 400, "boton_fullscreen");
+        const boton_atras = this.add.image(200, 550, "boton_volver");
+
+
+         setupButton(boton_full_screen, () =>{
+            boton_click.play();
+            this.time.delayedCall(1000, () => {
                 if(this.scale.isFullscreen){
                     this.scale.stopFullscreen();
                 }
                 else{
                     this.scale.startFullscreen();
                 }  
-            })        
-         });
+            })
+        });
 
-        const boton_inicio = this.add.image(200, 550, "boton_inicio")
-             .setInteractive()
-             .on('pointerdown', () => {
-                boton_click.play();
-                this.time.delayedCall(1000, () => {
+
+        setupButton(boton_atras, () =>{
+            boton_click.play();
+            this.time.delayedCall(1000, () => {
                  this.scene.stop("SettingsScreen");
                  this.scene.start("StartScreen");
-            }) 
-         });
+            })
+        });
+        
         
     }
 

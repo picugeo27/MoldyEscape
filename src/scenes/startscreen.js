@@ -48,7 +48,7 @@ export class StartScreen extends Phaser.Scene{
         )
         setupButton(boton_creditos, () => {
             boton_click.play();
-                this.cameras.main.fadeOut(500,0,0,0);
+            this.cameras.main.fadeOut(500,0,0,0);
             this.cameras.main.once('camerafadeoutcomplete', () => {
             this.scene.stop("StartScreen");
             this.scene.start("CreditsScreen");
