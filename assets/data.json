@@ -44,6 +44,11 @@
             },
             {
                 "type": "image",
+                "key": "boton_fullscreen",
+                "url": "BotonFullScreen.png"
+            },
+            {
+                "type": "image",
                 "key": "start_background",
                 "url": "StartBackgroundPlaceholder.png"
             },
@@ -86,6 +91,16 @@
                 "type": "image",
                 "key": "arte_cientifica",
                 "url": "cientifica_art.png"
+            },
+            {
+                "type": "image",
+                "key": "altavoz",
+                "url": "Speaker_Icon.png"
+            },
+            {
+                "type": "image",
+                "key": "altavoz_mute",
+                "url": "Speaker_Icon_Mute.png"
             },
             {
                 "type": "spritesheet",

@@ -58,7 +58,7 @@ export class StartScreen extends Phaser.Scene{
                 console.log("No sopportado todavía");
             });
 
-        boton_red.setDisplaySize(168, 55);
+        boton_red.setDisplaySize(165, 50);
         
         const boton_flecha = this.add.image(778, 400, "boton_flecha").setScale(0.03).setRotation(3.14)
             .setInteractive()
