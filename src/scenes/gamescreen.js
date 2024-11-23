@@ -93,8 +93,9 @@ export class GameScreen extends Phaser.Scene{
         // aqui metemos las coordeanadas de todos los botones que queramos
         const buttonsPosition = [
             new Coordinates(1,1),
-            new Coordinates (20, 8),
-            new Coordinates(11, 20),
+            new Coordinates (23, 1),
+            new Coordinates(1, 23),
+            new Coordinates(23,23)
         ]
         // se crean los botones y la colision con el personaje
         buttonsPosition.forEach((coordinates, index) => {
