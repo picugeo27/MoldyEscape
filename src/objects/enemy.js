@@ -36,28 +36,28 @@ export class Enemy extends Character{
                 this._scene.anims.create({
                     key: 'FWalkB',
                     frames: this._scene.anims.generateFrameNumbers('Fungo-WalkB-Sheet', { start: 0, end: 8 }),
-                    frameRate: 8,
+                    frameRate: 15,
                     repeat: -1
                 });
         
                 this._scene.anims.create({
                     key: 'FWalkF',
                     frames: this._scene.anims.generateFrameNumbers('Fungo-WalkF-Sheet', { start: 0, end: 8 }),
-                    frameRate: 8,
+                    frameRate: 15,
                     repeat: -1
                 });
         
                 this._scene.anims.create({
                     key: 'FWalkR',
                     frames: this._scene.anims.generateFrameNumbers('Fungo-WalkL-Sheet', { start: 0, end: 8 }),
-                    frameRate: 8,
+                    frameRate: 15,
                     repeat: -1
                 });
         
                 this._scene.anims.create({
                     key: 'FWalkL',
                     frames: this._scene.anims.generateFrameNumbers('Fungo-WalkR-Sheet', { start: 0, end: 8 }),
-                    frameRate: 8,
+                    frameRate: 15,
                     repeat: -1
                 });
     }

@@ -12,7 +12,7 @@ export class EndScreen extends Phaser.Scene{
     _mapValue;
 
     preload(){
-        this.load.image('particle', 'assets/placeholders/brillo.png');
+        this.load.image('particle', 'assets/Interactuables/particula.png');
     }
 
     create() {
@@ -73,10 +73,10 @@ export class EndScreen extends Phaser.Scene{
 
     victoryParticle(){
         const particleDuration = 5000;
-        const emitter = this.add.particles(this.scale.width/2, this.scale.height/2,'particle',{
-            angle: { min: 240, max: 300 },
+        const emitter = this.add.particles(this.scale.width/2, -20,'particle',{
+            angle: { min: -10, max: -170 },
             speed: { min: 200, max: 300 },
-            lifespan: 3500,
+            lifespan: 4500,
             gravityY: 200,
             quantity: 2,
          })
