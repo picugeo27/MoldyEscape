@@ -34,7 +34,7 @@
 **Juegos en Red**
 **URJC – GDDV 2024/2025**
 
-**Versión 0.1**
+**Versión 0.2**
  
 
 ## Introducción
@@ -64,15 +64,15 @@ En el juego existen dos roles, el de cazador y el de presa, que tienen objetivos
 
 ### Científica
 
-El objetivo de la presa es escapar del laberinto, y para ello, tendrá que cumplir 3 objetivos para neutralizar al cazador. Estos subobjetivos serán 4 palancas que aparecerán en el laberinto de forma aleatoria al inicio de cada partida, de los cuales solamente tendrá que activar 3, para evitar que el cazador pueda estar esperando en un punto y que el otro jugador no pueda hacer nada para avanzar.
+El objetivo de la científica es escapar del laberinto, y para ello, tendrá que cumplir 3 objetivos para neutralizar al monstruo. Estos subobjetivos serán 4 palancas que aparecerán en el laberinto al inicio de cada partida, de los cuales solamente tendrá que activar 3, para evitar que la científica pueda estar esperando en un punto y que el otro jugador no pueda hacer nada para avanzar.
 
 Una vez activadas las palancas, se soltará un gas que neutralizará al monstruo y el científico ganará la partida.
 
 ### Monstruo
 
-Tras liberarse de su jaula, el cazador quiere atrapar al científico para vengarse de todo el sufrimiento que ha recibido por parte del científico. Para ello tendrá que atraparle antes de que pueda escapar de su propio laboratorio.
+Tras liberarse de su jaula, el monstruo quiere atrapar a la científica para vengarse de todo el sufrimiento que ha recibido por parte de ella. Para ello, tendrá que atraparla antes de que pueda escapar de su propio laboratorio.
 
-El cazador tendrá mayor velocidad de movimiento para poder atrapar a la presa más fácilmente.
+El monstruo tendrá mayor velocidad de movimiento para poder atrapar a la presa más fácilmente.
 
 ## Género
 
@@ -136,22 +136,26 @@ La pantalla del juego contiene la completitud del mapa por el que se podrán mov
 
 Los dos jugadores tienen un movimiento similar, con pequeñas variaciones según su rol. Estas variaciones serán principalmente la velocidad, para que el cazador pueda atrapar a la presa y alguna habilidad propia.
 
-Los personajes se pueden desplazar por el espacio de suelo en 4 direcciones, arriba, abajo, derecha e izquierda.
+Los personajes se pueden desplazar por el espacio del suelo en 4 direcciones, arriba, abajo, derecha e izquierda.
+
+La científica se podrá mover con las teclas de flecha y el monstruo se puede mover con las teclas de WASD.
 
 ### Habilidades
 
 Cada jugador dispondrá de una habilidad que podrá ir reutilizando a lo largo de la partida para facilitarle su tarea. Cada uno tendrá una habilidad personalizada que le ayude a conseguir su objetivo.
 
-* La presa va a tener la capacidad de abrir y cerrar puertas dentro del laberinto, con el fin de modificar la disposición del terreno a su gusto y hacer más difícil al cazador su objetivo.  
-* El cazador por su parte podrá colocar una trampa en el suelo que ralentice unos segundos a la presa. Esta trampa será invisible para ambos jugadores, y solo se activará cuando pase por encima la presa.
+* La presa, a partir de la segunda fase, será la única que pueda pasar por las puertas del laberinto, mientras que el monstruo no puede, dificultando su navegación a través del laberinto y la captura de la científica. En esta fase se dispone de mapas sencillos, ninguno de ellos incluye puertas.
+* El cazador por su parte podrá colocar varias trampas en el suelo que ralenticen unos segundos a la presa. Estas trampas serán invisibles para ambos jugadores, y solo se activarán cuando pase por encima la presa.
 
-Este apartado se podrá ampliar según avance el desarrollo del videojuego
+Este apartado se podrá ampliar según avance el desarrollo del videojuego.
 
 <div align="center">
    <img src="imagenes_readme/ImagenHabilidades.png" alt="Imagen con los personajes en plena persecución" width="800" height="320">
 </div>
 
 ### Diagrama de flujo
+
+**Partida**
 
 El siguiente diagrama representa de manera simplificada cómo funcionaría una partida de Moldy Escape.
 
@@ -163,13 +167,24 @@ Después se comprobará si alguno de los jugadores ha completado su objetivo, si
    <img src="imagenes_readme/DiagramaFlujoPartida.png" alt="Diagrama de flujo de una partida" width="700" height="400">
 </div>
 
+**Pantallas**
+
+El siguiente diagrama representa el flujo de pantallas del juego.  
+Desde la pantalla de inicio se puede acceder a la pantalla de ajustes, a la de créditos, y a la pantalla de selección de niveles. Además, en una fase de desarrollo futura, desde aquí se podrá elegir entre un modo de juego local y uno en red.  
+En la pantalla de selección de niveles, se puede acceder a una pantalla de tutorial donde se explican los controles y el funcionamiento de una partida, y desde la que se puede volver a la selección de personaje. Una vez elegido el laberinto, el jugador se dirige a la pantalla de juego.  
+En la pantalla de juego, este continúa indefinidamente hasta que uno de los jugadores gana, en cuyo caso se accede a la pantalla de fin de partida, donde se puede ver quién es el ganador y quién es el perdedor. Desde esta pantalla de fin de partida, se puede volver a acceder a la pantalla de inicio, empezar una nueva partida o volver a cambiar los ajustes.
+
+<div align="center">
+   <img src="imagenes_readme/DiagramaFlujoPantallas.png" alt="Diagrama de flujo de pantallas" width="700" height="350">
+</div>
+
 ## Niveles
 
 Los niveles de juego se tratan de laberintos por donde tendrán que avanzar los personajes cumpliendo con sus objetivos.
 
-En primera instancia, el juego se lanzará con un solo nivel donde podrán jugador dos jugadores. Posteriormente se podrán agregar diferentes laberintos que se seleccionarán de manera aleatoria antes de empezar la partida.
+Se ha añadido la opción de seleccionar entre dos laberintos con diferente disposición de los elementos, con el fin de que no todas las partidas sean iguales. 
 
-Además, se pueden añadir mecánicas únicas a cada nivel, limitando el campo de visión o añadiendo interactividad con el entorno.
+Estos mapas se han introducido para desafiar a los jugadores en entornos más complicados de navegar cómodamente debido a las pocas rectas y los muchos movimientos de los personajes.
 
 ## Arte del juego
 
@@ -184,7 +199,7 @@ El juego tiene un estilo artístico de píxel art con colores vivos y contrastad
 
 **Fungo**
 <div align="center">
-   <img src="imagenes_readme/ArteMonstruo.png" alt="Arte conceptual del monstruo" width="700" height="600">
+   <img src="imagenes_readme/ArteMonstruo.png" alt="Arte conceptual del monstruo" width="700" height="650">
 </div>
 
 ## Audio
@@ -213,6 +228,17 @@ Los sonidos base serán:
 * Sonido de derrota para el perdedor en la pantalla final.  
 * Sonido al utilizar una habilidad.  
 * Sonido al iniciar la partida.
+
+Los audios añadidos en la segunda fase de desarrollo del juego han sido descargados de páginas web como [Freesound](https://freesound.org/), todos con licencias Creative Commons 0\. Se han añadido sonidos para:
+
+* **Pantalla de inicio, pantalla de créditos, pantalla de tutorial, pantalla de selección de personaje y menú de ajustes**: todas estas pantallas comparten la misma melodía de fondo.  
+* **Pantalla de juego:** la pantalla de juego tiene una melodía propia que se reproduce al comenzar la partida y para cuando uno de los jugadores gana.  
+* **Pantalla de victoria:** en esta pantalla suena una pequeña melodía al inicio que sirve para indicar la victoria de uno de los dos jugadores. En caso de que se cambie de pantalla antes de que esta melodía acabe, dicha melodía se para.  
+* **Efectos para los botones:** se han incluido efectos sonoros al pulsar los botones, para dar retroalimentación al jugador e indicar que se han pulsado correctamente.  
+* **Efectos en la pantalla de créditos:** al pasar por encima de los nombres se reproduce un sonido que indica que son interactuables.  
+* **Efectos para el sprint:** cuando los jugadores usan sus habilidades de sprint hay un efecto que indica que se ha aumentado la velocidad de movimiento. Cuando se pulsa el botón de sprint y este no se puede activar porque está en su fase de cooldown, suena un aviso indicando que está acción no se puede realizar.  
+* **Efectos para la colocación de trampas:** cuando el monstruo coloca una trampa, se reproduce un sonido para que el jugador sepa que se ha puesto correctamente.  
+* **Sonido al tirar de las palancas:** cuando la científica tira de una palanca se reproduce un efecto sonoro indicando que se ha realizado esta acción.
 
 ## Interfaces
 
@@ -247,6 +273,68 @@ Esta es la interfaz que tendrán los jugadores durante la partida. Ambos jugador
 <div align="center">
    <img src="imagenes_readme/PantallaJuego.png" alt="Pantalla de juego durante la partida" width="800" height="500">
 </div>
+
+## Pantallas finales
+
+### Pantalla de inicio
+
+La pantalla de inicio se ha mantenido prácticamente igual que en la primera fase, utilizando incluso el mismo fondo. Se han cambiado los botones, dándoles un efecto visual al pasar por encima de ellos y sonido al pulsarlos.
+
+<div align="center">
+   <img src="imagenes_readme/PantallaInicioF2.png" alt="Pantalla de inicio implementada en el juego" width="800" height="600">
+</div>
+
+### Pantalla de créditos
+
+En esta pantalla se puede ver a los creadores del juego, y los nombres se comportan como botones interactuables, que cambian su estilo al pasar por encima de ellos y se pueden pulsar.
+
+<div align="center">
+   <img src="imagenes_readme/PantallaCreditosF2.png" alt="Pantalla de créditos implementada en el juego" width="800" height="600">
+</div>
+
+### Pantalla de Ajustes
+
+Se ha añadido la pantalla de ajustes en la que se puede modificar de momento el volumen del juego y se puede poner el juego a pantalla completa.
+
+<div align="center">
+   <img src="imagenes_readme/PantallaAjustesF2.png" alt="Pantalla de ajustes implementada en el juego" width="800" height="600">
+</div>
+
+### Pantalla de Selección de Nivel
+
+En la pantalla de selección de nivel, se puede elegir uno de los dos laberintos disponibles para poder jugar, además de acceder a la pantalla de tutorial para entender los controles del juego.
+
+<div align="center">
+   <img src="imagenes_readme/PantallaSeleccionNivelF2.png" alt="Pantalla de tutorial 1 implementada en el juego" width="800" height="600">
+</div>
+
+### Pantalla de Tutorial
+
+Hemos añadido una pantalla en la que se le explica a los jugadores cuales son los controles y los objetivos que tiene cada jugador dentro de la partida.
+
+<div align="center">
+   <img src="imagenes_readme/PantallaTutorial1F2.png" alt="Pantalla de tutorial 2 implementada en el juego" width="800" height="600">
+</div>
+<div align="center">
+   <img src="imagenes_readme/PantallaTutorial2F2.png" alt="Pantalla de tutorial 2 implementada en el juego" width="800" height="600">
+</div>
+
+### Pantalla de Juego
+
+En la pantalla de la partida se podrá ver todo el mapa, la posición de ambos jugadores y las palancas a las que tiene que llegar la científica. Podemos ver también paneles laterales con los controles de cada jugador.
+
+<div align="center">
+   <img src="imagenes_readme/PantallaJuegoF2.png" alt="Pantalla de juego implementada" width="800" height="500">
+</div>
+
+### Pantalla de Victoria
+
+Después de que uno de los jugadores consiga su objetivo, se acabará la partida y se llevará automáticamente a esta pantalla, señalando al jugador que ha ganado y al que ha perdido la partida, dando la opción de volver a jugar otra partida, de ir a la nueva pantalla de ajustes y volver a la pantalla inicial.  
+
+<div align="center">
+   <img src="imagenes_readme/PantallaFinF2.png" alt="Pantalla de fin de partida implementada en el juego" width="800" height="600">
+</div>
+
 
 ## Créditos
 
