@@ -163,9 +163,6 @@ Una vez empezada la partida, los jugadores se moverán para acercarse a sus obje
 
 Después se comprobará si alguno de los jugadores ha completado su objetivo, si es el caso uno de ellos habrá ganado y el otro habrá perdido. En caso contrario se volverá a la fase de movimiento.
 
-<div align="center">
-   <img src="imagenes_readme/DiagramaFlujoPartida.png" alt="Diagrama de flujo de una partida" width="700" height="400">
-</div>
 
 **Pantallas**
 
@@ -174,9 +171,6 @@ Desde la pantalla de inicio se puede acceder a la pantalla de ajustes, a la de c
 En la pantalla de selección de niveles, se puede acceder a una pantalla de tutorial donde se explican los controles y el funcionamiento de una partida, y desde la que se puede volver a la selección de personaje. Una vez elegido el laberinto, el jugador se dirige a la pantalla de juego.  
 En la pantalla de juego, este continúa indefinidamente hasta que uno de los jugadores gana, en cuyo caso se accede a la pantalla de fin de partida, donde se puede ver quién es el ganador y quién es el perdedor. Desde esta pantalla de fin de partida, se puede volver a acceder a la pantalla de inicio, empezar una nueva partida o volver a cambiar los ajustes.
 
-<div align="center">
-   <img src="imagenes_readme/DiagramaFlujoPantallas.png" alt="Diagrama de flujo de pantallas" width="700" height="350">
-</div>
 
 ## Niveles
 
