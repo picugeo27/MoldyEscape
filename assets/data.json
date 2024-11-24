@@ -189,6 +189,11 @@
                 "key": "button",
                 "url": "Lever.png",
                 "frameConfig": { "frameWidth": 24, "frameHeight": 24 }
+            },
+            {
+                "type": "image",
+                "key": "trap",
+                "url": "Trap.png"
             }
         ]
     },

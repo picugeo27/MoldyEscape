@@ -88,7 +88,7 @@ export class CreditsScreen extends Phaser.Scene{
                         messageText.setText("Sigo en Arcane 2x7");
                         break;
                     case("Candela Jiménez González"):
-                        messageText.setText("Que alguien me contrate quiero");
+                        messageText.setText("Que alguien me contrate quiero comer");
                         break;
                     default:
                         messageText.setText("Profe merecemos un 10");
