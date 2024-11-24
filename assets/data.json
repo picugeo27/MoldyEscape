@@ -4,6 +4,42 @@
         "files": [
             {
                 "type": "image",
+                "key": "start_background",
+                "url": "StartBackgroundPlaceholder.png"
+            },
+            {
+                "type": "image",
+                "key": "credits_background",
+                "url": "CreditsBackgroundPlaceholder.png"
+            },
+            {
+                "type": "image",
+                "key": "arte_seta",
+                "url": "seta_art.png"
+            },
+            {
+                "type": "image",
+                "key": "arte_cientifica",
+                "url": "cientifica_art.png"
+            },
+            {
+                "type": "image",
+                "key": "altavoz",
+                "url": "Speaker_Icon.png"
+            },
+            {
+                "type": "image",
+                "key": "altavoz_mute",
+                "url": "Speaker_Icon_Mute.png"
+            }
+
+        ]
+    },
+    {
+        "path": "assets/Botones",
+        "files": [
+            {
+                "type": "image",
                 "key": "boton_jugar",
                 "url": "BotonJugar.png"
             },
@@ -51,56 +87,6 @@
                 "type": "image",
                 "key": "boton_fullscreen",
                 "url": "BotonFullScreen.png"
-            },
-            {
-                "type": "image",
-                "key": "start_background",
-                "url": "StartBackgroundPlaceholder.png"
-            },
-            {
-                "type": "image",
-                "key": "credits_background",
-                "url": "CreditsBackgroundPlaceholder.png"
-            },
-            {
-                "type": "image",
-                "key": "game_background",
-                "url": "Mapa.png"
-            },
-            {
-                "type": "image",
-                "key": "character",
-                "url": "Character.png"
-            },
-            {
-                "type": "image",
-                "key": "enemy",
-                "url": "Enemy.png"
-            },
-            {
-                "type": "image",
-                "key": "trap",
-                "url": "trampa.png"
-            },
-            {
-                "type": "image",
-                "key": "arte_seta",
-                "url": "seta_art.png"
-            },
-            {
-                "type": "image",
-                "key": "arte_cientifica",
-                "url": "cientifica_art.png"
-            },
-            {
-                "type": "image",
-                "key": "altavoz",
-                "url": "Speaker_Icon.png"
-            },
-            {
-                "type": "image",
-                "key": "altavoz_mute",
-                "url": "Speaker_Icon_Mute.png"
             }
 
         ]
@@ -185,8 +171,6 @@
             }
         ]
     },
-
-    
     {
         "path": "assets/Interactuables",
         "files": [

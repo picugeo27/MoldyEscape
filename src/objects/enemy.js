@@ -4,7 +4,7 @@ import { Coordinates, DIRECTION } from "../types/typedef.js";
 import { GameScreen } from "../scenes/gamescreen.js";
 import { Character } from "./character.js";
 
-const trapCooldown = 20000;
+const trapCooldown = 15000;
 
 export class Enemy extends Character{
 
@@ -28,35 +28,35 @@ export class Enemy extends Character{
                 // Definir las animaciones en el constructor
                 this._scene.anims.create({
                     key: 'FWaLkIdle', 
-                    frames: this._scene.anims.generateFrameNumbers('Fungo-Idle-Sheet', { start: 0, end: 5 }), 
+                    frames: this._scene.anims.generateFrameNumbers('Fungo-Idle-Sheet', { start: 0, end: 4 }), 
                     frameRate: 8, 
                     repeat: -1 
                 });
         
                 this._scene.anims.create({
                     key: 'FWalkB',
-                    frames: this._scene.anims.generateFrameNumbers('Fungo-WalkB-Sheet', { start: 0, end: 8 }),
+                    frames: this._scene.anims.generateFrameNumbers('Fungo-WalkB-Sheet', { start: 0, end: 7 }),
                     frameRate: 15,
                     repeat: -1
                 });
         
                 this._scene.anims.create({
                     key: 'FWalkF',
-                    frames: this._scene.anims.generateFrameNumbers('Fungo-WalkF-Sheet', { start: 0, end: 8 }),
+                    frames: this._scene.anims.generateFrameNumbers('Fungo-WalkF-Sheet', { start: 0, end: 7 }),
                     frameRate: 15,
                     repeat: -1
                 });
         
                 this._scene.anims.create({
                     key: 'FWalkR',
-                    frames: this._scene.anims.generateFrameNumbers('Fungo-WalkL-Sheet', { start: 0, end: 8 }),
+                    frames: this._scene.anims.generateFrameNumbers('Fungo-WalkL-Sheet', { start: 0, end: 4 }),
                     frameRate: 15,
                     repeat: -1
                 });
         
                 this._scene.anims.create({
                     key: 'FWalkL',
-                    frames: this._scene.anims.generateFrameNumbers('Fungo-WalkR-Sheet', { start: 0, end: 8 }),
+                    frames: this._scene.anims.generateFrameNumbers('Fungo-WalkR-Sheet', { start: 0, end: 4 }),
                     frameRate: 15,
                     repeat: -1
                 });

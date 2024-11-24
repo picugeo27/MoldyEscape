@@ -6,8 +6,6 @@ export class StartScreen extends Phaser.Scene{
         super({key: 'StartScreen'});
     }
 
-
-
     preload() {
         this.load.pack('image_pack', "assets/data.json");
         this.load.json('maps_pack', 'assets/maps.json');
@@ -99,8 +97,6 @@ export class StartScreen extends Phaser.Scene{
                 })    
             });
     }
-
-    update() {}
 
     switchBoton(boton_local, boton_red){
         if(boton_local.visible) {

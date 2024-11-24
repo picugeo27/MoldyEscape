@@ -6,7 +6,7 @@ import { GameScreen } from "../scenes/gamescreen.js";
 
 
 const turboTime = 5000;
-const turboCooldown = 20000;
+const turboCooldown = 10000;
 const speed = 5;
 const accelerationMultiplier = 2;
 

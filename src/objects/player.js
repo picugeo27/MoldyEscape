@@ -16,7 +16,7 @@ export class Player extends Character{
     
     constructor(scene, coordinates, keyboardInput){
         super(scene, coordinates, keyboardInput);   // constructor de character
-        
+        this.turboTime = 6000;
         // le añadimos el sprite
         this._sprite = scene.add.sprite(0, 0, 'character').setScale(0.8);
         this.add([this._sprite]);
