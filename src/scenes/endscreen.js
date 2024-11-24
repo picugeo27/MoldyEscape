@@ -18,8 +18,6 @@ export class EndScreen extends Phaser.Scene{
     create() {
         //Los botones tienen colores distintos espero que me perdoneis xd
 
-        this.scale.resize(870, this.scale.height);
-
         const menuMusic = this.registry.get('menuMusic');
         this.registry.remove('menuMusic');
 
