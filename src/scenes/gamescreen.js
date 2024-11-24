@@ -1,6 +1,6 @@
 import { Player } from "../objects/player.js";
 import { Enemy } from "../objects/enemy.js";
-import { Coordinates } from "../types/typedef.js";
+import { Coordinates, MAP_INIT } from "../types/typedef.js";
 import { InputManager } from "../components/inputManager.js";
 import { Trap } from "../objects/trap.js";
 
@@ -40,13 +40,16 @@ export class GameScreen extends Phaser.Scene{
 
     init(data){
         this.mapValue = data.data;
+        console.log('MapValue recibido:', this.mapValue);
     }
 
     preload(){
+
         this.load.image('particle', 'assets/Interactuables/particula.png');
         const tileMapData = this.cache.json.get('maps_pack');
         if (this.mapValue != 0 && this.mapValue != 1)
             this.mapValue = 1;
+        console.log(tileMapData.maps[this.mapValue]);
 
         this.load.tilemapTiledJSON(tileMapData.maps[this.mapValue].key, tileMapData.maps[this.mapValue].path);
         this.#mapKey = tileMapData.maps[this.mapValue].key;
@@ -60,10 +63,12 @@ export class GameScreen extends Phaser.Scene{
         // Creamos el tilemap y las capas
         const map = this.make.tilemap({key: this.#mapKey, tileHeight: 24, tileWidth: 24});    //1 para mapa 1, 2 para mapa 2
         const tileset = map.addTilesetImage(this.#mapUsed, "lab_tiles");   //1 para mapa 1, 2 para mapa 2
-        const backgroundLayer = map.createLayer("Fondo", tileset, 0, 0);     //Capa de fondo
-        this.#colliderLayer = map.createLayer("Paredes", tileset, 0, 0);    //Capa de colliders
-        this.#doorLayer = map.createLayer("Puertas", tileset, 0, 0);    //Capa de puertas
+        const backgroundLayer = map.createLayer("Fondo", tileset, MAP_INIT, 0);     //Capa de fondo
+        this.#colliderLayer = map.createLayer("Paredes", tileset, MAP_INIT, 0);    //Capa de colliders
+        this.#doorLayer = map.createLayer("Puertas", tileset, MAP_INIT, 0);    //Capa de puertas
 
+        this.add.image(0,0, "banner_player").setOrigin(0,0);
+        this.add.image(780,0, "banner_enemy").setOrigin(0,0);
         // Creamos key manager, jugador, enemigo y su colision
         this.#keyManager = new InputManager(this);      
 

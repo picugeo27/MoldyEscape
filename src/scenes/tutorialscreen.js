@@ -9,6 +9,7 @@ export class TutoriaScreen extends Phaser.Scene{
     preload(){
         this.load.image('objetivos', 'assets/Tutorial/Objetivos.png');
         this.load.image('controles', 'assets/Tutorial/Controles.png');
+        this.cameras.main.fadeIn(500,0,0,0);
     }
 
     controls;
@@ -16,6 +17,8 @@ export class TutoriaScreen extends Phaser.Scene{
 
     create() {
 
+        this.registry.get('menuMusic');
+        
         this.controls = this.add.image(this.scale.width/2, this.scale.height/2, "controles").setScale(0.7);
         this.objectives = this.add.image(this.scale.width/2, this.scale.height/2, "objetivos").setScale(0.7).setVisible(false);
 
@@ -28,7 +31,7 @@ export class TutoriaScreen extends Phaser.Scene{
             })
     });
 
-    const boton_2 = this.add.image(650, 550, "boton_volver");
+    const boton_2 = this.add.image(650, 550, "boton_siguiente");
     boton_2.setInteractive();
     boton_2.on('pointerover', () => {
         boton_2.postFX.addShine(0.8,0.05,1);

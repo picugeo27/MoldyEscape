@@ -14,7 +14,8 @@ export class StartScreen extends Phaser.Scene{
    }
 
     create() {
-        this.add.image(0, 0, 'start_background').setOrigin(0, 0).setScale(1);
+        
+        this.add.image(0, 0, 'start_background').setOrigin(0, 0);
 
         const boton_click = this.sound.add('boton_click', {volume:1});
         const boton_flecha_click = this.sound.add('boton_flecha_click', {volume:1});
@@ -29,9 +30,9 @@ export class StartScreen extends Phaser.Scene{
             this.registry.set('menuMusic', menuMusic);
         }
 
-        const boton_jugar = this.add.image(400, 550, "boton_jugar").setScale(0.95);
-        const boton_ajustes = this.add.image(675, 475, "boton_ajustes").setScale(0.95);
-        const boton_creditos = this.add.image(675, 550, "boton_creditos").setScale(0.9);        
+        const boton_jugar = this.add.image(400, 550, "boton_jugar");
+        const boton_ajustes = this.add.image(675, 475, "boton_ajustes");
+        const boton_creditos = this.add.image(675, 550, "boton_creditos");        
 
         setupButton(boton_jugar,()=>{
             boton_click.play();
@@ -79,8 +80,9 @@ export class StartScreen extends Phaser.Scene{
 
         boton_red.setDisplaySize(165, 50);
         
-        const boton_flecha = this.add.image(778, 400, "boton_flecha").setScale(0.03).setRotation(3.14)
-            .setInteractive()
+        const boton_flecha = this.add.image(778, 400, "boton_flecha").setScale(0.9)
+        boton_flecha.flipX = true;
+        boton_flecha.setInteractive()
             .on('pointerdown', () => {
                 boton_flecha_click.play();
                 this.time.delayedCall(500, () =>{
@@ -88,7 +90,7 @@ export class StartScreen extends Phaser.Scene{
                 })    
             });
         
-        const boton_flecha_2 = this.add.image(572, 400, "boton_flecha").setScale(0.03)
+        const boton_flecha_2 = this.add.image(572, 400, "boton_flecha").setScale(0.9)
             .setInteractive()
             .on('pointerdown', () => {
                 boton_flecha_click.play();

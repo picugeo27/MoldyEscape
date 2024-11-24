@@ -1,4 +1,5 @@
 const TILE_SIZE = 24;
+export const MAP_INIT = 180;
 
 export const DIRECTION = {
   UP: 'UP',
@@ -24,11 +25,11 @@ export class Coordinates{
   }
 
   getRealX(){
-    return this.x * TILE_SIZE + TILE_SIZE/2;
+    return MAP_INIT + this.x * TILE_SIZE + TILE_SIZE/2;
   }
 
   getRealY (){
-    return this.y * TILE_SIZE + TILE_SIZE/2;
+    return  this.y * TILE_SIZE + TILE_SIZE/2;
   }
 }
 
@@ -41,7 +42,7 @@ export function setupButton(button, onClick){
   });
 
   button.on('pointerout', () => {
-      button.setScale(0.95);
+      button.setScale(1);
       button.postFX.clear();
   });
 

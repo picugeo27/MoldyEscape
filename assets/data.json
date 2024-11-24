@@ -87,6 +87,16 @@
                 "type": "image",
                 "key": "boton_fullscreen",
                 "url": "BotonFullScreen.png"
+            },
+            {
+                "type": "image",
+                "key": "boton_siguiente",
+                "url": "BotonSiguiente.png"
+            },
+            {
+                "type": "image",
+                "key": "boton_tutorial",
+                "url": "BotonTutorial.png"
             }
 
         ]
@@ -179,6 +189,21 @@
                 "key": "button",
                 "url": "Lever.png",
                 "frameConfig": { "frameWidth": 24, "frameHeight": 24 }
+            }
+        ]
+    },
+    {
+        "path": "assets/Interfaces",
+        "files": [
+            {
+                "type": "image",
+                "key": "banner_player",
+                "url": "banner1.png"
+            },
+            {
+                "type": "image",
+                "key": "banner_enemy",
+                "url": "banner2.png"
             }
         ]
     }
