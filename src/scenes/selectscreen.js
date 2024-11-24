@@ -12,7 +12,6 @@ export class SelectScreen extends Phaser.Scene{
 
     preload() {
         this.cameras.main.fadeIn(500,0,0,0);
-        console.log(this.#mapList)
         this.cache.json.get('maps_pack').preview.forEach((element) =>{
             if (!this.#mapList.includes(element.key)){
                 this.load.image(element.key,element.url);
@@ -36,6 +35,7 @@ export class SelectScreen extends Phaser.Scene{
         
         const boton_jugar = this.add.image(400, 550, "boton_jugar").setScale(0.95); 
         const boton_atras = this.add.image(100, 550, "boton_volver");
+        const boton_tutorial = this.add.image(680, 550, "boton_ajustes");
 
         this.#selectedMap = this.add.image(this.scale.width/2 , this.scale.height/2, this.#mapList[this.#indexSelectedMap]).setScale(0.6);
         
@@ -57,6 +57,15 @@ export class SelectScreen extends Phaser.Scene{
             this.cameras.main.once('camerafadeoutcomplete', () => {
                 this.scene.stop("SelectScreen");
                 this.scene.start("StartScreen");
+        })
+    })
+
+        setupButton(boton_tutorial, () =>{
+            boton_click.play();
+            this.cameras.main.fadeOut(500,0,0,0);
+            this.cameras.main.once('camerafadeoutcomplete', () => {
+                this.scene.stop("SelectScreen");
+                this.scene.start("TutorialScreen");
         })
     })
 
