@@ -42,6 +42,7 @@ export class EndScreen extends Phaser.Scene{
 
             this.cameras.main.fadeOut(500,0,0,0);
             this.cameras.main.once('camerafadeoutcomplete', () => {
+                this._victorySound.stop();
                 this.scene.stop("EndScreen");
                 this.scene.start("StartScreen");
             })
@@ -52,6 +53,7 @@ export class EndScreen extends Phaser.Scene{
         setupButton(boton_nueva_partida, () => {
             this.cameras.main.fadeOut(500,0,0,0);
             this.cameras.main.once('camerafadeoutcomplete', () => {
+                this._victorySound.stop();
                 this.scene.stop("EndScreen");
                 this.scene.add('GameScreen', GameScreen);
                 this.scene.start("GameScreen", {data: this._mapValue});
@@ -62,6 +64,7 @@ export class EndScreen extends Phaser.Scene{
         setupButton(boton_ajustes, () => {
             this.cameras.main.fadeOut(500,0,0,0);
             this.cameras.main.once('camerafadeoutcomplete', () => {
+                this._victorySound.stop();
                 this.scene.stop("EndScreen");
                 this.scene.start("SettingsScreen");
             })
