@@ -11,19 +11,19 @@ import { TutoriaScreen } from "./scenes/tutorialscreen.js";
 
 const game = new Phaser.Game({
     type: Phaser.AUTO,
-    width: 900,
+    width: SIZE_CANVAS.WIDTH,
     height: SIZE_CANVAS.HEIGHT,
     parent: 'game-canvas',
     backgroundColor: '#97c6e0',
     scale:{
-        mode: Phaser.Scale.EXPAND,
-        autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
+        mode: Phaser.Scale.FIT,
+        autoCenter: Phaser.Scale.CENTER_BOTH
     },
     physics: {
         default: 'arcade',
         arcade: {
             gravity: { y: 0, x: 0 },
-            debug: true,
+            debug: false,
         }
     },
 });

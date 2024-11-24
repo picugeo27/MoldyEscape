@@ -26,13 +26,8 @@ export class InputManager{
     _DRight;
     _GTurboEnemy;
     _MTurboPlayer;
-    //Tecla especial (?)
     _trapKey;
 
-    // aqui se añadiran los controles del otro jugador
-    // se haria añadiendo parametros para que se asignen al up down y tal, y en funcion de eso ponemos que funcione
-    // y en el update se cambiaria algo para eso
-    
     /**
      * 
      * @param {Phaser.Scene} scene 
@@ -100,7 +95,6 @@ export class InputManager{
 
     isTurboKeyEnemyPressed(){
         return this._GTurboEnemy;
-        //return Phaser.Input.Keyboard.JustDown(this.#keyG);
     }
 
     checkTurboKeyPlayer(){
@@ -109,7 +103,6 @@ export class InputManager{
 
     isTurboKeyPlayerPressed(){
         return this._MTurboPlayer;
-        //return Phaser.Input.Keyboard.JustDown(this.#keyG);
     }
 
     isTrapPressed(){

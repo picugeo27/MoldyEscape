@@ -1,1 +1,1 @@
-los tipos de phaser, para que visual studio tenga autocompletado
+los tipos de phaser, para que visual studio tenga autocompletado (y que funcione decentemente)

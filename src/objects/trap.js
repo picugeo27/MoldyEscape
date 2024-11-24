@@ -13,7 +13,6 @@ export class Trap extends Phaser.GameObjects.Sprite {
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
         
-        this.setScale(0.05); 
         this.body.setSize(10, 10); 
         this.body.setImmovable(true); 
 

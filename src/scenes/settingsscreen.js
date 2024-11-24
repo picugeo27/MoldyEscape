@@ -108,6 +108,4 @@ export class SettingsScreen extends Phaser.Scene{
         
     }
 
-    update() {}
-
 }

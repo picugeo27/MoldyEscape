@@ -16,9 +16,9 @@ export class GameScreen extends Phaser.Scene{
     /** @type {Phaser.Tilemaps.TilemapLayer}*/
     #doorLayer = null;
     /**@type {Coordinates} */
-    #playerCoordinates = new Coordinates(5,5);
+    #playerCoordinates = new Coordinates(15,9);
     /**@type {Coordinates} */
-    #enemyCoordinates = new Coordinates(10,10);
+    #enemyCoordinates = new Coordinates(9,15);
     /**@type {InputManager} */
     #keyManager;
 
@@ -40,16 +40,15 @@ export class GameScreen extends Phaser.Scene{
 
     init(data){
         this.mapValue = data.data;
-        console.log('MapValue recibido:', this.mapValue);
     }
 
     preload(){
+        this.scale.resize(960, this.scale.height);
 
         this.load.image('particle', 'assets/Interactuables/particula.png');
         const tileMapData = this.cache.json.get('maps_pack');
         if (this.mapValue != 0 && this.mapValue != 1)
             this.mapValue = 1;
-        console.log(tileMapData.maps[this.mapValue]);
 
         this.load.tilemapTiledJSON(tileMapData.maps[this.mapValue].key, tileMapData.maps[this.mapValue].path);
         this.#mapKey = tileMapData.maps[this.mapValue].key;
@@ -69,13 +68,13 @@ export class GameScreen extends Phaser.Scene{
 
         this.add.image(0,0, "banner_player").setOrigin(0,0);
         this.add.image(780,0, "banner_enemy").setOrigin(0,0);
+
         // Creamos key manager, jugador, enemigo y su colision
         this.#keyManager = new InputManager(this);      
 
         this.#player = new Player(this, this.#playerCoordinates, this.#keyManager);
         this.#enemy = new Enemy(this, this.#enemyCoordinates, this.#keyManager);
         
-        //this.physics.add.overlap(this.#player, this.#enemy, this.enemyWin);
         this.physics.add.overlap(this.#player, this.#enemy, this.enemyWin.bind(this));
 
         // aqui llamamos el metodo que crea los botones, lo separe para que create no sea tan grande
@@ -111,28 +110,23 @@ export class GameScreen extends Phaser.Scene{
 
     // que hacer cuando gana el jugador
     playerWin(){
-        console.log("Player gana");
         this._gameMusic.stop();
         this.scene.remove('GameScreen');
-        //const playerIsWinner = true;
         this.scene.start('EndScreen', {playerIsWinner: true, map: this.mapValue});
-        //this.endGame();
     }
 
     // que hacer cuando gana el monstruo
     enemyWin(){
-        console.log("Enemigo gana");
         this._gameMusic.stop();
         this.scene.remove('GameScreen');
-        //const playerIsWinner = false;
         this.scene.start('EndScreen', {playerIsWinner: false, map: this.mapValue});
-        //this.endGame();
     }
 
 
     // Cuando se pulsa un boton que se hace (no podemos quitar ese player que no se usa porque sino por como se invoca el player desaparece)
     pushButton = (player, element) =>{
         this._pressButtonSound.play();
+
         //particulas
         element.setFrame(1);
         this.leverParticle(element.x, element.y);
@@ -155,14 +149,6 @@ export class GameScreen extends Phaser.Scene{
             trap.destroy();
         })
     }
-
-    /*
-    endGame(player, playerIsWinner){
-        //console.log("Player gana");
-        this.scene.remove('GameScreen');
-        this.scene.start('EndScreen', playerIsWinner);
-    }
-    */
 
     /**
      * 

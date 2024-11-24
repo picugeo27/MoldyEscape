@@ -1,4 +1,3 @@
-import { GameScreen } from "./gamescreen.js";
 import { setupButton } from "../types/typedef.js";
 
 export class StartScreen extends Phaser.Scene{
