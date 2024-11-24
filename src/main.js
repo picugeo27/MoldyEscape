@@ -11,13 +11,13 @@ import { TutoriaScreen } from "./scenes/tutorialscreen.js";
 
 const game = new Phaser.Game({
     type: Phaser.AUTO,
-    width: SIZE_CANVAS.WIDTH,
+    width: 900,
     height: SIZE_CANVAS.HEIGHT,
     parent: 'game-canvas',
     backgroundColor: '#97c6e0',
     scale:{
-        mode: Phaser.Scale.FIT,
-        autoCenter: Phaser.Scale.CENTER_BOTH
+        mode: Phaser.Scale.EXPAND,
+        autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
     },
     physics: {
         default: 'arcade',

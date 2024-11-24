@@ -18,6 +18,8 @@ export class EndScreen extends Phaser.Scene{
     create() {
         //Los botones tienen colores distintos espero que me perdoneis xd
 
+        this.scale.resize(870, this.scale.height);
+
         const menuMusic = this.registry.get('menuMusic');
         this.registry.remove('menuMusic');
 
@@ -80,9 +82,9 @@ export class EndScreen extends Phaser.Scene{
     }
 
     victoryParticle(){
-        const particleDuration = 5000;
-        const emitter = this.add.particles(this.scale.width/2, -20,'particle',{
-            angle: { min: -10, max: -170 },
+        const particleDuration = 4000;
+        const emitter = this.add.particles(this.scale.width/2, -40,'particle',{
+            angle: { min: -50, max: 200 },
             speed: { min: 200, max: 300 },
             lifespan: 4500,
             gravityY: 200,

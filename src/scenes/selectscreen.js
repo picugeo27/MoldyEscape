@@ -11,20 +11,18 @@ export class SelectScreen extends Phaser.Scene{
     #mapList = []
 
     preload() {
-        this.cameras.main.fadeIn(500,0,0,0);
+        
         this.cache.json.get('maps_pack').preview.forEach((element) =>{
             if (!this.#mapList.includes(element.key)){
                 this.load.image(element.key,element.url);
                 this.#mapList.push(element.key);
-            }
-            
+            }  
         })
-
 
    }
 
     create() {
-        this.add.image(0, 0, 'credits_background').setOrigin(0, 0).setScale(1);
+        this.add.image(0, 0, 'credits_background').setOrigin(0, 0);
 
         this.add.text(115, 40, 'SELECCIONA UN NIVEL', { color: '#ffffff', fontSize: 50, stroke: '#df5fa8', strokeThickness: 4});
 
@@ -35,7 +33,7 @@ export class SelectScreen extends Phaser.Scene{
         
         const boton_jugar = this.add.image(400, 550, "boton_jugar").setScale(0.95); 
         const boton_atras = this.add.image(100, 550, "boton_volver");
-        const boton_tutorial = this.add.image(680, 550, "boton_ajustes");
+        const boton_tutorial = this.add.image(680, 550, "boton_tutorial");
 
         this.#selectedMap = this.add.image(this.scale.width/2 , this.scale.height/2, this.#mapList[this.#indexSelectedMap]).setScale(0.6);
         
@@ -69,7 +67,7 @@ export class SelectScreen extends Phaser.Scene{
         })
     })
 
-        const boton_flecha = this.add.image(520, 550, "boton_flecha").setScale(0.03).setRotation(3.14)
+        const boton_flecha = this.add.image(520, 550, "boton_flecha").setScale(0.9)
             .setInteractive()
             .on('pointerdown', () => {
                 boton_flecha_click.play();
@@ -78,7 +76,8 @@ export class SelectScreen extends Phaser.Scene{
                 })    
             });
         
-        const boton_flecha_2 = this.add.image(280, 550, "boton_flecha").setScale(0.03)
+            boton_flecha.flipX = true;
+        const boton_flecha_2 = this.add.image(280, 550, "boton_flecha").setScale(0.9)
             .setInteractive()
             .on('pointerdown', () => {
                 boton_flecha_click.play();
