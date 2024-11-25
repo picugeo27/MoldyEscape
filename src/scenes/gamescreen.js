@@ -45,7 +45,10 @@ export class GameScreen extends Phaser.Scene{
     preload(){
         this.scale.resize(960, this.scale.height);
 
+        //Particulas
         this.load.image('particle', 'assets/Interactuables/particula.png');
+        this.load.image('trapParticle', 'assets/Interactuables/particulaTrampa.png');
+
         const tileMapData = this.cache.json.get('maps_pack');
         if (this.mapValue != 0 && this.mapValue != 1)
             this.mapValue = 1;
@@ -143,6 +146,7 @@ export class GameScreen extends Phaser.Scene{
     setTrap(coordinates){
         const trap = new Trap(this, coordinates);
         this.#traps.add(trap);
+        this.trapParticle(coordinates.getRealX(), coordinates.getRealY());
         
         this.physics.add.overlap(this.#player, trap, () => {
             this.#player.slow();
@@ -164,6 +168,20 @@ export class GameScreen extends Phaser.Scene{
     leverParticle(leverX, leverY){
         const particleDuration = 500;
         const emitter = this.add.particles(leverX, leverY,'particle',{
+            angle: { min: 0, max: 360 },
+            speed: { min: 50, max: 100 },
+            lifespan: 200,
+            gravityY: 200,
+            quantity: 1,
+         })
+         this.time.delayedCall(particleDuration, ()=> {
+            emitter.stop();
+         })
+    }
+
+    trapParticle(coordX, coordY){
+        const particleDuration = 500;
+        const emitter = this.add.particles(coordX, coordY,'trapParticle',{
             angle: { min: 0, max: 360 },
             speed: { min: 50, max: 100 },
             lifespan: 200,
