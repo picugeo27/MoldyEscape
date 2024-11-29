@@ -85,7 +85,7 @@ export class CreditsScreen extends Phaser.Scene{
                         messageText.setText("No cotilleen ni critiquen... sin mí");
                         break;
                     case("Unai Retes Corada"):
-                        messageText.setText("Sigo en Arcane 2x7");
+                        messageText.setText("Arcane 2x7 30:09");
                         break;
                     case("Candela Jiménez González"):
                         messageText.setText("Que alguien me contrate quiero comer");
