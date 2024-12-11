@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-MoldyescapeApplication<moldyescape>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.moldyescape.moldyescape.MoldyescapeApplication",
+            "projectName": "moldyescape",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
