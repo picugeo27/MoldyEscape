@@ -1,41 +1,29 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
     <head>
-        <title>HTML Login Form</title>
+      <meta charset="UTF-8">
+      <title>Login Page</title>
+      <link rel="stylesheet" href="assets/loginformstyle.css">
+    
     </head>
     <body>
-        <div class="wrapper">
-            <div class="form-box login">
-            <h1>Tu Cuenta</h1>
-            <div class="input-box">
-                <span class="icon"></span>
-                <input type="text" required id="username" name="username">
-                <label>Usuario</label>
-            </div>
-            <div class="input-box">
-                <span class="icon"></span>
-                <input type="password" required id="password" name="password">
-                <label>Contraseña</label>
-            </div>
-            <button type="submit" class="btn" name="loginButton">Continuar</button>
-            </div>
-        </div>
+    <!-- partial:index.partial.html -->
+    <!-- <div id="bg" style="display: none;"></div> -->
+    
+    <form>
+      <div class="form-field">
+        <input type="text" id="username" placeholder="Usuario" name="username" required/>
+      </div>
+      
+      <div class="form-field">
+        <input type="password" id="password" placeholder="Contraseña" name="password" required/>
+      </div>
+      
+      <div class="form-field">
+        <button class="btn" type="submit" name="loginButton">Iniciar sesión</button>
+      </div>
+    </form>
+    <!-- partial -->
+    
     </body>
-</html> -->
-
-<div class="wrapper">
-    <div class="form-box login">
-    <h1>Tu Cuenta</h1>
-    <div class="input-box">
-        <span class="icon"></span>
-        <input type="text" required id="username" name="username">
-        <label>Usuario</label>
-    </div>
-    <div class="input-box">
-        <span class="icon"></span>
-        <input type="password" required id="password" name="password">
-        <label>Contraseña</label>
-    </div>
-    <button type="submit" class="btn" name="loginButton">Continuar</button>
-    </div>
-</div>
+</html>

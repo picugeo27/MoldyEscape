@@ -17,12 +17,12 @@ const game = new Phaser.Game({
     height: SIZE_CANVAS.HEIGHT,
     parent: 'game-canvas',
     backgroundColor: '#97c6e0',
+    dom: {
+        createContainer: true
+    },
     scale:{
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH
-    },
-    dom: {
-        createContainer: true
     },
     physics: {
         default: 'arcade',
