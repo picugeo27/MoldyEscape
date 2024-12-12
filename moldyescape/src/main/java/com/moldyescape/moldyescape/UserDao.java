@@ -1,5 +1,6 @@
 package com.moldyescape.moldyescape;
 
+import java.io.Console;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -22,7 +23,7 @@ public class UserDao {
     // // the mapping between instances and the repositories.
 
      @Autowired
-     @Qualifier("usersPath")
+     @Qualifier("userPath")
      private String usersPath;
 
     public UserDao(String usersPath) {
@@ -61,7 +62,10 @@ public class UserDao {
              // Construct the file path dynamically based on the username
              String filePath = this.usersPath + "/" + updatedUser.getUsername() + ".json";  // decision de diseño
              File file = new File(filePath);
-
+             if (!file.exists()) {
+                file.getParentFile().mkdirs(); // Create the parent directories if they don't exist
+                file.createNewFile(); // Create the file itself
+            }
              // Write the updated User object back to the file
              objectMapper.writeValue(file, updatedUser);
              return true; // Successfully updated the file

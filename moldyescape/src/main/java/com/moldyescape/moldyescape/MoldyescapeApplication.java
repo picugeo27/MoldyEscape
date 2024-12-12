@@ -11,16 +11,7 @@ public class MoldyescapeApplication {
 	public String getUserPath(){
 		return "data/users";
 	}
-	
-	@Bean
-	public UserService getUserService(UserDao userDao){
-		return new UserService(userDao);
-	}
 
-	@Bean
-	public UserDao getUserDao(String userPath){
-		return new UserDao(userPath);
-	}
 	public static void main(String[] args) {
 		SpringApplication.run(MoldyescapeApplication.class, args);
 	}
