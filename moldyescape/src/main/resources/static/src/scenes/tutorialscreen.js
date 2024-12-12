@@ -1,6 +1,6 @@
 import { setupButton } from "../types/typedef.js";
 
-export class TutoriaScreen extends Phaser.Scene{
+export class TutorialScreen extends Phaser.Scene{
     constructor(){
         super({key: 'TutorialScreen'});
     }

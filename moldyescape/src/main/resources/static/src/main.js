@@ -6,7 +6,8 @@ import { CreditsScreen } from "./scenes/creditsscreen.js";
 import { SIZE_CANVAS } from "./types/typedef.js";
 import { SelectScreen } from "./scenes/selectscreen.js";
 import { SettingsScreen } from "./scenes/settingsscreen.js";
-import { TutoriaScreen } from "./scenes/tutorialscreen.js";
+import { TutorialScreen } from "./scenes/tutorialscreen.js";
+import { UsersOverlay } from "./scenes/usersoverlay.js";
 
 
 const game = new Phaser.Game({
@@ -30,9 +31,9 @@ const game = new Phaser.Game({
 
 game.scene.add('StartScreen', StartScreen);
 game.scene.add('SelectScreen', SelectScreen);
-game.scene.add('TutorialScreen', TutoriaScreen);
+game.scene.add('TutorialScreen', TutorialScreen);
 game.scene.add('EndScreen', EndScreen);
 game.scene.add('CreditsScreen', CreditsScreen);
 game.scene.add('SettingsScreen', SettingsScreen);
 game.scene.start('StartScreen');
-
+game.scene.add('UsersOverlay', UsersOverlay); 
