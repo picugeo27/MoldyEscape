@@ -17,9 +17,8 @@ export class SelectScreen extends Phaser.Scene{
                 this.load.image(element.key,element.url);
                 this.#mapList.push(element.key);
             }  
-        })
-
-   }
+       })
+    }
 
     create() {
         this.add.image(0, 0, 'credits_background').setOrigin(0, 0);

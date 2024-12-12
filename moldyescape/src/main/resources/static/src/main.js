@@ -8,6 +8,7 @@ import { SelectScreen } from "./scenes/selectscreen.js";
 import { SettingsScreen } from "./scenes/settingsscreen.js";
 import { TutorialScreen } from "./scenes/tutorialscreen.js";
 import { UsersOverlay } from "./scenes/usersoverlay.js";
+import { LoginScreen } from "./scenes/loginscreen.js";
 
 
 const game = new Phaser.Game({
@@ -20,13 +21,16 @@ const game = new Phaser.Game({
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH
     },
+    dom: {
+        createContainer: true
+    },
     physics: {
         default: 'arcade',
         arcade: {
             gravity: { y: 0, x: 0 },
             debug: false,
         }
-    },
+    } 
 });
 
 game.scene.add('StartScreen', StartScreen);
@@ -35,5 +39,7 @@ game.scene.add('TutorialScreen', TutorialScreen);
 game.scene.add('EndScreen', EndScreen);
 game.scene.add('CreditsScreen', CreditsScreen);
 game.scene.add('SettingsScreen', SettingsScreen);
-game.scene.start('StartScreen');
 game.scene.add('UsersOverlay', UsersOverlay); 
+game.scene.add('LoginScreen', LoginScreen);
+//game.scene.start('StartScreen');
+game.scene.start('LoginScreen');
