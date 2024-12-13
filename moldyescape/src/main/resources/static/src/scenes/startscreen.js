@@ -6,9 +6,9 @@ export class StartScreen extends Phaser.Scene{
     }
 
     preload() {
-        this.load.pack('image_pack', "assets/data.json");
-        this.load.json('maps_pack', 'assets/maps.json');
-        this.load.pack('sounds_pack', 'assets/sounds.json');
+        //this.load.pack('image_pack', "assets/data.json");
+        //this.load.json('maps_pack', 'assets/maps.json');
+        //this.load.pack('sounds_pack', 'assets/sounds.json');
         this.cameras.main.fadeIn(500,0,0,0);
    }
 
