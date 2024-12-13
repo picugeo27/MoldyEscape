@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class User {
     private String username;
     private String password;
-    private String lastSeen;
+    private Long lastSeen;
 
     /*
      * {"username": kk,
@@ -17,16 +17,15 @@ public class User {
     @JsonCreator
     public User(@JsonProperty("username") String username,
                 @JsonProperty("password") String password,
-                @JsonProperty("lastSeen") String seen)
+                @JsonProperty("lastSeen") Long seen)
                 {
                     this.username = username;   // el this.es el campo de json
                     this.password = password;   // lo que hay a la derecha es la variable
-                    this.lastSeen = seen;
+                    if (seen != null)
+                        this.lastSeen = seen;
+                    else
+                        this.lastSeen = System.currentTimeMillis();
                 }
-    
-    public User(String username, String password){
-        this(username, password, String.valueOf(System.currentTimeMillis()));
-    }
 
     public String getUsername(){
         return this.username;
@@ -42,5 +41,13 @@ public class User {
 
     public void setPassword(String password){
         this.password = password;
+    }
+
+    public Long getLastSeen(){
+        return this.lastSeen;
+    }
+
+    public void setLastSeen(Long lastSeen){
+        this.lastSeen = lastSeen;
     }
 }
