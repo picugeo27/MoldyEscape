@@ -11,6 +11,7 @@ export class LoginScreen extends Phaser.Scene{
         this.load.json('maps_pack', 'assets/maps.json');
         this.load.pack('sounds_pack', 'assets/sounds.json');
         this.load.html('loginform', 'assets/loginform.html');
+        //this.load.html('loginform', 'assets/formulario.html');
         this.cameras.main.fadeIn(500,0,0,0);
     }
 
@@ -33,7 +34,7 @@ export class LoginScreen extends Phaser.Scene{
 
         const text = this.add.text(10, 10, 'Please login to play', { color: 'white', fontFamily: 'Arial', fontSize: '32px '});
 
-        const element = this.add.dom(200, 200).createFromCache('loginform');
+        const element = this.add.dom(300, 250).createFromCache('loginform');
 
         element.setPerspective(800);
         element.addListener('click');
