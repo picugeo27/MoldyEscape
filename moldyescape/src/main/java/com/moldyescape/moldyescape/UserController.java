@@ -5,7 +5,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.lang.foreign.Linker.Option;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,26 +24,46 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
-@RequestMapping("/api/users")   // cuando se use api users solo se llamara este metodo
+@RequestMapping("/users")   // cuando se use api users solo se llamara este metodo
 public class UserController {
 
     @Autowired  // susceptible de ser inyectado
     private UserService userService;
-
+    @Autowired
+    private KeepAlive keepAliveService;
 
     public UserController(UserService user){
         this.userService = user;
     }
 
-    @GetMapping("/{username}")
+    //
+    // PETICIONES GET
+    //
+
+    @GetMapping
     public ResponseEntity<User> getUser(@RequestParam String username) throws IOException{
         Optional<User> user = this.userService.getUser(username);
 
         return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
+
+    @GetMapping("/connectedcount")
+    public int getConectedCount() {
+        return keepAliveService.getConnectedUsersCount();
+    }
+
+    @GetMapping("/connectedusers")
+    public Set<String> getConnectedUsers() {
+        return keepAliveService.getConnectedUsers();
+    }
     
-    @PostMapping // se ejecuta sobre la raiz
-    public ResponseEntity<User> registerUser(@RequestBody User entity) {
+    
+    //
+    // PETICIONES POST
+    //
+
+    @PostMapping ("/register")// se ejecuta sobre la raiz
+    public ResponseEntity<User> registerUser(@RequestBody User entity) throws IOException{
         boolean added = this.userService.registerUser(entity);
         if(added){
             return ResponseEntity.ok(entity);
@@ -49,10 +71,36 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
     }
-    
-    @DeleteMapping
-    public ResponseEntity<Boolean> deleteUser(@PathVariable String username){
-        this.userService.deleteUser(username);
-        return ResponseEntity.ok(true); // el .ok hace que sea el tipo que tiene que devolver
+
+    @PostMapping("/login")
+    public ResponseEntity<Boolean> loginUser(@RequestParam String username, @RequestParam String password) {
+        return userService.loginUser(username, password);
     }
+    
+    @PostMapping("/logout/{username}")
+    public ResponseEntity<String> logoutUser(@PathVariable String username) {
+        keepAliveService.disconnectUser(username);
+        return ResponseEntity.ok("Sesion cerrada");
+    }
+
+    @PostMapping("/keepalive/{username}")
+    public ResponseEntity<String> keepAlive(@PathVariable String username) {
+        keepAliveService.keepAlive(username);
+        return ResponseEntity.ok("Keep alive recibido");
+    }
+    
+    
+    //
+    // PETICIONES DELETE
+    //
+
+    @DeleteMapping("/{username}")
+    public ResponseEntity<String> deleteUser(@PathVariable String username){
+        boolean deleted = this.userService.deleteUser(username);
+        if (deleted)
+        return ResponseEntity.ok("Usuario eliminado"); // el .ok hace que sea el tipo que tiene que devolver
+        else
+        return ResponseEntity.ok("Error al borrar");
+    }
+    
 }

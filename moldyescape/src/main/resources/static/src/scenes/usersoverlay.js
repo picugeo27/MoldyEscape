@@ -7,48 +7,39 @@
         preload() {
         }
 
-        create() {
+    create() {
+        // Crear un fondo semi-transparente
+        this.overlay = this.add.rectangle(
+            this.cameras.main.centerX,
+            this.cameras.main.centerY,
+            this.cameras.main.width * 0.8,
+            this.cameras.main.height * 0.6,
+            0x000000,
+            0.6 // Opacidad
+        );
+        this.overlay.setOrigin(0.5, 0.5);
+        this.overlay.setVisible(false);
 
+        // Añadir usuarios
+        this.statsText = this.add.text(
+            this.cameras.main.centerX,
+            this.cameras.main.centerY,
+            'Usuarios activos',
+            { fontSize: '20px', color: '#ffffff', align: 'center' }
+        );
+        this.statsText.setOrigin(0.5, 0.5);
+        this.statsText.setVisible(false);
 
-            // Crear un fondo semi-transparente
-            this.overlay = this.add.rectangle(
-                this.cameras.main.centerX,
-                this.cameras.main.centerY,
-                this.cameras.main.width * 0.8,
-                this.cameras.main.height * 0.6,
-                0x000000, //color
-                0.8 // Opacidad
-            );
-            this.overlay.setOrigin(0.5, 0.5);
-            this.overlay.setVisible(false);
+        // Mostrar y ocultar
+        this.input.keyboard.on('keydown-SPACE', () => {
+            this.toggleOverlay(true);
+        });
 
+        this.input.keyboard.on('keyup-SPACE', () => {
+            this.toggleOverlay(false);
+        });
+    }
 
-            // Añadir usuarios
-            this.statsText = this.add.text(
-                this.cameras.main.centerX,
-                this.cameras.main.centerY,
-                'Usuarios activos',
-                { 
-                    fontSize: '20px', 
-                    color: '#ffffff',
-                    align: 'center'
-                
-                });
-
-
-            this.statsText.setOrigin(0.5, 0.5);
-            this.statsText.setVisible(false);
-
-            // Mostrar y ocultar
-            this.input.keyboard.on('keydown-SPACE', () => {
-                this.toggleOverlay(true);
-            });
-
-            this.input.keyboard.on('keyup-SPACE', () => {
-                this.toggleOverlay(false);
-
-            });
-        }
 
         toggleOverlay(show) {
             this.overlay.setVisible(show);
