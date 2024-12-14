@@ -43,3 +43,4 @@ game.scene.add('UsersOverlay', UsersOverlay);
 game.scene.add('LoginScreen', LoginScreen);
 //game.scene.start('StartScreen');
 game.scene.start('LoginScreen');
+game.scene.start('UsersOverlay', UsersOverlay); 

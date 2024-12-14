@@ -31,11 +31,11 @@ export class UsersOverlay extends Phaser.Scene {
         this.statsText.setVisible(false);
 
         // Mostrar y ocultar
-        this.input.keyboard.on('keydown-TAB', () => {
+        this.input.keyboard.on('keydown-SPACE', () => {
             this.toggleOverlay(true);
         });
 
-        this.input.keyboard.on('keyup-TAB', () => {
+        this.input.keyboard.on('keyup-SPACE', () => {
             this.toggleOverlay(false);
         });
     }
