@@ -17,11 +17,25 @@ var connectedUser = {
     }
 }
 
-function setInterval(){}
 
 function keepAlive(){
-    if (connectedUser.username != null){
-        
-        
+    if (connectedUser.username != null) {
+        // Realiza una solicitud AJAX para mantener la conexión activa
+        $.ajax({
+            method: "POST",
+            url: "http://localhost:8080/users/keepalive/"+connectedUser.username,
+            
+        })
+        .done(function(data, textStatus, jqXHR) {
+            console.log("Keepalive success: " + textStatus + " " + jqXHR.status);
+        })
+        .fail(function(data, textStatus, jqXHR) {
+            console.error("Keepalive error: ");
+        });
+    } else {
+        console.log("No connected user. Keepalive not sent.");
     }
 }
+
+setInterval(keepAlive, 10*1000);
+keepAlive();

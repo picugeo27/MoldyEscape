@@ -22,6 +22,7 @@ export class LoginScreen extends Phaser.Scene{
         const boton_atras = this.add.image(400, 550, "boton_volver");
         setupButton(boton_atras, () => {
             boton_click.play();
+            connectedUser.logIn("Paco");
             this.cameras.main.fadeOut(500,0,0,0);
             this.cameras.main.once('camerafadeoutcomplete', () => {
                 this.scene.stop("LoginScreen");
