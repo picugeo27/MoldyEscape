@@ -3,46 +3,135 @@
         constructor() {
             super({ key: 'UsersOverlay'});
         }
+        
+        //Texto del pop-up
+        _statsText = [];
+        //maxUsersOverlay = 13;
+        _currentPage = 0; // Página actual
+        _usersPerPage = 5; // Usuarios por página
+        _maxPages;
 
         preload() {
+            
         }
 
-    create() {
-        // Crear un fondo semi-transparente
-        this.overlay = this.add.rectangle(
-            this.cameras.main.centerX,
-            this.cameras.main.centerY,
-            this.cameras.main.width * 0.8,
-            this.cameras.main.height * 0.6,
-            0x000000,
-            0.6 // Opacidad
-        );
-        this.overlay.setOrigin(0.5, 0.5);
-        this.overlay.setVisible(false);
+        create() {
+            //Conjunto de usuarios conectados, luego tiene que cogerse el conjunto de usuarios conectados (mas bien sus usernames) con una peticion GET.
+            var connectedUsersSet = new Set(["Blanca", "Unai", "Candela", "George", "Paloma", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p"]);
+ 
+            // Crear un fondo semi-transparente
+            this.overlay = this.add.rectangle(
+                this.cameras.main.centerX,
+                this.cameras.main.centerY,
+                this.cameras.main.width * 0.8,
+                this.cameras.main.height * 0.6,
+                0x000000,
+                0.6 // Opacidad
+            );
+            this.overlay.setOrigin(0.5, 0.5);
+            this.overlay.setVisible(false);
 
-        // Añadir usuarios
-        this.statsText = this.add.text(
-            this.cameras.main.centerX,
-            this.cameras.main.centerY,
-            'Usuarios activos',
-            { fontSize: '20px', color: '#ffffff', align: 'center' }
-        );
-        this.statsText.setOrigin(0.5, 0.5);
-        this.statsText.setVisible(false);
 
-        // Mostrar y ocultar
-        this.input.keyboard.on('keydown-SPACE', () => {
-            this.toggleOverlay(true);
-        });
+            //Son rectangulos porque le ha dado por no cargar las imagenes jajajajan't
+            this.leftArrowButton = this.add.rectangle(this.cameras.main.centerX - 250,
+                this.cameras.main.centerY, 50, 50, 0xffffff);
+            this.leftArrowButton.setInteractive().setVisible(false)
+                .on('pointerdown', () => {
+                    this.changePages(0);   
+                });
 
-        this.input.keyboard.on('keyup-SPACE', () => {
-            this.toggleOverlay(false);
-        });
-    }
+            this.rightArrowButton = this.add.rectangle(this.cameras.main.centerX + 250,
+                this.cameras.main.centerY, 50, 50, 0xffffff);
+            this.rightArrowButton.setInteractive().setVisible(false)
+                .on('pointerdown', () => {
+                    this.changePages(1);   
+                 });
+
+            // Añadir usuarios al texto que se mostrará en el overlay por pantalla
+            this.connectedUsers = Array.from(connectedUsersSet);
+            //Maximo de paginas posible para el número de usuarios puesto
+            this._maxPages = Math.ceil(this.connectedUsers.length/this._usersPerPage);
+
+            this.showConnectedUsers();
+            if (this._statsText) {
+                this._statsText.forEach(text => {
+                    text.setVisible(!text.visible);
+                });
+            }
+
+            // Mostrar y ocultar
+            this.input.keyboard.on('keydown-SPACE', () => { 
+                if(this.overlay.visible){
+                    this.toggleOverlay(false);
+                }
+                else{
+                    this.toggleOverlay(true);
+                }
+            });
+            
+        }
 
 
         toggleOverlay(show) {
             this.overlay.setVisible(show);
-            this.statsText.setVisible(show);
+            if (this._statsText) {
+                this._statsText.forEach(text => {
+                    text.setVisible(!text.visible);
+                });
+            }
+            this.leftArrowButton.setVisible(show);
+            this.rightArrowButton.setVisible(show);
+            if(this._currentPage === 0){
+                this.leftArrowButton.setVisible(false);
+            }
+            else if(this._currentPage === this._maxPages){
+                this.rightArrowButton.setVisible(false);
+            }
         }
+
+        changePages(index){
+            //index === 1 para moverse a la derecha, index === 0 para la izquierda
+            if(index === 1){
+                this._currentPage += 1;
+                this.showConnectedUsers();
+            }
+            else if(index === 0){
+                this._currentPage -= 1;
+                this.showConnectedUsers();
+            }
+        }
+
+
+        //Metodo para coger la lista de usernames y mostrarlos en el pop-up al pulsar espacio
+        showConnectedUsers(){
+            this._statsText.forEach(text => text.destroy());
+            this._statsText = [];
+            var start = this._currentPage * this._usersPerPage;
+            var end = start + this._usersPerPage;
+
+            var toShow = this.connectedUsers.slice(start, end);
+
+            for (var index = 0; index < this._usersPerPage; index += 1){
+                const aux = this.add.text(325, 175 + index * 50, toShow[index],
+                    { fontSize: '40px', color: '#ffffff', align: 'center' })//.setVisible(false);
+                    this._statsText.push(aux);
+            }
+            console.log(this._statsText);
+            this.updateButtons();
+
+            //Código para lista que se corta
+            //console.log(connectedUsers);
+            // for(var index = 0; index < this.maxUsersOverlay; index += 1){
+            //     const aux = this.add.text(100, 135 + index * 26, connectedUsers[index],
+            //         { fontSize: '20px', color: '#ffffff', align: 'center' }).setVisible(false);
+            //         this._statsText.push(aux);
+            // }
+        }
+
+        
+        updateButtons(){           
+            this.leftArrowButton.setVisible(this._currentPage > 0 && this.overlay.visible);
+            this.rightArrowButton.setVisible(this._currentPage < this._maxPages - 1 && this.overlay.visible);
+        }
+
     }
