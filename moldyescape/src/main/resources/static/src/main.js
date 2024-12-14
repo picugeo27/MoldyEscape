@@ -35,5 +35,16 @@ game.scene.add('TutorialScreen', TutorialScreen);
 game.scene.add('EndScreen', EndScreen);
 game.scene.add('CreditsScreen', CreditsScreen);
 game.scene.add('SettingsScreen', SettingsScreen);
+<<<<<<< Updated upstream
 game.scene.start('StartScreen');
 game.scene.add('UsersOverlay', UsersOverlay); 
+=======
+game.scene.add('UsersOverlay', UsersOverlay); 
+game.scene.add('LoginScreen', LoginScreen);
+
+//game.scene.start('StartScreen');
+game.scene.start('LoginScreen');
+game.scene.start('UsersOverlay', UsersOverlay);
+
+
+>>>>>>> Stashed changes
