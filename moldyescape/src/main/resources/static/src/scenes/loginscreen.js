@@ -11,7 +11,6 @@ export class LoginScreen extends Phaser.Scene{
         this.load.json('maps_pack', 'assets/maps.json');
         this.load.pack('sounds_pack', 'assets/sounds.json');
         this.load.html('loginform', 'assets/loginform.html');
-        //this.load.html('loginform', 'assets/formulario.html');
         this.cameras.main.fadeIn(500,0,0,0);
     }
 
@@ -32,7 +31,7 @@ export class LoginScreen extends Phaser.Scene{
 
         //Login form
 
-        const text = this.add.text(10, 10, 'Please login to play', { color: 'white', fontFamily: 'Arial', fontSize: '32px '});
+        const text = this.add.text(10, 10, 'Registrate o inicia sesión para jugar', { color: 'white', fontFamily: 'Arial', fontSize: '32px '});
 
         const element = this.add.dom(300, 250).createFromCache('loginform');
 
@@ -55,7 +54,7 @@ export class LoginScreen extends Phaser.Scene{
 
                     //  Populate the text with whatever they typed in as the username!
                     //text.setText(`Welcome ${inputUsername.value}`);
-                    text.setText('Welcome');
+                    text.setText('Bienvenido');
                     element.setVisible(false); // Esconde el formulario
                 }
                 else

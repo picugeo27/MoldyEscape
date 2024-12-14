@@ -72,7 +72,7 @@ export class CreditsScreen extends Phaser.Scene{
                 // Mostrar el mensaje
                 border.setVisible(true);
                 messageBox.setVisible(true);
-                messageText.setVisible(true);
+                messageText.setVisible(true); 
 
                 // Actualizar el texto con el elemento seleccionado
                 //messageText.setText(`Has seleccionado: ${item}`);
