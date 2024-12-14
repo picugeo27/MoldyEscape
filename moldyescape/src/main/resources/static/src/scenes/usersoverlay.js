@@ -1,11 +1,11 @@
 
-export class UsersOverlay extends Phaser.Scene {
-    constructor() {
-        super({ key: 'UsersOverlay'});
-    }
+    export class UsersOverlay extends Phaser.Scene {
+        constructor() {
+            super({ key: 'UsersOverlay'});
+        }
 
-    preload() {
-    }
+        preload() {
+        }
 
     create() {
         // Crear un fondo semi-transparente
@@ -40,8 +40,9 @@ export class UsersOverlay extends Phaser.Scene {
         });
     }
 
-    toggleOverlay(show) {
-        this.overlay.setVisible(show);
-        this.statsText.setVisible(show);
+
+        toggleOverlay(show) {
+            this.overlay.setVisible(show);
+            this.statsText.setVisible(show);
+        }
     }
-}

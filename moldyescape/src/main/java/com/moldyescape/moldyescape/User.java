@@ -13,7 +13,6 @@ public class User {
      * "password": pass123,
      * "lastSeen": 123456789}
      */
-
     @JsonCreator
     public User(@JsonProperty("username") String username,
                 @JsonProperty("password") String password,
