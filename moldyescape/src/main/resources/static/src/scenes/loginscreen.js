@@ -1,5 +1,8 @@
 import { setupButton } from "../types/typedef.js";
 
+//Cargar fuente con FontFace
+//const font = new FontFace('Press Start 2P', 'url(https://fonts.gstatic.com/s/pressstart2p/v13/e3t4euGpGgyyPJc5ITeoYDkUeypByx0.ttf)');
+
 export class LoginScreen extends Phaser.Scene {
     constructor() {
         super({ key: 'LoginScreen' });
@@ -25,8 +28,8 @@ export class LoginScreen extends Phaser.Scene {
 
 
         //Login form
-
-        const text = this.add.text(10, 10, 'Registrate o inicia sesión para jugar', { color: 'white', fontFamily: 'Arial', fontSize: '32px ' });
+        
+        const text = this.add.text(10, 10, 'Registrate o inicia sesión para jugar', { color: 'white', fontFamily: 'Arial', fontSize: '20px ' });
 
         const element = this.add.dom(300, 250).createFromCache('loginform');
 
@@ -64,7 +67,7 @@ export class LoginScreen extends Phaser.Scene {
                 }
                 else {
 
-                    text.setText('Wrong');
+                    text.setText('Inicio de sesión inválido');
                 }
             }
 
