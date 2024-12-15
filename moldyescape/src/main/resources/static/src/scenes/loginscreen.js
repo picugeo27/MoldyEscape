@@ -74,6 +74,25 @@ export class LoginScreen extends Phaser.Scene {
 
     loginExitoso(username) {
         connectedUser.logIn(username);
+
+        console.log("keep alive")
+        if (connectedUser.username != null) {
+            // Realiza una solicitud AJAX para mantener la conexión activa
+            $.ajax({
+                method: "POST",
+                url: "http://localhost:8080/users/keepalive/" + connectedUser.username,
+
+            })
+                .done(function (data, textStatus, jqXHR) {
+                    console.log("Keepalive success: " + textStatus + " " + jqXHR.status);
+                })
+                .fail(function () {
+                    console.error("Keepalive error");
+                });
+        } else {
+            console.log("No connected user. Keepalive not sent.");
+        }
+
         this.cameras.main.fadeOut(500, 0, 0, 0);
         this.cameras.main.once('camerafadeoutcomplete', () => {
             this.scene.stop("LoginScreen");
