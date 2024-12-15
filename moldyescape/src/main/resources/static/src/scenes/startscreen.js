@@ -29,7 +29,7 @@ export class StartScreen extends Phaser.Scene{
             this.registry.set('menuMusic', menuMusic);
         }
 
-        const boton_jugar = this.add.image(400, 550, "boton_jugar");
+        const boton_jugar = this.add.image(675, 325, "boton_jugar");
         const boton_ajustes = this.add.image(675, 475, "boton_ajustes");
         const boton_creditos = this.add.image(675, 550, "boton_creditos");        
 

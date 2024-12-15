@@ -15,6 +15,7 @@ export class LoginScreen extends Phaser.Scene {
         this.load.pack('sounds_pack', 'assets/sounds.json');
         this.load.html('loginform', 'assets/loginform.html');
         this.cameras.main.fadeIn(500, 0, 0, 0);
+
     }
 
     create() {
@@ -25,6 +26,7 @@ export class LoginScreen extends Phaser.Scene {
         setupButton(boton_atras, () => {
             boton_click.play();
         });
+
 
 
         //Login form
