@@ -17,5 +17,4 @@ public class MoldyescapeApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MoldyescapeApplication.class, args);
 	}
-
 }

@@ -116,7 +116,6 @@
                     { fontSize: '40px', color: '#ffffff', align: 'center' })//.setVisible(false);
                     this._statsText.push(aux);
             }
-            console.log(this._statsText);
             this.updateButtons();
 
             //Código para lista que se corta
