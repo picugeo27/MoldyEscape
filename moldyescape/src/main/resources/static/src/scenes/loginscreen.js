@@ -30,7 +30,7 @@ export class LoginScreen extends Phaser.Scene {
 
 
         //Login form
-        
+
         const text = this.add.text(10, 10, 'Registrate o inicia sesión para jugar', { color: 'white', fontFamily: 'Arial', fontSize: '20px ' });
 
         const element = this.add.dom(300, 250).createFromCache('loginform');
@@ -47,7 +47,7 @@ export class LoginScreen extends Phaser.Scene {
 
             if (event.target.name === 'loginButton') {
 
-                
+
                 if (inputUsername !== '' && inputPassword !== '') {
 
                     $.ajax({
@@ -72,46 +72,36 @@ export class LoginScreen extends Phaser.Scene {
 
                     text.setText('Inicio de sesión inválido');
                 }
-                        }else if (event.target.name === 'registerButton') {
-                            // Lógica de registro
-                            if (inputUsername !== '' && inputPassword !== '') {
-                                const requestBody = {
-                                    username: inputUsername,
-                                    password: inputPassword,
-                                };
-            
-                                fetch('http://localhost:8080/users/register', {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                    },
-                                    body: JSON.stringify(requestBody), // Enviamos los datos
-                                })
-                                    .then((response) => {
-                                        if (response.ok) {
-                                            text.setText('Registro completo');
-                                            element.setVisible(false); // Esconde el formulario
+            } else if (event.target.name === 'registerButton') {
+                // Lógica de registro
+                if (inputUsername !== '' && inputPassword !== '') {
+                    const requestBody = {
+                        username: inputUsername,
+                        password: inputPassword,
+                    };
 
-                                            this.cameras.main.fadeOut(500, 0, 0, 0);
-                                    this.cameras.main.once('camerafadeoutcomplete', () => {
-                                        this.scene.stop("LoginScreen");
-                                        this.scene.start("StartScreen");
-                                     })
-                                    
-                                    } else {
-                                            text.setText('Ya hay un usuario con este nombre');
-                                        }
-                                    })
-                                    .catch((error) => {
-                                        text.setText('Error durante el registro');
-                                        console.error(error);
-                                    });
-                            } else {
-                                text.setText('Rellene todos los campos');
-                            }
+                    $.ajax({
+                        method: "POST",
+                        url: "http://localhost:8080/users/register",
+                        data: JSON.stringify({ username: inputUsername, password: inputPassword }),
+                        processData: false,
+                        headers: {
+                            "Content-type": "application/json"
                         }
-                    });
+                    }).done(() => {
+                        this.loginExitoso(inputUsername);
+                    })
+                        .fail(function (data) {
+                            console.log(data);
+                        });
+
+
+                } else {
+                    text.setText('Rellene todos los campos');
                 }
+            }
+        });
+    }
 
     loginExitoso(username) {
         connectedUser.logIn(username);
