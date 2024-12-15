@@ -39,14 +39,15 @@ export class LoginScreen extends Phaser.Scene {
         element.addListener('click');
 
         element.on('click', (event) => {
+            // @ts-ignore
+            const inputUsername = element.getChildByName('username').value;
+            // @ts-ignore
+            const inputPassword = element.getChildByName('password').value;
+            console.log(inputUsername)
 
             if (event.target.name === 'loginButton') {
 
-                // @ts-ignore
-                const inputUsername = element.getChildByName('username').value;
-                // @ts-ignore
-                const inputPassword = element.getChildByName('password').value;
-                console.log(inputUsername)
+                
                 if (inputUsername !== '' && inputPassword !== '') {
 
                     $.ajax({
@@ -71,11 +72,46 @@ export class LoginScreen extends Phaser.Scene {
 
                     text.setText('Inicio de sesión inválido');
                 }
-            }
+                        }else if (event.target.name === 'registerButton') {
+                            // Lógica de registro
+                            if (inputUsername !== '' && inputPassword !== '') {
+                                const requestBody = {
+                                    username: inputUsername,
+                                    password: inputPassword,
+                                };
+            
+                                fetch('http://localhost:8080/users/register', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify(requestBody), // Enviamos los datos
+                                })
+                                    .then((response) => {
+                                        if (response.ok) {
+                                            text.setText('Registro completo');
+                                            element.setVisible(false); // Esconde el formulario
 
-        });
-
-    }
+                                            this.cameras.main.fadeOut(500, 0, 0, 0);
+                                    this.cameras.main.once('camerafadeoutcomplete', () => {
+                                        this.scene.stop("LoginScreen");
+                                        this.scene.start("StartScreen");
+                                     })
+                                    
+                                    } else {
+                                            text.setText('Ya hay un usuario con este nombre');
+                                        }
+                                    })
+                                    .catch((error) => {
+                                        text.setText('Error durante el registro');
+                                        console.error(error);
+                                    });
+                            } else {
+                                text.setText('Rellene todos los campos');
+                            }
+                        }
+                    });
+                }
 
     loginExitoso(username) {
         connectedUser.logIn(username);
