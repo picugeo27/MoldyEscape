@@ -26,6 +26,7 @@ public class UserService {
         this.userdao = userDao;
         this.lock = new ReentrantReadWriteLock();
         loadAllUsers();
+
     }
 
     // carga todos los usuarios a la variable
@@ -39,22 +40,22 @@ public class UserService {
         }
     }
 
+    public void initRanking(Ranking ranking) {
+        for (var user : allUsers) {
+            ranking.addUser(user);
+        }
+    }
+
     // busca el usuario que se pide y lo devuelve
     public Optional<User> getUser(String username) throws IOException {
-        var readLock = lock.readLock();
-        readLock.lock();
-        try {
 
-            for (var user : allUsers) {
-                if (user.getUsername().equals(username)) {
-                    return Optional.of(user);
-                }
+        for (var user : allUsers) {
+            if (user.getUsername().equals(username)) {
+                return Optional.of(user);
             }
-            return Optional.empty();
-
-        } finally {
-            readLock.unlock();
         }
+        return Optional.empty();
+
     }
 
     // se pasa un usuario, si ya existe el nombre de usuario devuelve falso
@@ -100,45 +101,65 @@ public class UserService {
         writeLock.lock();
         try {
             boolean deleted = this.userdao.deleteUser(username);
+
+            int i = getUserIndex(username);
+            if (i != -1)
+                allUsers.remove(i);
             return deleted;
         } finally {
             writeLock.unlock();
         }
     }
 
-    public boolean addWin(String username){
+    public boolean addWin(String username) {
         var writeLock = lock.writeLock();
         writeLock.lock();
         try {
-            for(var user: allUsers){
-                if(user.getUsername().equals(username)){
+            for (var user : allUsers) {
+                if (user.getUsername().equals(username)) {
                     user.addWin();
                     boolean added = this.userdao.updateUser(user);
                     return added;
                 }
             }
-            
+
         } finally {
             writeLock.unlock();
         }
         return false;
     }
 
-    // devuelve true si ya existe el usuario, sino devuelve false
-    private boolean existsUser(String username) throws IOException {
+    public ResponseEntity<Integer> getWins(String username) {
         var readLock = lock.readLock();
         readLock.lock();
         try {
 
             for (var user : allUsers) {
                 if (user.getUsername().equals(username)) {
-                    return true;
+                    return ResponseEntity.ok(user.getMatchesWon());
                 }
             }
         } finally {
             readLock.unlock();
         }
+        return (ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
+    // devuelve true si ya existe el usuario, sino devuelve false
+    private boolean existsUser(String username) throws IOException {
+        for (var user : allUsers) {
+            if (user.getUsername().equals(username)) {
+                return true;
+            }
+        }
         return false;
     }
 
+    private int getUserIndex(String username) {
+        for (int i = 0; i < allUsers.size(); i++) {
+            if (allUsers.get(i).getUsername().equals(username))
+                return i;
+        }
+        return -1;
+    }
 }
