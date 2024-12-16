@@ -102,7 +102,11 @@
                 "type": "image",
                 "key": "Logout",
                 "url": "Logout.png"
-
+            },
+            {
+                "type": "image",
+                "key": "boton_ranking",
+                "url": "BotonRanking.png"
             }
 
         ]
