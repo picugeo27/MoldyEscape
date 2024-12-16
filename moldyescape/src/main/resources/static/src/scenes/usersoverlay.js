@@ -131,7 +131,7 @@ export class UsersOverlay extends Phaser.Scene {
     async getConnectedUsers() {
         $.ajax({
             method: "GET",
-            url: "http://localhost:8080/users/connectedusers"
+            url: "/users/connectedusers"
         }).done((data) => {
             this.connectedUsersSet = data;
             this.connectedUsers = Array.from(this.connectedUsersSet);

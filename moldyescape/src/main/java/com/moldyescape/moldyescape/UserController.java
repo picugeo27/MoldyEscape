@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 @RestController
 @RequestMapping("/users") // cuando se use api users solo se llamara este metodo
@@ -80,6 +82,17 @@ public class UserController {
     public ResponseEntity<String> keepAlive(@PathVariable String username) {
         keepAliveService.keepAlive(username);
         return ResponseEntity.ok("Keep alive recibido");
+    }
+
+
+    //
+    // PETICIONES PUT
+    //
+
+    @PutMapping("win/{username}")
+    public ResponseEntity<Boolean> putMethodName(@PathVariable String username) {
+        boolean added = userService.addWin(username);
+        return ResponseEntity.ok(added);
     }
 
     //

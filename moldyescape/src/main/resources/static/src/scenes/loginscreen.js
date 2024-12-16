@@ -20,14 +20,6 @@ export class LoginScreen extends Phaser.Scene {
 
     create() {
         this.add.image(0, 0, 'credits_background').setOrigin(0, 0).setScale(1);
-        const boton_click = this.sound.add('boton_click', { volume: 1 });
-
-        const boton_atras = this.add.image(400, 550, "boton_volver");
-        setupButton(boton_atras, () => {
-            boton_click.play();
-        });
-
-
 
         //Login form
 
@@ -52,7 +44,7 @@ export class LoginScreen extends Phaser.Scene {
 
                     $.ajax({
                         method: "POST",
-                        url: "http://localhost:8080/users/login?username=" + inputUsername + "&password=" + inputPassword,
+                        url: "/users/login?username=" + inputUsername + "&password=" + inputPassword,
 
                     })
                         .done(() => {
@@ -82,7 +74,7 @@ export class LoginScreen extends Phaser.Scene {
 
                     $.ajax({
                         method: "POST",
-                        url: "http://localhost:8080/users/register",
+                        url: "/users/register",
                         data: JSON.stringify({ username: inputUsername, password: inputPassword }),
                         processData: false,
                         headers: {
@@ -93,6 +85,7 @@ export class LoginScreen extends Phaser.Scene {
                     })
                         .fail(function (data) {
                             console.log(data);
+                            text.setText("Este usuario ya existe");
                         });
 
 
@@ -111,7 +104,7 @@ export class LoginScreen extends Phaser.Scene {
             // Realiza una solicitud AJAX para mantener la conexión activa
             $.ajax({
                 method: "POST",
-                url: "http://localhost:8080/users/keepalive/" + connectedUser.username,
+                url: "/users/keepalive/" + connectedUser.username,
 
             })
                 .done(function (data, textStatus, jqXHR) {

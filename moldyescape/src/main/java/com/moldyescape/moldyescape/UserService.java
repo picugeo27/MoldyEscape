@@ -1,15 +1,12 @@
 package com.moldyescape.moldyescape;
 
 import java.io.IOException;
-import java.lang.foreign.Linker.Option;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -107,6 +104,24 @@ public class UserService {
         } finally {
             writeLock.unlock();
         }
+    }
+
+    public boolean addWin(String username){
+        var writeLock = lock.writeLock();
+        writeLock.lock();
+        try {
+            for(var user: allUsers){
+                if(user.getUsername().equals(username)){
+                    user.addWin();
+                    boolean added = this.userdao.updateUser(user);
+                    return added;
+                }
+            }
+            
+        } finally {
+            writeLock.unlock();
+        }
+        return false;
     }
 
     // devuelve true si ya existe el usuario, sino devuelve false
