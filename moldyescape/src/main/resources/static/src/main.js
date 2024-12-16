@@ -9,6 +9,7 @@ import { SettingsScreen } from "./scenes/settingsscreen.js";
 import { TutorialScreen } from "./scenes/tutorialscreen.js";
 import { UsersOverlay } from "./scenes/usersoverlay.js";
 import { LoginScreen } from "./scenes/loginscreen.js";
+import { RankingScreen } from "./scenes/rankingscreen.js";
 
 
 const game = new Phaser.Game({
@@ -41,6 +42,7 @@ game.scene.add('CreditsScreen', CreditsScreen);
 game.scene.add('SettingsScreen', SettingsScreen);
 game.scene.add('UsersOverlay', UsersOverlay); 
 game.scene.add('LoginScreen', LoginScreen);
+game.scene.add('RankingScreen', RankingScreen);
 //game.scene.start('StartScreen');
 game.scene.start('LoginScreen');
 game.scene.start('UsersOverlay', UsersOverlay); 

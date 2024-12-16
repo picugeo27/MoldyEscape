@@ -29,9 +29,21 @@ export class StartScreen extends Phaser.Scene{
             this.registry.set('menuMusic', menuMusic);
         }
 
+        const boton_ranking = this.add.image(675, 250, "boton_ranking");
         const boton_jugar = this.add.image(675, 325, "boton_jugar");
         const boton_ajustes = this.add.image(675, 475, "boton_ajustes");
-        const boton_creditos = this.add.image(675, 550, "boton_creditos");        
+        const boton_creditos = this.add.image(675, 550, "boton_creditos");     
+
+        setupButton(boton_ranking,()=>{
+            boton_click.play();
+            this.cameras.main.fadeOut(500,0,0,0);
+            this.cameras.main.once('camerafadeoutcomplete', () => {
+                this.scene.stop("StartScreen");
+                this.scene.start("RankingScreen");
+            });
+               
+        })
+
 
         setupButton(boton_jugar,()=>{
             boton_click.play();
