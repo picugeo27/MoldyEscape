@@ -97,6 +97,11 @@
                 "type": "image",
                 "key": "boton_tutorial",
                 "url": "BotonTutorial.png"
+            },
+            {
+                "type": "image",
+                "key": "boton_ranking",
+                "url": "BotonRanking.png"
             }
 
         ]
