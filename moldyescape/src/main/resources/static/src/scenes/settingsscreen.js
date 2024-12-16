@@ -6,6 +6,7 @@ export class SettingsScreen extends Phaser.Scene{
     }
 
     preload() {
+
         this.cameras.main.fadeIn(500,0,0,0);
     }
 
@@ -82,6 +83,8 @@ export class SettingsScreen extends Phaser.Scene{
         
         const boton_full_screen = this.add.image(400, 350, "boton_fullscreen");
         const boton_atras = this.add.image(200, 550, "boton_volver");
+        const boton_borrar_usuario = this.add.image(20,20, "Logout").setScale(0.01).setInteractive();
+            
 
 
          setupButton(boton_full_screen, () =>{
@@ -104,8 +107,43 @@ export class SettingsScreen extends Phaser.Scene{
                  this.scene.start("StartScreen");
             })
         });
+     
         
+        boton_borrar_usuario.on('pointerdown', () => {
+            console.log('Botón de borrar usuario presionado');
+            boton_click.play();
+            
+            
+            // Confirmación (opcional)
+                const usernameToDelete = connectedUser.username; // Obtener el nombre de usuario conectado
+                if (!usernameToDelete) {
+                    console.error("No hay un usuario conectado para borrar.");
+                    return;
+                }
         
+                this.time.delayedCall(500, () => {
+                    // Enviar la petición DELETE
+                    $.ajax({
+                        method: "DELETE",
+                        url: `http://localhost:8080/users/${usernameToDelete}`,
+                    })
+                        .done(() => {
+                            console.log(`Usuario ${usernameToDelete} borrado exitosamente.`);
+        
+                            // Realizar logout
+                            connectedUser.logOut();
+        
+                            // Redirigir a la pantalla de login
+                            this.cameras.main.fadeOut(500, 0, 0, 0);
+                            this.cameras.main.once('camerafadeoutcomplete', () => {
+                                this.scene.stop("SettingsScreen");
+                                this.scene.start("LoginScreen");
+                            });
+                        })
+                        .fail(() => {
+                            console.error(`Error al borrar el usuario`);
+                        });
+                });
+            });
+            }
     }
-
-}
