@@ -8,7 +8,7 @@ export class RankingScreen extends Phaser.Scene {
     async preload(){
         await this.getRankedUsers();
     }
-    async create(){
+    create(){
         
     }
 
@@ -29,5 +29,9 @@ export class RankingScreen extends Phaser.Scene {
         }).fail(function (data, message) {
             console.log(message);
         })
+    }
+
+    showRanking(){
+        
     }
 }

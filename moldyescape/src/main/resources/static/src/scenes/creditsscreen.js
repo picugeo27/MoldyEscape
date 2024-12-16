@@ -93,6 +93,7 @@ export class CreditsScreen extends Phaser.Scene{
                     default:
                         messageText.setText("Profe merecemos un 10");
                 }
+                
             });
         });
         
