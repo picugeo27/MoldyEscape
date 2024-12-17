@@ -346,6 +346,12 @@ Después de que uno de los jugadores consiga su objetivo, se acabará la partida
 
 **Blanca García Vera:** Programación.
 
+
+## Diagrama de clases de la aplicación
+<div align="center">
+   <img src="imagenes_readme/DiagramaFlujoPantallas.png" alt="Diagrama de clases de la API REST" width="700" height="350">
+</div>
+
 ## Instrucciones
 
 Antes de nada, suponemos que se tiene instalado el java (como comentamos en clase), que es necesario para poder iniciar el servidor. 
