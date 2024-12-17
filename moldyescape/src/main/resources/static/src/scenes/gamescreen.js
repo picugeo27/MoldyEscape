@@ -48,6 +48,7 @@ export class GameScreen extends Phaser.Scene{
         //Particulas
         this.load.image('particle', 'assets/Interactuables/particula.png');
         this.load.image('trapParticle', 'assets/Interactuables/particulaTrampa.png');
+        this.load.html('chatform', 'assets/chatform.html');
 
         const tileMapData = this.cache.json.get('maps_pack');
         if (this.mapValue != 0 && this.mapValue != 1)
@@ -90,6 +91,37 @@ export class GameScreen extends Phaser.Scene{
         this._gameMusic = this.sound.add('game_music', {loop:true, volume:1});
         this._gameMusic.play();
 
+        ////////////////////////////////////////////////
+        //CHAT
+        ////////////////////////////////////////////////
+
+
+        const element = this.add.dom(300, 250).createFromCache('chat');
+
+        element.setPerspective(800);
+        element.addListener('click');
+
+        element.on('click', (event) => {
+            // @ts-ignore
+            const inputMessage = element.getChildByName('chat').value;
+            console.log(inputMessage)
+
+            if (event.target.name === 'sendButton') {
+
+
+                if (inputMessage !== '') {  //Si el mensaje no está vacío
+
+                   //Guardar el mensaje en una lista de strings
+                    
+                }
+                else {
+
+                    //text.setText('Inicio de sesión inválido');
+                }
+            }
+        });
+
+        /////////////////////////////////////
     }
 
     createButtons(){
