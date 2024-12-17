@@ -6,9 +6,9 @@ import { Trap } from "../objects/trap.js";
 
 const buttonsToWin = 3;
 
-export class GameScreen extends Phaser.Scene{
-    constructor(){
-        super({key: 'GameScreen'});
+export class GameScreen extends Phaser.Scene {
+    constructor() {
+        super({ key: 'GameScreen' });
     }
 
     /** @type {Phaser.Tilemaps.TilemapLayer}*/
@@ -16,9 +16,9 @@ export class GameScreen extends Phaser.Scene{
     /** @type {Phaser.Tilemaps.TilemapLayer}*/
     #doorLayer = null;
     /**@type {Coordinates} */
-    #playerCoordinates = new Coordinates(15,9);
+    #playerCoordinates = new Coordinates(15, 9);
     /**@type {Coordinates} */
-    #enemyCoordinates = new Coordinates(9,15);
+    #enemyCoordinates = new Coordinates(9, 15);
     /**@type {InputManager} */
     #keyManager;
 
@@ -26,7 +26,7 @@ export class GameScreen extends Phaser.Scene{
     #traps;
 
     #pushedButtons = 0;
-    
+
     /**@type {Player} */
     #player;
     /**@type {Enemy} */
@@ -38,11 +38,11 @@ export class GameScreen extends Phaser.Scene{
     _pressButtonSound;
     _gameMusic;
 
-    init(data){
+    init(data) {
         this.mapValue = data.data;
     }
 
-    preload(){
+    preload() {
         this.scale.resize(960, this.scale.height);
 
         //Particulas
@@ -57,82 +57,54 @@ export class GameScreen extends Phaser.Scene{
         this.#mapKey = tileMapData.maps[this.mapValue].key;
         this.#mapUsed = tileMapData.maps[this.mapValue].name;
 
-        this.cameras.main.fadeIn(500,0,0,0);
+        this.cameras.main.fadeIn(500, 0, 0, 0);
     }
 
-    create(){
+    create() {
 
         // Creamos el tilemap y las capas
-        const map = this.make.tilemap({key: this.#mapKey, tileHeight: 24, tileWidth: 24});    //1 para mapa 1, 2 para mapa 2
+        const map = this.make.tilemap({ key: this.#mapKey, tileHeight: 24, tileWidth: 24 });    //1 para mapa 1, 2 para mapa 2
         const tileset = map.addTilesetImage(this.#mapUsed, "lab_tiles");   //1 para mapa 1, 2 para mapa 2
         const backgroundLayer = map.createLayer("Fondo", tileset, MAP_INIT, 0);     //Capa de fondo
         this.#colliderLayer = map.createLayer("Paredes", tileset, MAP_INIT, 0);    //Capa de colliders
         this.#doorLayer = map.createLayer("Puertas", tileset, MAP_INIT, 0);    //Capa de puertas
 
-        this.add.image(0,0, "banner_player").setOrigin(0,0);
-        this.add.image(780,0, "banner_enemy").setOrigin(0,0);
+        this.add.image(0, 0, "banner_player").setOrigin(0, 0);
+        this.add.image(780, 0, "banner_enemy").setOrigin(0, 0);
 
         // Creamos key manager, jugador, enemigo y su colision
-        this.#keyManager = new InputManager(this);      
+        this.#keyManager = new InputManager(this);
 
         this.#player = new Player(this, this.#playerCoordinates, this.#keyManager);
         this.#enemy = new Enemy(this, this.#enemyCoordinates, this.#keyManager);
-        
+
         this.physics.add.overlap(this.#player, this.#enemy, this.enemyWin.bind(this));
 
         // aqui llamamos el metodo que crea los botones, lo separe para que create no sea tan grande
         this.createButtons();
-        
+
         /** @type {Phaser.GameObjects.Group} */
         this.#traps = this.physics.add.group();
 
-        this._pressButtonSound = this.sound.add('take_button', {volume:1});
-        this._gameMusic = this.sound.add('game_music', {loop:true, volume:1});
+        this._pressButtonSound = this.sound.add('take_button', { volume: 1 });
+        this._gameMusic = this.sound.add('game_music', { loop: true, volume: 1 });
         this._gameMusic.play();
 
-        ////////////////////////////////////////////////
-        //CHAT
-        ////////////////////////////////////////////////
 
-
-        const element = this.add.dom(300, 250).createFromCache('chat');
-
-        element.setPerspective(800);
-        element.addListener('click');
-
-        element.on('click', (event) => {
-            // @ts-ignore
-            const inputMessage = element.getChildByName('chat').value;
-            console.log(inputMessage)
-
-            if (event.target.name === 'sendButton') {
-
-
-                if (inputMessage !== '') {  //Si el mensaje no está vacío
-
-                   //Guardar el mensaje en una lista de strings
-                    
-                }
-                else {
-
-                    //text.setText('Inicio de sesión inválido');
-                }
-            }
-        });
 
         /////////////////////////////////////
     }
 
-    createButtons(){
+    createButtons() {
         /** @type {Phaser.GameObjects.Group} */
-        this.#buttons  = this.physics.add.group();
+        this.#buttons = this.physics.add.group();
 
         // aqui metemos las coordeanadas de todos los botones que queramos
         const buttonsPosition = [
-            new Coordinates(1,1),
-            new Coordinates (23, 1),
+            new Coordinates(1, 1),
+            new Coordinates(23, 1),
             new Coordinates(1, 23),
-            new Coordinates(23,23)
+            new Coordinates(23, 23)
         ]
         // se crean los botones y la colision con el personaje
         buttonsPosition.forEach((coordinates, index) => {
@@ -143,29 +115,29 @@ export class GameScreen extends Phaser.Scene{
     }
 
     // que hacer cuando gana el jugador
-    playerWin(){
+    playerWin() {
         this._gameMusic.stop();
         this.scene.remove('GameScreen');
-        this.scene.start('EndScreen', {playerIsWinner: true, map: this.mapValue});
+        this.scene.start('EndScreen', { playerIsWinner: true, map: this.mapValue });
     }
 
     // que hacer cuando gana el monstruo
-    enemyWin(){
+    enemyWin() {
         this._gameMusic.stop();
         this.scene.remove('GameScreen');
-        this.scene.start('EndScreen', {playerIsWinner: false, map: this.mapValue});
+        this.scene.start('EndScreen', { playerIsWinner: false, map: this.mapValue });
     }
 
 
     // Cuando se pulsa un boton que se hace (no podemos quitar ese player que no se usa porque sino por como se invoca el player desaparece)
-    pushButton = (player, element) =>{
+    pushButton = (player, element) => {
         this._pressButtonSound.play();
 
         //particulas
         element.setFrame(1);
         this.leverParticle(element.x, element.y);
         element.body.enable = false;
-        this.#pushedButtons +=1;
+        this.#pushedButtons += 1;
         if (this.#pushedButtons >= buttonsToWin)
             this.playerWin();
     }
@@ -174,11 +146,11 @@ export class GameScreen extends Phaser.Scene{
      * @param {Coordinates} coordinates 
      */
 
-    setTrap(coordinates){
+    setTrap(coordinates) {
         const trap = new Trap(this, coordinates);
         this.#traps.add(trap);
         this.trapParticle(coordinates.getRealX(), coordinates.getRealY());
-        
+
         this.physics.add.overlap(this.#player, trap, () => {
             this.#player.slow();
             trap.destroy();
@@ -189,38 +161,38 @@ export class GameScreen extends Phaser.Scene{
      * 
      * @param {Coordinates} coordinates 
      */
-    
-    isWalkable(coordinates){
 
-        const tile = this.#colliderLayer.getTileAt(coordinates.x,coordinates.y);
+    isWalkable(coordinates) {
+
+        const tile = this.#colliderLayer.getTileAt(coordinates.x, coordinates.y);
         return tile == null || tile.index == 0;
     }
 
-    leverParticle(leverX, leverY){
+    leverParticle(leverX, leverY) {
         const particleDuration = 500;
-        const emitter = this.add.particles(leverX, leverY,'particle',{
+        const emitter = this.add.particles(leverX, leverY, 'particle', {
             angle: { min: 0, max: 360 },
             speed: { min: 50, max: 100 },
             lifespan: 200,
             gravityY: 200,
             quantity: 1,
-         })
-         this.time.delayedCall(particleDuration, ()=> {
+        })
+        this.time.delayedCall(particleDuration, () => {
             emitter.stop();
-         })
+        })
     }
 
-    trapParticle(coordX, coordY){
+    trapParticle(coordX, coordY) {
         const particleDuration = 500;
-        const emitter = this.add.particles(coordX, coordY,'trapParticle',{
+        const emitter = this.add.particles(coordX, coordY, 'trapParticle', {
             angle: { min: 0, max: 360 },
             speed: { min: 50, max: 100 },
             lifespan: 200,
             gravityY: 200,
             quantity: 1,
-         })
-         this.time.delayedCall(particleDuration, ()=> {
+        })
+        this.time.delayedCall(particleDuration, () => {
             emitter.stop();
-         })
+        })
     }
 }

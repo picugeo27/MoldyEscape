@@ -64,7 +64,7 @@ var connectedUser = {
     logIn: function (username) {
         this.username = username;
         this.logged = true;
-        intervalo = setInterval(keepAlive, 10 * 1000);
+        intervalo = setInterval(keepAlive, 5 * 1000);
 
     },
 

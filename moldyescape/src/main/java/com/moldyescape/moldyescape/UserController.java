@@ -72,6 +72,7 @@ public class UserController {
     public ResponseEntity<User> registerUser(@RequestBody User entity) throws IOException {
         boolean added = this.userService.registerUser(entity);
         if (added) {
+            ranking.addUser(entity);
             return ResponseEntity.ok(entity);
         } else {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();

@@ -7,7 +7,6 @@ export class UsersOverlay extends Phaser.Scene {
     //Texto del pop-up
     _statsText = [];
     intervalo;
-    //maxUsersOverlay = 13;
     _currentPage = 0; // Página actual
     _usersPerPage = 5; // Usuarios por página
     _maxPages;
@@ -19,8 +18,6 @@ export class UsersOverlay extends Phaser.Scene {
 
     async create() {
         this.scene.bringToTop();
-        //Conjunto de usuarios conectados, luego tiene que cogerse el conjunto de usuarios conectados (mas bien sus usernames) con una peticion GET.
-        //var connectedUsersSet = new Set(["Blanca", "Unai", "Candela", "George", "Paloma", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n"]);
 
         this.connectedUsersSet = new Set();
         this.connectedUsers = [];
@@ -37,36 +34,20 @@ export class UsersOverlay extends Phaser.Scene {
         this.overlay.setOrigin(0.5, 0.5);
         this.overlay.setVisible(false);
 
-
-        //Son rectangulos porque le ha dado por no cargar las imagenes jajajajan't
-        //  this.leftArrowButton = this.add.rectangle(this.cameras.main.centerX - 250,
-        //      this.cameras.main.centerY, 50, 50, 0xffffff);
-        //  this.leftArrowButton.setInteractive().setVisible(false)
-        //      .on('pointerdown', () => {
-        //          this.changePages(0);
-        //      })
-        //  this.rightArrowButton = this.add.rectangle(this.cameras.main.centerX + 250,
-        //      this.cameras.main.centerY, 50, 50, 0xffffff);
-        //  this.rightArrowButton.setInteractive().setVisible(false)
-        //      .on('pointerdown', () => {
-        //          this.changePages(1);
-        //      });
-
-        
         this.leftArrowButton = this.add.image(this.cameras.main.centerX - 250, this.cameras.main.centerY, "boton_flecha").setScale(0.9);
         this.leftArrowButton.setInteractive().setVisible(false)
             .on('pointerdown', () => {
-                this.changePages(0);   
+                this.changePages(0);
             });
-        
+
         this.rightArrowButton = this.add.image(this.cameras.main.centerX + 250, this.cameras.main.centerY, "boton_flecha").setScale(0.9)
         this.rightArrowButton.flipX = true;
         this.rightArrowButton.setInteractive().setVisible(false)
             .on('pointerdown', () => {
-                    this.changePages(1);   
+                this.changePages(1);
             });
-        
-            
+
+
 
         // Mostrar y ocultar
         this.input.keyboard.on('keydown-SPACE', () => {
@@ -128,14 +109,6 @@ export class UsersOverlay extends Phaser.Scene {
             this._statsText.push(aux);
         }
         this.updateButtons();
-
-        //Código para lista que se corta
-        //console.log(connectedUsers);
-        // for(var index = 0; index < this.maxUsersOverlay; index += 1){
-        //     const aux = this.add.text(100, 135 + index * 26, connectedUsers[index],
-        //         { fontSize: '20px', color: '#ffffff', align: 'center' }).setVisible(false);
-        //         this._statsText.push(aux);
-        // }
     }
 
 

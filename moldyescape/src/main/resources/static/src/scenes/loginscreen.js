@@ -1,8 +1,5 @@
 import { setupButton } from "../types/typedef.js";
 
-//Cargar fuente con FontFace
-//const font = new FontFace('Press Start 2P', 'url(https://fonts.gstatic.com/s/pressstart2p/v13/e3t4euGpGgyyPJc5ITeoYDkUeypByx0.ttf)');
-
 export class LoginScreen extends Phaser.Scene {
     constructor() {
         super({ key: 'LoginScreen' });
@@ -23,12 +20,6 @@ export class LoginScreen extends Phaser.Scene {
         this.add.image(0, 0, 'credits_background').setOrigin(0, 0).setScale(1);
         const boton_click = this.sound.add('boton_click', { volume: 1 });
 
-        const boton_atras = this.add.image(400, 550, "boton_volver");
-        setupButton(boton_atras, () => {
-            boton_click.play();
-        });
-
-
         //Login form
 
         const text = this.add.text(10, 10, 'Registrate o inicia sesión para jugar', { color: 'white', fontFamily: 'Arial', fontSize: '20px ' });
@@ -43,7 +34,6 @@ export class LoginScreen extends Phaser.Scene {
             const inputUsername = element.getChildByName('username').value;
             // @ts-ignore
             const inputPassword = element.getChildByName('password').value;
-            console.log(inputUsername)
 
             if (event.target.name === 'loginButton') {
 

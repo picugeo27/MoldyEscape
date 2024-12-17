@@ -68,9 +68,7 @@ export class RankingScreen extends Phaser.Scene {
     }
 
     async getRankedUsers() {
-        //Placeholder
-        //var staticList = ["Blanca", "Unai", "Candela", "George", "Paloma"];
-        //this._rankingList = staticList;
+
         $.ajax({
             method: "GET",
             url: "/users/getranking"
@@ -84,9 +82,6 @@ export class RankingScreen extends Phaser.Scene {
             const lineHeight = 40;
 
             this.showRanking(startX, startY, lineHeight);
-            //this._maxPages = Math.ceil(this.connectedUsers.length / this._usersPerPage);
-            //this.showConnectedUsers();
-            //this.hideTexts();
 
         }).fail(function (data, message) {
             console.log(message);
@@ -146,23 +141,23 @@ export class RankingScreen extends Phaser.Scene {
             });
         playerText.on('pointerover', () => playerText.setStyle({ stroke: '#f39c12' }))
         playerText.on('pointerout', () => playerText.setStyle({ stroke: "3A5FCE" }))
-        .on('pointerdown', async () => {
+            .on('pointerdown', async () => {
 
-            const data = await new Promise((resolve, reject) => {
-                $.ajax({
-                    method: "GET",
-                    url: "/users/getwins?username=" + connectedUser.username,
-                    success: resolve,
-                    error: reject
+                const data = await new Promise((resolve, reject) => {
+                    $.ajax({
+                        method: "GET",
+                        url: "/users/getwins?username=" + connectedUser.username,
+                        success: resolve,
+                        error: reject
+                    });
                 });
-            });
-            this.messageText.text = "Número de partidas ganadas: " + data;
-            // Mostrar el mensaje
-            this.border.setVisible(true);
-            this.messageBox.setVisible(true);
-            this.messageText.visible = true;
-            ;
+                this.messageText.text = "Número de partidas ganadas: " + data;
+                // Mostrar el mensaje
+                this.border.setVisible(true);
+                this.messageBox.setVisible(true);
+                this.messageText.visible = true;
+                ;
 
-        })
+            })
     }
 }
