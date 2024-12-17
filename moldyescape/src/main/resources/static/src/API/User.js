@@ -4,7 +4,7 @@ function keepAlive() {
         // Realiza una solicitud AJAX para mantener la conexión activa
         $.ajax({
             method: "POST",
-            url: "http://localhost:8080/users/keepalive/" + connectedUser.username,
+            url: "/users/keepalive/" + connectedUser.username,
 
         })
             .done(function (data, textStatus, jqXHR) {

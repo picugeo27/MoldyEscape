@@ -73,6 +73,7 @@ export class EndScreen extends Phaser.Scene{
         })
         
          this.victoryParticle();
+         this.saveWin();
     }
 
     init(data){
@@ -93,5 +94,19 @@ export class EndScreen extends Phaser.Scene{
          this.time.delayedCall(particleDuration, ()=> {
             emitter.stop();
          })
+    }
+
+    saveWin(){
+        if (this.#playerIsWinner){
+            $.ajax({
+                method: "PUT",
+                url: "/users/win/" + connectedUser.username ,
+            }).done((data) => {
+                console.log(data);
+            })
+                .fail(function (data) {
+                    console.log(data);
+                });
+        }
     }
 }

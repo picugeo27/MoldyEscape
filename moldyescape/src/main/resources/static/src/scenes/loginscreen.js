@@ -9,6 +9,7 @@
         }
 
 
+
         preload() {
             this.load.pack('image_pack', "assets/data.json");
             this.load.json('maps_pack', 'assets/maps.json');
@@ -26,7 +27,6 @@
             setupButton(boton_atras, () => {
                 boton_click.play();
             });
-
 
 
             //Login form
@@ -47,12 +47,11 @@
 
                 if (event.target.name === 'loginButton') {
 
-
                     if (inputUsername !== '' && inputPassword !== '') {
 
                         $.ajax({
                             method: "POST",
-                            url: "http://localhost:8080/users/login?username=" + inputUsername + "&password=" + inputPassword,
+                            url: "/users/login?username=" + inputUsername + "&password=" + inputPassword,
 
                         })
                             .done(() => {
@@ -95,6 +94,32 @@
                                 console.log(data);
                             });
 
+                    text.setText('Inicio de sesión inválido');
+                }
+            } else if (event.target.name === 'registerButton') {
+                // Lógica de registro
+                if (inputUsername !== '' && inputPassword !== '') {
+                    const requestBody = {
+                        username: inputUsername,
+                        password: inputPassword,
+                    };
+
+                    $.ajax({
+                        method: "POST",
+                        url: "/users/register",
+                        data: JSON.stringify({ username: inputUsername, password: inputPassword }),
+                        processData: false,
+                        headers: {
+                            "Content-type": "application/json"
+                        }
+                    }).done(() => {
+                        this.loginExitoso(inputUsername);
+                    })
+                        .fail(function (data) {
+                            console.log(data);
+                            text.setText("Este usuario ya existe");
+                        });
+
 
                     } else {
                         text.setText('Rellene todos los campos');
@@ -106,12 +131,12 @@
         loginExitoso(username) {
             connectedUser.logIn(username);
 
-            console.log("keep alive")
-            if (connectedUser.username != null) {
-                // Realiza una solicitud AJAX para mantener la conexión activa
-                $.ajax({
-                    method: "POST",
-                    url: "http://localhost:8080/users/keepalive/" + connectedUser.username,
+        console.log("keep alive")
+        if (connectedUser.username != null) {
+            // Realiza una solicitud AJAX para mantener la conexión activa
+            $.ajax({
+                method: "POST",
+                url: "/users/keepalive/" + connectedUser.username,
 
                 })
                     .done(function (data, textStatus, jqXHR) {
