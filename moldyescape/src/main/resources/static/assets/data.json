@@ -65,6 +65,11 @@
             },
             {
                 "type": "image",
+                "key": "boton_chat",
+                "url": "BotonChat.png"
+            },
+            {
+                "type": "image",
                 "key": "boton_flecha",
                 "url": "BotonFlecha.png"
             },
