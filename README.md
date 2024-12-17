@@ -349,7 +349,7 @@ Después de que uno de los jugadores consiga su objetivo, se acabará la partida
 
 ## Diagrama de clases de la aplicación
 <div align="center">
-   <img src="imagenes_readme/DiagramaFlujoPantallas.png" alt="Diagrama de clases de la API REST" width="700" height="350">
+   <img src="imagenes_readme/DiagramaApi.png" alt="Diagrama de clases de la API REST" width="700" height=450">
 </div>
 
 ## Instrucciones
