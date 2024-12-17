@@ -57,7 +57,7 @@ export class LoginScreen extends Phaser.Scene {
                         .done(() => {
 
                             //  Populate the text with whatever they typed in as the username!
-                            text.setText(`Bienvenido ${inputUsername}`);
+                            text.setText(`Bienvenido de nuevo ${inputUsername}`);
                             element.setVisible(false); // Esconde el formulario
 
                             this.loginExitoso(inputUsername);

@@ -41,7 +41,7 @@ export class RankingScreen extends Phaser.Scene {
             0xffffff
         ).setOrigin(0.5); // Centrar el rectángulo
 
-        this.messageText = this.add.text(this.scale.width / 2, 400, "",
+        this.messageText = this.add.text(this.scale.width / 2, 440, "",
             {
                 color: '#000000',
                 fontSize: 24,
@@ -130,7 +130,7 @@ export class RankingScreen extends Phaser.Scene {
                         error: reject
                     });
                 });
-                this.messageText.text = data;
+                this.messageText.text = "Número de partidas ganadas: " + data;
                 // Mostrar el mensaje
                 this.border.setVisible(true);
                 this.messageBox.setVisible(true);
@@ -145,7 +145,8 @@ export class RankingScreen extends Phaser.Scene {
                 this.boton_hover.play();
             });
         playerText.on('pointerover', () => playerText.setStyle({ stroke: '#f39c12' }))
-        playerText.on('pointerout', () => playerText.setStyle({ stroke: "3A5FCE" })).on('pointerdown', async () => {
+        playerText.on('pointerout', () => playerText.setStyle({ stroke: "3A5FCE" }))
+        .on('pointerdown', async () => {
 
             const data = await new Promise((resolve, reject) => {
                 $.ajax({
@@ -155,7 +156,7 @@ export class RankingScreen extends Phaser.Scene {
                     error: reject
                 });
             });
-            this.messageText.text = data;
+            this.messageText.text = "Número de partidas ganadas: " + data;
             // Mostrar el mensaje
             this.border.setVisible(true);
             this.messageBox.setVisible(true);
