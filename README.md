@@ -359,7 +359,7 @@ Para instalarlo se puede descargar del siguiente enlace: https://learn.microsoft
 Para iniciar el servidor lo haremos a través de la consola.
 
   - Abrimos una terminal
-  - Entramos en la carpeta donde se encuentra el archivo "moldyescape-0.0.1-SNAPSHOT". Que está en la ruta moldyescape>target.
+  - Entramos en la carpeta donde se encuentra el archivo "moldyescape-0.0.1-SNAPSHOT". Que está en la ruta moldyescape.
     - Esto se puede hacer de varias maneras. Una de ellas es abrir una terminal de sistema operativo e ir navegando por las carpetas del ordenador (en windows utilizando cd) hasta la ruta.
     - La segunda opciones click derecho en la carpeta y abrir con terminal.
   - Una vez en el direcorio ejecutamos el comando java -jar moldyescape-0.0.1-SNAPSHOT
