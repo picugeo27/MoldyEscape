@@ -13,7 +13,7 @@ import { RankingScreen } from "./scenes/rankingscreen.js";
 import { ChatOverlay } from "./scenes/chatoverlay.js";
 
 
-const game = new Phaser.Game({
+export const game = new Phaser.Game({
     type: Phaser.AUTO,
     width: SIZE_CANVAS.WIDTH,
     height: SIZE_CANVAS.HEIGHT,
@@ -45,6 +45,5 @@ game.scene.add('UsersOverlay', UsersOverlay);
 game.scene.add('LoginScreen', LoginScreen);
 game.scene.add('RankingScreen', RankingScreen);
 game.scene.add("ChatOverlay", ChatOverlay);
-//game.scene.start('StartScreen');
 game.scene.start('LoginScreen');
 game.scene.start('UsersOverlay', UsersOverlay); 
