@@ -39,19 +39,34 @@ export class UsersOverlay extends Phaser.Scene {
 
 
         //Son rectangulos porque le ha dado por no cargar las imagenes jajajajan't
-        this.leftArrowButton = this.add.rectangle(this.cameras.main.centerX - 250,
-            this.cameras.main.centerY, 50, 50, 0xffffff);
+        //  this.leftArrowButton = this.add.rectangle(this.cameras.main.centerX - 250,
+        //      this.cameras.main.centerY, 50, 50, 0xffffff);
+        //  this.leftArrowButton.setInteractive().setVisible(false)
+        //      .on('pointerdown', () => {
+        //          this.changePages(0);
+        //      })
+        //  this.rightArrowButton = this.add.rectangle(this.cameras.main.centerX + 250,
+        //      this.cameras.main.centerY, 50, 50, 0xffffff);
+        //  this.rightArrowButton.setInteractive().setVisible(false)
+        //      .on('pointerdown', () => {
+        //          this.changePages(1);
+        //      });
+
+        
+        this.leftArrowButton = this.add.image(this.cameras.main.centerX - 250, this.cameras.main.centerY, "boton_flecha").setScale(0.9);
         this.leftArrowButton.setInteractive().setVisible(false)
             .on('pointerdown', () => {
-                this.changePages(0);
+                this.changePages(0);   
             });
-
-        this.rightArrowButton = this.add.rectangle(this.cameras.main.centerX + 250,
-            this.cameras.main.centerY, 50, 50, 0xffffff);
+        
+        this.rightArrowButton = this.add.image(this.cameras.main.centerX + 250, this.cameras.main.centerY, "boton_flecha").setScale(0.9)
+        this.rightArrowButton.flipX = true;
         this.rightArrowButton.setInteractive().setVisible(false)
             .on('pointerdown', () => {
-                this.changePages(1);
+                    this.changePages(1);   
             });
+        
+            
 
         // Mostrar y ocultar
         this.input.keyboard.on('keydown-SPACE', () => {

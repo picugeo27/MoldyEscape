@@ -15,6 +15,52 @@
             margin-top: 0;
             background: linear-gradient(to bottom, #A4BBFF 50%, #465181);
         }
+
+
+        
+        /* Estilo para el fondo del modal */
+        .modal {
+            display: none; /* Oculto por defecto */
+            position: fixed;
+            z-index: 1000; /* Encima de todo */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semi-transparente */
+        }
+
+        /* Contenido del modal */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+            border-radius: 10px;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Botón para cerrar el modal */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+
+
     </style>
 
 </head>
@@ -23,6 +69,14 @@
     <div class="container" id="game-canvas"></div>
     <script src="src/API/User.js" type="module"></script>
     <script src="src/main.js" type="module"></script>
+
+    <!-- Modal de alerta -->
+    <div id="disconnect-modal" class="modal">
+        <div class="modal-content">
+            <span id="close-modal" class="close">&times;</span>
+            <p id="modal-message">Has sido desconectado del juego. Volviendo a la pantalla de inicio...</p>
+        </div>
+    </div>
 
 </body>
 

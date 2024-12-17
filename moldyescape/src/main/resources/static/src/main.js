@@ -13,7 +13,7 @@ import { RankingScreen } from "./scenes/rankingscreen.js";
 import { ChatScreen } from "./scenes/chatscreen.js";
 
 
-const game = new Phaser.Game({
+export const game = new Phaser.Game({
     type: Phaser.AUTO,
     width: SIZE_CANVAS.WIDTH,
     height: SIZE_CANVAS.HEIGHT,
