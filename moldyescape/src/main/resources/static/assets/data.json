@@ -107,6 +107,11 @@
                 "type": "image",
                 "key": "boton_ranking",
                 "url": "BotonRanking.png"
+            },
+            {
+                "type": "image",
+                "key": "boton_borrar_usuario",
+                "url": "BotonBorrarUsuario.png"
             }
 
         ]
