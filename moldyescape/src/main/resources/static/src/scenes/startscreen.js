@@ -44,6 +44,17 @@ export class StartScreen extends Phaser.Scene{
                
         })
 
+        const boton_chat = this.add.image(480, 300, "boton_ajustes").setScale(0.95).setInteractive();
+
+        boton_chat.on('pointerdown', () => {
+            this.cameras.main.fadeOut(500, 0, 0, 0);
+            this.cameras.main.once('camerafadeoutcomplete', () => {
+                this.scene.stop("StartScreen");
+                this.scene.start("ChatScreen");
+        });
+        })
+
+
 
         setupButton(boton_jugar,()=>{
             boton_click.play();

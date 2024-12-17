@@ -4,15 +4,11 @@ export class ChatOverlay extends Phaser.Scene {
         super({ key: 'ChatOverlay' });
     }
 
-    //Texto del pop-up
+    //Variables para mensajes
+    messages = [];
     _statsText = [];
-    intervalo;
-    //maxUsersOverlay = 13;
-    _currentPage = 0; // Página actual
-    _usersPerPage = 5; // Usuarios por página
-    _maxPages;
-    messagesSet;
-    messages;
+    overlay;
+
     preload() {
 
     }
@@ -30,100 +26,66 @@ export class ChatOverlay extends Phaser.Scene {
             this.cameras.main.centerY,
             this.cameras.main.width * 0.8,
             this.cameras.main.height * 0.6,
-            0x000000,
-            0.6 // Opacidad
-        );
-        this.overlay.setOrigin(0.5, 0.5);
-        this.overlay.setVisible(false);
+            0x000000, 0.6 // Opacidad
+        ).setOrigin(0.5).setVisible(false);
 
 
         // Mostrar y ocultar
         this.input.keyboard.on('keydown-ENTER', () => {
-            if (this.overlay.visible) {
-                this.toggleOverlay(false);
-            }
-            else {
-                this.toggleOverlay(true);
-            }
+            this.toggleOverlay(!this.overlay.visible);
         });
 
-        await this.getMessages();
-
-        this.intervalo = setInterval(() => this.getMessages(), 10 * 1000);
+        this.setupHTMLListeners();
+  
     }
 
     toggleOverlay(show) {
         this.overlay.setVisible(show);
-        if (this._statsText) {
-            this._statsText.forEach(text => {
-                text.setVisible(!text.visible);
-            });
-        }
-    
+        this._statsText.forEach(text => text.setVisible(show));
     }
 
-    changePages(index) {
-        //index === 1 para moverse a la derecha, index === 0 para la izquierda
-        if (index === 1) {
-            this._currentPage += 1;
-            this.showConnectedUsers();
-        }
-        else if (index === 0) {
-            this._currentPage -= 1;
-            this.showConnectedUsers();
+     // Configurar los listeners del input HTML
+     setupHTMLListeners() {
+        const inputElement = document.getElementById('message');
+        const sendButton = document.getElementById('sendButton');
+
+        // Evento al hacer clic en "Enviar"
+        sendButton.addEventListener('click', () => this.sendMessage(inputElement));
+
+        // Evento al presionar Enter en el input
+        inputElement.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Evita recargar la página
+                this.sendMessage(inputElement);
+            }
+        });
+    }
+
+    // Enviar un mensaje al sistema
+    sendMessage(inputElement) {
+        const newMessage = inputElement.value.trim();
+
+        if (newMessage) {
+            this.messages.push(newMessage); // Agregar al array de mensajes
+            inputElement.value = ''; // Limpiar input
+            this.showMessages(); // Actualizar la vista en Phaser
         }
     }
 
-
-    //Metodo para coger la lista de usernames y mostrarlos en el pop-up al pulsar espacio
-    showConnectedUsers() {
+    // Mostrar los mensajes en pantalla
+    showMessages() {
+        // Limpiar textos anteriores
         this._statsText.forEach(text => text.destroy());
         this._statsText = [];
-        var start = this._currentPage * this._usersPerPage;
-        var end = start + this._usersPerPage;
 
-        var toShow = this.messages.slice(start, end);
-
-        for (var index = 0; index < this._usersPerPage; index += 1) {
-            const aux = this.add.text(325, 175 + index * 50, toShow[index],
-                { fontSize: '40px', color: '#ffffff', align: 'center' })//.setVisible(false);
-            this._statsText.push(aux);
-        }
-
-        //Código para lista que se corta
-        //console.log(connectedUsers);
-        // for(var index = 0; index < this.maxUsersOverlay; index += 1){
-        //     const aux = this.add.text(100, 135 + index * 26, connectedUsers[index],
-        //         { fontSize: '20px', color: '#ffffff', align: 'center' }).setVisible(false);
-        //         this._statsText.push(aux);
-        // }
-    }
-
-
-
-    async getMessages() {
-
-        //$.ajax({
-        //    method: "GET",
-        //    url: "http://localhost:8080/users/connectedusers"
-        //}).done((data) => {
-        //    this.connectedUsersSet = data;
-        //    this.connectedUsers = Array.from(this.connectedUsersSet);
-        //    this._maxPages = Math.ceil(this.connectedUsers.length / this._usersPerPage);
-        //    this.showConnectedUsers();
-        //    this.hideTexts();
-        //}).fail(function (data, message) {
-        //    console.log(message);
-        //})
-
-    }
-
-    hideTexts() {
-        if (this._statsText && !this.overlay.visible) {
-            this._statsText.forEach(text => {
-                text.setVisible(!text.visible);
+        // Mostrar cada mensaje en pantalla
+        this.messages.forEach((msg, index) => {
+            const text = this.add.text(50, 150 + index * 30, msg, {
+                fontSize: '20px', color: '#ffffff'
             });
-        }
+            this._statsText.push(text);
+        });
     }
-
 }
+
+
