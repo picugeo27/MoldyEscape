@@ -1,3 +1,5 @@
+import { setupButton } from "../types/typedef.js";
+
 export class ChatScreen extends Phaser.Scene
 {
 	constructor(){
@@ -82,14 +84,17 @@ export class ChatScreen extends Phaser.Scene
 		
 		
         // Botón para volver a la pantalla de inicio startscreen.
-		const boton_volver = this.add.image(480, 300, "boton_ajustes").setScale(0.95).setInteractive();
-        boton_volver.on('pointerdown', () => {
-            this.cameras.main.fadeOut(500, 0, 0, 0);
-            this.cameras.main.once('camerafadeoutcomplete', () => {
-                this.scene.stop("ChatScreen");
-                this.scene.start("StartScene");
-        });
-        })
+		const boton_volver = this.add.image(400, 550, "boton_volver");
+ 
+
+				setupButton(boton_volver,()=>{
+					this.cameras.main.fadeOut(500,0,0,0);
+					this.cameras.main.once('camerafadeoutcomplete', () => {
+						this.scene.stop("ChatScreen");
+                		this.scene.start("StartScreen");
+					});
+					   
+				})
     }
 	
 	update(time, delta)
