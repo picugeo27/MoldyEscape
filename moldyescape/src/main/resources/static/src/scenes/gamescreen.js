@@ -48,7 +48,6 @@ export class GameScreen extends Phaser.Scene{
         //Particulas
         this.load.image('particle', 'assets/Interactuables/particula.png');
         this.load.image('trapParticle', 'assets/Interactuables/particulaTrampa.png');
-        this.load.html('chatform', 'assets/chatform.html');
 
         const tileMapData = this.cache.json.get('maps_pack');
         if (this.mapValue != 0 && this.mapValue != 1)

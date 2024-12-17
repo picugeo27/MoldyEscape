@@ -44,6 +44,20 @@ export class StartScreen extends Phaser.Scene{
                
         })
 
+        const boton_chat = this.add.image(140, 475, "boton_chat");
+
+        setupButton(boton_chat,()=>{
+            boton_click.play();
+            this.cameras.main.fadeOut(500,0,0,0);
+            this.cameras.main.once('camerafadeoutcomplete', () => {
+                this.scene.stop("StartScreen");
+                this.scene.start("ChatScreen");
+            });
+               
+        })
+
+
+
 
         setupButton(boton_jugar,()=>{
             boton_click.play();
@@ -77,13 +91,13 @@ export class StartScreen extends Phaser.Scene{
             });
             });
     
-        var boton_local = this.add.image(140, 475, "boton_local")
+        var boton_local = this.add.image(415, 475, "boton_local")
             .setInteractive()
             .on('pointerdown', () => {
                 boton_click.play();
             });
 
-        var boton_red = this.add.image(140, 475, "boton_en_red").setVisible(false)
+        var boton_red = this.add.image(415, 475, "boton_en_red").setVisible(false)
             .setInteractive()
             .on('pointerdown', () => {
                 console.log("No soportado todavía");
@@ -91,7 +105,7 @@ export class StartScreen extends Phaser.Scene{
 
         boton_red.setDisplaySize(165, 50);
         
-        const boton_flecha = this.add.image(245, 475, "boton_flecha").setScale(0.9)
+        const boton_flecha = this.add.image(520, 475, "boton_flecha").setScale(0.9)
         boton_flecha.flipX = true;
         boton_flecha.setInteractive()
             .on('pointerdown', () => {
@@ -101,7 +115,7 @@ export class StartScreen extends Phaser.Scene{
                 })    
             });
         
-        const boton_flecha_2 = this.add.image(35, 475, "boton_flecha").setScale(0.9)
+        const boton_flecha_2 = this.add.image(310, 475, "boton_flecha").setScale(0.9)
             .setInteractive()
             .on('pointerdown', () => {
                 boton_flecha_click.play();
