@@ -10,6 +10,7 @@ import { TutorialScreen } from "./scenes/tutorialscreen.js";
 import { UsersOverlay } from "./scenes/usersoverlay.js";
 import { LoginScreen } from "./scenes/loginscreen.js";
 import { RankingScreen } from "./scenes/rankingscreen.js";
+import { ChatOverlay } from "./scenes/chatoverlay.js";
 
 
 const game = new Phaser.Game({
@@ -21,7 +22,7 @@ const game = new Phaser.Game({
     dom: {
         createContainer: true
     },
-    scale:{
+    scale: {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH
     },
@@ -31,7 +32,7 @@ const game = new Phaser.Game({
             gravity: { y: 0, x: 0 },
             debug: false,
         }
-    } 
+    }
 });
 
 game.scene.add('StartScreen', StartScreen);
@@ -40,9 +41,10 @@ game.scene.add('TutorialScreen', TutorialScreen);
 game.scene.add('EndScreen', EndScreen);
 game.scene.add('CreditsScreen', CreditsScreen);
 game.scene.add('SettingsScreen', SettingsScreen);
-game.scene.add('UsersOverlay', UsersOverlay); 
+game.scene.add('UsersOverlay', UsersOverlay);
 game.scene.add('LoginScreen', LoginScreen);
 game.scene.add('RankingScreen', RankingScreen);
+game.scene.add("ChatOverlay", ChatOverlay);
 //game.scene.start('StartScreen');
 game.scene.start('LoginScreen');
 game.scene.start('UsersOverlay', UsersOverlay); 

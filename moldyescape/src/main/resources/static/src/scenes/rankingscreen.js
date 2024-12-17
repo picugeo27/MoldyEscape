@@ -7,8 +7,6 @@ export class RankingScreen extends Phaser.Scene {
 
     //Lista con el ranking
     _rankingList;
-    //Gamusino es un placeholder, luego quitar que os conozco
-    _userConnected = "Gamusino";
 
     //Variables del cuadro de texto
     border;
@@ -19,18 +17,17 @@ export class RankingScreen extends Phaser.Scene {
     boton_hover;
     boton_click;
 
-    async preload(){
+    async preload() {
         await this.getRankedUsers();
     }
-    create(){
-        this.boton_click = this.sound.add('boton_click', {volume:1});
-        this.boton_hover = this.sound.add('boton_hover', {volume:1});
-        
-        this.add.text(200, 30, 'RANKING TOP 5', { color: '#ffffff', fontSize: 50, fontStyle: 'bold', stroke: '#df5fa8', strokeThickness: 4});
+
+    async create() {
+        this.boton_click = this.sound.add('boton_click', { volume: 1 });
+        this.boton_hover = this.sound.add('boton_hover', { volume: 1 });
+
+        this.add.text(200, 30, 'RANKING TOP 5', { color: '#ffffff', fontSize: 50, fontStyle: 'bold', stroke: '#df5fa8', strokeThickness: 4 });
         // Posición inicial para el texto
-        const startX = 300;
-        const startY = 115;
-        const lineHeight = 40; // Espacio entre líneas
+        // Espacio entre líneas
 
         //Crear cuadro para que al pulsar un nombre de la lista, aparezca el rol de cada uno
         // Borde del contenedor
@@ -57,12 +54,12 @@ export class RankingScreen extends Phaser.Scene {
         this.messageBox.setVisible(false);
         this.messageText.setVisible(false);
 
-        this.showRanking(startX, startY, lineHeight);
+
 
         const boton_atras = this.add.image(400, 550, "boton_volver");
         setupButton(boton_atras, () => {
             this.boton_click.play();
-            this.cameras.main.fadeOut(500,0,0,0);
+            this.cameras.main.fadeOut(500, 0, 0, 0);
             this.cameras.main.once('camerafadeoutcomplete', () => {
                 this.scene.stop("RankingScreen");
                 this.scene.start("StartScreen");
@@ -70,18 +67,23 @@ export class RankingScreen extends Phaser.Scene {
         });
     }
 
-    async getRankedUsers(){
+    async getRankedUsers() {
         //Placeholder
-        var staticList = ["Blanca", "Unai", "Candela", "George", "Paloma"];
-        this._rankingList = staticList;
+        //var staticList = ["Blanca", "Unai", "Candela", "George", "Paloma"];
+        //this._rankingList = staticList;
         $.ajax({
             method: "GET",
             url: "/users/getranking"
         }).done((data) => {
             this.connectedUsersSet = data;
             this.connectedUsers = Array.from(this.connectedUsersSet);
-            //this._rankingList = this.connectedUsers;
+            this._rankingList = this.connectedUsers;
 
+            const startX = 300;
+            const startY = 115;
+            const lineHeight = 40;
+
+            this.showRanking(startX, startY, lineHeight);
             //this._maxPages = Math.ceil(this.connectedUsers.length / this._usersPerPage);
             //this.showConnectedUsers();
             //this.hideTexts();
@@ -89,13 +91,14 @@ export class RankingScreen extends Phaser.Scene {
         }).fail(function (data, message) {
             console.log(message);
         })
+
     }
 
-    showRanking(startX, startY, lineHeight){
+    showRanking(startX, startY, lineHeight) {
         // Crear cada línea de texto
         this._rankingList.forEach((item, index) => {
             var colorCode;
-            switch(index){
+            switch (index) {
                 case 0:
                     colorCode = '#AF9C0A';
                     break;
@@ -109,25 +112,56 @@ export class RankingScreen extends Phaser.Scene {
                     colorCode = '#df5fa8';
                     break;
             }
-            const text = this.add.text(startX, startY + index * lineHeight, index+1 + "º " + item,
-                { color: '#ffffff', fontSize: 32, stroke: colorCode, strokeThickness: 4})
-            .setInteractive()
-            .on('pointerover', () => {
-                this.boton_hover.play();    
-            });
+            const text = this.add.text(startX, startY + index * lineHeight, index + 1 + "º " + item,
+                { color: '#ffffff', fontSize: 32, stroke: colorCode, strokeThickness: 4 })
+                .setInteractive()
+                .on('pointerover', () => {
+                    this.boton_hover.play();
+                });
             text.on('pointerover', () => text.setStyle({ stroke: '#f39c12' }))
             text.on('pointerout', () => text.setStyle({ stroke: colorCode }))
-            text.on('pointerdown', () => {
+            text.on('pointerdown', async () => {
+
+                const data = await new Promise((resolve, reject) => {
+                    $.ajax({
+                        method: "GET",
+                        url: "/users/getwins?username=" + item,
+                        success: resolve,
+                        error: reject
+                    });
+                });
+                this.messageText.text = data;
                 // Mostrar el mensaje
                 this.border.setVisible(true);
                 this.messageBox.setVisible(true);
-                this.messageText.setVisible(true);
+                this.messageText.visible = true;
 
-                
+
             });
         });
 
-        this.add.text(125, 330, "Usuario conectado: " + this._userConnected, { color: '#ffffff', fontSize: 32, stroke: '#3A5FCE', strokeThickness: 4});
+        const playerText = this.add.text(125, 330, "Usuario conectado: " + connectedUser.username, { color: '#ffffff', fontSize: 32, stroke: '#3A5FCE', strokeThickness: 4 }).setInteractive()
+            .on('pointerover', () => {
+                this.boton_hover.play();
+            });
+        playerText.on('pointerover', () => playerText.setStyle({ stroke: '#f39c12' }))
+        playerText.on('pointerout', () => playerText.setStyle({ stroke: "3A5FCE" })).on('pointerdown', async () => {
 
+            const data = await new Promise((resolve, reject) => {
+                $.ajax({
+                    method: "GET",
+                    url: "/users/getwins?username=" + connectedUser.username,
+                    success: resolve,
+                    error: reject
+                });
+            });
+            this.messageText.text = data;
+            // Mostrar el mensaje
+            this.border.setVisible(true);
+            this.messageBox.setVisible(true);
+            this.messageText.visible = true;
+            ;
+
+        })
     }
 }

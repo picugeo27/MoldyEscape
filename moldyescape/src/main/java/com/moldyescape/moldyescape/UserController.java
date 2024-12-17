@@ -99,7 +99,7 @@ public class UserController {
     // PETICIONES PUT
     //
 
-    @PutMapping("win")
+    @PutMapping("/win")
     public ResponseEntity<Boolean> putMethodName(@RequestBody String username) {
         ranking.addWin(username);
         userService.addWin(username);
@@ -110,7 +110,7 @@ public class UserController {
     // PETICIONES DELETE
     //
 
-    @DeleteMapping("")
+    @DeleteMapping()
     public ResponseEntity<String> deleteUser(@RequestBody String username) {
         boolean deleted = this.userService.deleteUser(username);
         if (deleted) {

@@ -148,7 +148,7 @@ public class UserService {
     // devuelve true si ya existe el usuario, sino devuelve false
     private boolean existsUser(String username) throws IOException {
         for (var user : allUsers) {
-            if (user.getUsername().equals(username)) {
+            if (user.getUsername().equalsIgnoreCase(username)) {
                 return true;
             }
         }

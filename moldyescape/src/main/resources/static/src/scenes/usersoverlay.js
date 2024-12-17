@@ -18,6 +18,7 @@ export class UsersOverlay extends Phaser.Scene {
     }
 
     async create() {
+        this.scene.bringToTop();
         //Conjunto de usuarios conectados, luego tiene que cogerse el conjunto de usuarios conectados (mas bien sus usernames) con una peticion GET.
         //var connectedUsersSet = new Set(["Blanca", "Unai", "Candela", "George", "Paloma", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n"]);
 
@@ -31,7 +32,7 @@ export class UsersOverlay extends Phaser.Scene {
             this.cameras.main.width * 0.8,
             this.cameras.main.height * 0.6,
             0x000000,
-            0.6 // Opacidad
+            0.8 // Opacidad
         );
         this.overlay.setOrigin(0.5, 0.5);
         this.overlay.setVisible(false);

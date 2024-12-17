@@ -1,32 +1,32 @@
 import { setupButton } from "../types/typedef.js";
 
-export class SettingsScreen extends Phaser.Scene{
-    constructor(){
-        super({key: 'SettingsScreen'});
+export class SettingsScreen extends Phaser.Scene {
+    constructor() {
+        super({ key: 'SettingsScreen' });
     }
 
     preload() {
 
-        this.cameras.main.fadeIn(500,0,0,0);
+        this.cameras.main.fadeIn(500, 0, 0, 0);
     }
 
     create() {
-        
+
         //Sonidos
-        const boton_click = this.sound.add('boton_click', {volume:1});
+        const boton_click = this.sound.add('boton_click', { volume: 1 });
 
 
         // Crear un rectángulo semi-transparente encima de la imagen
         const overlay = this.add.rectangle(630, 550, 360, 160, 0x000000, 0.5);
 
         this.add.text(460, 490, 'IMPORTANTE\n Los cambios en los ajustes\n se guardan\nautomáticamente\n durante la misma sesión\n',
-             { color: '#ffffff', fontSize: 20, stroke: '#df5fa8', align:'center'});//, strokeThickness: 4});
+            { color: '#ffffff', fontSize: 20, stroke: '#df5fa8', align: 'center' });//, strokeThickness: 4});
 
 
         let menuMusic = this.registry.get('menuMusic');
         if (!menuMusic) {
             // Si no existe, crearlo y guardarlo en el registro
-            menuMusic = this.sound.add('menu_music', {loop:true, volume:0.5});
+            menuMusic = this.sound.add('menu_music', { loop: true, volume: 0.5 });
             menuMusic.play();
             this.registry.set('menuMusic', menuMusic);
         }
@@ -69,7 +69,7 @@ export class SettingsScreen extends Phaser.Scene{
 
         this.input.setDraggable(handle); //Hacer que se pueda deslizar el handler por la barra
 
-        
+
         this.input.on('drag', (pointer, gameObject, dragX) => { //Al deslizar el handle, se cambia el volumen y se almacena en el datamanager
             if (gameObject === handle) {
                 handle.x = Phaser.Math.Clamp(dragX, minX, maxX);
@@ -80,70 +80,71 @@ export class SettingsScreen extends Phaser.Scene{
             }
         });
 
-        
-        const boton_full_screen = this.add.image(400, 350, "boton_fullscreen");
+
+        const boton_full_screen = this.add.image(400, 300, "boton_fullscreen");
         const boton_atras = this.add.image(200, 550, "boton_volver");
-        const boton_borrar_usuario = this.add.image(20,20, "Logout").setScale(0.01).setInteractive();
-            
+        const boton_borrar_usuario = this.add.image(400, 380, "boton_volver");
 
 
-         setupButton(boton_full_screen, () =>{
+
+        setupButton(boton_full_screen, () => {
             boton_click.play();
             this.time.delayedCall(1000, () => {
-                if(this.scale.isFullscreen){
+                if (this.scale.isFullscreen) {
                     this.scale.stopFullscreen();
                 }
-                else{
+                else {
                     this.scale.startFullscreen();
-                }  
-            })
-        });
-
-
-        setupButton(boton_atras, () =>{
-            boton_click.play();
-            this.time.delayedCall(1000, () => {
-                 this.scene.stop("SettingsScreen");
-                 this.scene.start("StartScreen");
-            })
-        });
-     
-        
-        boton_borrar_usuario.on('pointerdown', () => {
-            console.log('Botón de borrar usuario presionado');
-            boton_click.play();
-            
-            
-            // Confirmación (opcional)
-                const usernameToDelete = connectedUser.username; // Obtener el nombre de usuario conectado
-                if (!usernameToDelete) {
-                    console.error("No hay un usuario conectado para borrar.");
-                    return;
                 }
-        
-                this.time.delayedCall(500, () => {
-                    // Enviar la petición DELETE
-                    $.ajax({
-                        method: "DELETE",
-                        url: `http://localhost:8080/users/${usernameToDelete}`,
-                    })
-                        .done(() => {
-                            console.log(`Usuario ${usernameToDelete} borrado exitosamente.`);
-        
-                            // Realizar logout
-                            connectedUser.logOut();
-        
-                            // Redirigir a la pantalla de login
-                            this.cameras.main.fadeOut(500, 0, 0, 0);
-                            this.cameras.main.once('camerafadeoutcomplete', () => {
-                                this.scene.stop("SettingsScreen");
-                                this.scene.start("LoginScreen");
-                            });
-                        })
-                        .fail(() => {
-                            console.error(`Error al borrar el usuario`);
-                        });
-                });
+            })
+        });
+
+
+        setupButton(boton_atras, () => {
+            boton_click.play();
+            this.cameras.main.fadeOut(500, 0, 0, 0);
+            this.cameras.main.once('camerafadeoutcomplete', () => {
+                this.scene.stop("SettingsScreen");
+                this.scene.start("StartScreen");
             });
+        });
+
+        setupButton(boton_borrar_usuario, () => {
+            boton_click.play();
+
+
+            // Confirmación (opcional)
+            const usernameToDelete = connectedUser.username; // Obtener el nombre de usuario conectado
+            if (!usernameToDelete) {
+                console.error("No hay un usuario conectado para borrar.");
+                return;
             }
-    }
+
+            // Enviar la petición DELETE
+            $.ajax({
+                method: "DELETE",
+                url: `/users`,
+                contentType: 'application/json',
+                data: usernameToDelete
+            })
+                .done((data) => {
+                    console.log(data);
+
+                    // Realizar logout
+                    connectedUser.logOut();
+
+                    // Redirigir a la pantalla de login
+                    this.cameras.main.fadeOut(500, 0, 0, 0);
+                    this.cameras.main.once('camerafadeoutcomplete', () => {
+                        this.scene.stop("SettingsScreen");
+                        this.scene.start("LoginScreen");
+                    });
+                })
+                .fail(() => {
+                    console.error(`Error al borrar el usuario`);
+                });
+        })
+
+    };
+}
+
