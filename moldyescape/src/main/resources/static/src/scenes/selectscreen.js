@@ -9,7 +9,7 @@ export class SelectScreen extends Phaser.Scene {
     #selectedMap;
     #indexSelectedMap = 0;
     #mapList = [];
-    #clickCount = 0; // Contador de clics
+    #clickCount = 0;
     #titleText;
 
     preload() {
@@ -17,6 +17,8 @@ export class SelectScreen extends Phaser.Scene {
             if (!this.#mapList.includes(element.key)) {
                 this.load.image(element.key, element.url);
                 this.#mapList.push(element.key);
+                console.log('Mapa cargado:', element.key); // Verifica que los mapas se cargan correctamente
+
             }
         });
     }
@@ -49,6 +51,9 @@ export class SelectScreen extends Phaser.Scene {
                 menuMusic.stop();
                 this.scene.stop("SelectScreen");
                 this.scene.add('GameScreen', GameScreen);
+
+                console.log('Índice seleccionado:', this.#indexSelectedMap); // Esto te ayudará a verificar el valor
+
                 this.scene.start("GameScreen", { data: this.#indexSelectedMap });
             });
         });
@@ -89,13 +94,12 @@ export class SelectScreen extends Phaser.Scene {
                 boton_flecha_click.play();
                 this.time.delayedCall(500, () => {
                     this.incrementClickCount(); // Incrementa el contador
-                    this.nextMap();
+                    this.previousMap();
                 });
             });
-    
-        // Reinicia el contador y su texto
+
         this.#clickCount = 0; // Reinicia el contador a 0
-        
+
     }
 
     incrementClickCount() {
@@ -109,6 +113,10 @@ export class SelectScreen extends Phaser.Scene {
 
     nextMap() {
         this.#indexSelectedMap = (this.#indexSelectedMap + 1) % this.#mapList.length;
+        this.#selectedMap.setTexture(this.#mapList[this.#indexSelectedMap]);
+    }
+    previousMap() {
+        this.#indexSelectedMap = (this.#indexSelectedMap - 1 + this.#mapList.length) % this.#mapList.length;
         this.#selectedMap.setTexture(this.#mapList[this.#indexSelectedMap]);
     }
 }

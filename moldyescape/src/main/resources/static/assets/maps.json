@@ -10,7 +10,14 @@
             "key": "Laboratorio2",
             "name": "Lab2",
             "path": "assets/Mapas/lab2.json"
+        },
+
+        {
+            "key": "Laboratorio3",
+            "name": "Lab3",
+            "path": "assets/Mapas/lab3.json"
         }
+
     ],
 
     "preview": [
@@ -23,6 +30,11 @@
             "type": "image",
             "key": "Lab2_preview",
             "url": "assets/Mapas/Lab2_preview.png"
+        },
+        {
+            "type": "image",
+            "key": "Lab3_preview",
+            "url": "assets/Mapas/Lab3_preview.png"
         }
     ]
 }
