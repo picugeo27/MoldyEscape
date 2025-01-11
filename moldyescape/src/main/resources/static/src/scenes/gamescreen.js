@@ -50,7 +50,7 @@ export class GameScreen extends Phaser.Scene {
         this.load.image('trapParticle', 'assets/Interactuables/particulaTrampa.png');
 
         const tileMapData = this.cache.json.get('maps_pack');
-        if (this.mapValue != 0 && this.mapValue != 1)
+        if (this.mapValue <0 || this.mapValue >= tileMapData.maps.length)
             this.mapValue = 1;
 
         this.load.tilemapTiledJSON(tileMapData.maps[this.mapValue].key, tileMapData.maps[this.mapValue].path);
@@ -63,8 +63,8 @@ export class GameScreen extends Phaser.Scene {
     create() {
 
         // Creamos el tilemap y las capas
-        const map = this.make.tilemap({ key: this.#mapKey, tileHeight: 24, tileWidth: 24 });    //1 para mapa 1, 2 para mapa 2
-        const tileset = map.addTilesetImage(this.#mapUsed, "lab_tiles");   //1 para mapa 1, 2 para mapa 2
+        const map = this.make.tilemap({ key: this.#mapKey, tileHeight: 24, tileWidth: 24 });    //1 para mapa 1, 2 para mapa 2, 3 para el 3
+        const tileset = map.addTilesetImage(this.#mapUsed, "lab_tiles");   //1 para mapa 1, 2 para mapa 2, 3 para el 3
         const backgroundLayer = map.createLayer("Fondo", tileset, MAP_INIT, 0);     //Capa de fondo
         this.#colliderLayer = map.createLayer("Paredes", tileset, MAP_INIT, 0);    //Capa de colliders
         this.#doorLayer = map.createLayer("Puertas", tileset, MAP_INIT, 0);    //Capa de puertas
