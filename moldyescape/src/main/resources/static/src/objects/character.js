@@ -20,11 +20,12 @@ export class Character extends Phaser.GameObjects.Container{
      _speed;
      _acceleration;
      _turboActive;
+     _online;
      /**@type {GameScreen} */
      _scene;
      _turboSound;
      _wrongButton;
- 
+     _facing;
      // Creamos el player, la escena donde aparece y la posicion
      /**
       * @param {GameScreen} scene 
@@ -41,7 +42,8 @@ export class Character extends Phaser.GameObjects.Container{
         this._speed = speed;
         this._turboActive = false;
         this._acceleration = 1;
-        
+        this._facing = DIRECTION.DOWN;
+
         this.scene.add.existing(this);          // lo añadimos a la escena
         this.scene.physics.add.existing(this);  // le añadimos las fisicas de phaser 
         this.body.setSize(24, 24);              // le ponemos el colisionador a ese tamaño
@@ -119,15 +121,19 @@ export class Character extends Phaser.GameObjects.Container{
     setTarget(direction){
         switch(direction){
             case DIRECTION.UP:
+                this._facing = DIRECTION.UP;
                 this._target.y -= 1
                 break;
             case DIRECTION.DOWN:
+                this._facing = DIRECTION.DOWN;
                 this._target.y += 1
                 break;
             case DIRECTION.LEFT:
+                this._facing = DIRECTION.LEFT;
                 this._target.x -= 1
                 break;
             case DIRECTION.RIGHT:
+                this._facing = DIRECTION.RIGHT;
                 this._target.x += 1
                 break;
             default:
@@ -136,6 +142,14 @@ export class Character extends Phaser.GameObjects.Container{
         
     }
 
+    resetFacing(){
+        this._facing = DIRECTION.DOWN;
+    }
+
+    getFacing(){
+        return this._facing;
+    }
+    
     resetTarget(){
         this._target.x = this._coordinates.x;
         this._target.y = this._coordinates.y;

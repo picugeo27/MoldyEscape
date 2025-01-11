@@ -58,7 +58,10 @@ export class StartScreen extends Phaser.Scene {
             this.cameras.main.fadeOut(500, 0, 0, 0);
             this.cameras.main.once('camerafadeoutcomplete', () => {
                 this.scene.stop("StartScreen");
-                this.scene.start("SelectScreen", { data: boton_red.visible });
+                if(boton_red.visible)
+                    this.scene.start("OnlineSelectScreen");
+                else
+                    this.scene.start("SelectScreen");
             });
 
         })
@@ -104,18 +107,15 @@ export class StartScreen extends Phaser.Scene {
         boton_flecha.setInteractive()
             .on('pointerdown', () => {
                 boton_flecha_click.play();
-                this.time.delayedCall(500, () => {
-                    this.switchBoton(boton_local, boton_red)
-                })
+                this.switchBoton(boton_local, boton_red)
             });
 
         const boton_flecha_2 = this.add.image(310, 475, "boton_flecha").setScale(0.9)
             .setInteractive()
             .on('pointerdown', () => {
                 boton_flecha_click.play();
-                this.time.delayedCall(500, () => {
-                    this.switchBoton(boton_local, boton_red)
-                })
+                this.switchBoton(boton_local, boton_red)
+                
             });
     }
 

@@ -7,6 +7,7 @@ import { Character } from "./character.js";
 const slowTime = 5000;
 const slowAmount = 0.5;
 
+
 export class Player extends Character{
 
     /**
@@ -14,10 +15,15 @@ export class Player extends Character{
      * @param {Coordinates} coordinates 
      */
     
-    constructor(scene, coordinates, keyboardInput){
+    _reciveInfo;
+    _sendInfo
+
+    constructor(scene, coordinates, keyboardInput, reciveInfo, sendInfo, socket){
         super(scene, coordinates, keyboardInput);   // constructor de character
         this.turboTime = 6000;
         this.turboCooldown = 8000;
+        this._reciveInfo = reciveInfo;
+        this._sendInfo = sendInfo;
         // le añadimos el sprite
         this._sprite = scene.add.sprite(0, 0, 'character').setScale(0.8);
         this.add([this._sprite]);
@@ -88,5 +94,9 @@ export class Player extends Character{
             // Si no se está moviendo, se pone la animación de idle
             this._sprite.anims.play('CWalkIdle', true);
         }
+    }
+
+    onlineUpdate(data){
+        ("online update del player")
     }
 }

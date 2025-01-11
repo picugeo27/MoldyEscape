@@ -1,9 +1,10 @@
 import { GameScreen } from "./gamescreen.js";
 import { setupButton } from "../types/typedef.js";
+import { Vote } from "../types/messages.js";
 
-export class SelectScreen extends Phaser.Scene {
+export class OnlineSelectScreen extends Phaser.Scene {
     constructor() {
-        super({ key: 'SelectScreen' });
+        super({ key: 'OnlineSelectScreen' });
     }
 
     #selectedMap;
@@ -11,13 +12,14 @@ export class SelectScreen extends Phaser.Scene {
     #mapList = [];
     #clickCount = 0;
     #titleText;
+    voted = false;
+    socket;
 
     preload() {
         this.cache.json.get('maps_pack').preview.forEach((element) => {
             if (!this.#mapList.includes(element.key)) {
                 this.load.image(element.key, element.url);
                 this.#mapList.push(element.key);
-                console.log('Mapa cargado:', element.key); // Verifica que los mapas se cargan correctamente
 
             }
         });
@@ -34,6 +36,8 @@ export class SelectScreen extends Phaser.Scene {
             strokeThickness: 4,
         });
     
+        const host = window.location.host;
+
         const menuMusic = this.registry.get('menuMusic');
         const boton_click = this.sound.add('boton_click', { volume: 1 });
         const boton_flecha_click = this.sound.add('boton_flecha_click', { volume: 1 });
@@ -43,24 +47,26 @@ export class SelectScreen extends Phaser.Scene {
         const boton_tutorial = this.add.image(680, 550, "boton_tutorial");
     
         this.#selectedMap = this.add.image(this.scale.width / 2, this.scale.height / 2, this.#mapList[this.#indexSelectedMap]).setScale(0.6);
-    
+        
+
+        /*  
+        Ajustes de botones
+        */
+        // CAMBIAR POR BOTON VOTAR
         setupButton(boton_jugar, () => {
             boton_click.play();
-            this.cameras.main.fadeOut(500, 0, 0, 0);
-            this.cameras.main.once('camerafadeoutcomplete', () => {
-                menuMusic.stop();
-                this.scene.stop("SelectScreen");
-                this.scene.add('GameScreen', GameScreen);
-
-                this.scene.start("GameScreen", { map: this.#indexSelectedMap, online: false, role: null });
-            });
+            if (this.voted)
+                this.cancelVote()
+            else 
+                this.vote()
         });
     
         setupButton(boton_atras, () => {
             boton_click.play();
             this.cameras.main.fadeOut(500, 0, 0, 0);
             this.cameras.main.once('camerafadeoutcomplete', () => {
-                this.scene.stop("SelectScreen");
+                this.socket.close();
+                this.scene.stop("OnlineSelectScreen");
                 this.scene.start("StartScreen");
             });
         });
@@ -78,10 +84,7 @@ export class SelectScreen extends Phaser.Scene {
             .setInteractive()
             .on('pointerdown', () => {
                 boton_flecha_click.play();
-                this.time.delayedCall(500, () => {
-                    this.incrementClickCount(); // Incrementa el contador
-                    this.nextMap();
-                });
+                this.nextMap();
             });
     
         boton_flecha.flipX = true;
@@ -90,13 +93,48 @@ export class SelectScreen extends Phaser.Scene {
             .setInteractive()
             .on('pointerdown', () => {
                 boton_flecha_click.play();
-                this.time.delayedCall(500, () => {
-                    this.incrementClickCount(); // Incrementa el contador
-                    this.previousMap();
-                });
+                this.previousMap();
             });
 
         this.#clickCount = 0; // Reinicia el contador a 0
+
+        /**
+         * COMUNICACION
+         */
+
+        this.socket = new WebSocket("ws://" + host + "/game");
+        this.socket.onopen = () => {
+            console.log("Conexion abierta");
+            this.registry.set("socket", this.socket);
+
+        }
+
+        this.socket.onmessage = (message) => {
+            try{
+                const data = JSON.parse(message.data);
+                console.log(data.type);
+                if (data.type == "start"){
+                    menuMusic.stop();
+                    this.startGame(data.value, data.role)
+                }
+                else 
+                console.log(data.type + " No soportado");
+
+                
+            }catch(error){
+                console.log(error)
+            }
+            
+            console.log(message.data);
+        }
+
+        this.socket.onclose = () => {
+            console.log('Conexión cerrada');
+            this.cameras.main.once('camerafadeoutcomplete', () => {
+                this.scene.stop("OnlineSelectScreen");
+                this.scene.start("StartScreen");
+            });
+        };
 
     }
 
@@ -110,11 +148,39 @@ export class SelectScreen extends Phaser.Scene {
     }
 
     nextMap() {
+        if (this.voted)
+            return
+        this.incrementClickCount();
         this.#indexSelectedMap = (this.#indexSelectedMap + 1) % this.#mapList.length;
         this.#selectedMap.setTexture(this.#mapList[this.#indexSelectedMap]);
     }
     previousMap() {
+        if (this.voted)
+            return
+        this.incrementClickCount();
         this.#indexSelectedMap = (this.#indexSelectedMap - 1 + this.#mapList.length) % this.#mapList.length;
         this.#selectedMap.setTexture(this.#mapList[this.#indexSelectedMap]);
+    }
+
+    startGame(mapValue, thisRole){
+        this.cameras.main.fadeOut(500, 0, 0, 0);
+        this.cameras.main.once('camerafadeoutcomplete', () => {
+            this.scene.stop("SelectScreen");
+            this.scene.add('GameScreen', GameScreen);
+            this.scene.start("GameScreen", { map: mapValue, online: true, role: thisRole });
+        });
+    }
+
+    vote(){
+        this.voted = true;
+        const vote = new Vote(this.#indexSelectedMap)
+        this.socket.send(JSON.stringify(vote));
+
+    }
+
+    cancelVote(){
+        this.voted = false;
+        const vote = new Vote(-1);
+        this.socket.send(JSON.stringify(vote));
     }
 }

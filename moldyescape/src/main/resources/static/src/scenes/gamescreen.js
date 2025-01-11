@@ -3,6 +3,7 @@ import { Enemy } from "../objects/enemy.js";
 import { Coordinates, MAP_INIT } from "../types/typedef.js";
 import { InputManager } from "../components/inputManager.js";
 import { Trap } from "../objects/trap.js";
+import { OnlineSelectScreen } from "./onlineselectscreen.js";
 
 const buttonsToWin = 3;
 
@@ -38,8 +39,24 @@ export class GameScreen extends Phaser.Scene {
     _pressButtonSound;
     _gameMusic;
 
+    _online;
+    _onlinePlayer;  // el player es controlado de fuera (no local)
+    _onlineEnemy;   // el enemigo es controlado de fuera (no local)
+
     init(data) {
-        this.mapValue = data.data;
+        this._onlinePlayer = false;
+        this._onlineEnemy = false;
+        this.mapValue = data.map;
+        console.log(data)
+        if (data.online){
+            this._online = data.online;
+            if (data.role == 0)
+                this._onlinePlayer = true;
+            else
+                this._onlineEnemy = true;
+            var socket = this.registry.get("socket");
+            this.configSocket(socket);
+        }
     }
 
     preload() {
@@ -62,6 +79,8 @@ export class GameScreen extends Phaser.Scene {
 
     create() {
 
+        const socket = this.registry.get("socket");
+
         // Creamos el tilemap y las capas
         const map = this.make.tilemap({ key: this.#mapKey, tileHeight: 24, tileWidth: 24 });    //1 para mapa 1, 2 para mapa 2, 3 para el 3
         const tileset = map.addTilesetImage(this.#mapUsed, "lab_tiles");   //1 para mapa 1, 2 para mapa 2, 3 para el 3
@@ -75,8 +94,10 @@ export class GameScreen extends Phaser.Scene {
         // Creamos key manager, jugador, enemigo y su colision
         this.#keyManager = new InputManager(this);
 
-        this.#player = new Player(this, this.#playerCoordinates, this.#keyManager);
-        this.#enemy = new Enemy(this, this.#enemyCoordinates, this.#keyManager);
+        console.log("player " + this._onlinePlayer);
+        console.log("enemy " + this._onlineEnemy)
+        this.#player = new Player(this, this.#playerCoordinates, this.#keyManager, this._onlinePlayer, this._onlineEnemy, socket); // equivale a "me controlan" o controlo
+        this.#enemy = new Enemy(this, this.#enemyCoordinates, this.#keyManager, this._onlineEnemy, this._onlinePlayer, socket);
         this.#player.setDepth(10);
         this.#enemy.setDepth(10);
         this.physics.add.overlap(this.#player, this.#enemy, this.enemyWin.bind(this));
@@ -193,5 +214,27 @@ export class GameScreen extends Phaser.Scene {
         this.time.delayedCall(particleDuration, () => {
             emitter.stop();
         })
+    }
+
+    /**
+     * 
+     * @param {WebSocket} socket 
+     */
+    configSocket(socket){
+        socket.onmessage = (message) => {
+            
+            try{
+                const data = JSON.parse(message.data);
+                console.log(data.type);
+
+                if (this._onlinePlayer){
+                    this.#player.onlineUpdate(data);
+                } else if (this._onlineEnemy){
+                    this.#enemy.onlineUpdate(data);
+                }
+            } catch(error){
+            console.log(error)
+        }
+        }
     }
 }
