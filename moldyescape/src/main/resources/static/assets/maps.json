@@ -35,6 +35,11 @@
             "type": "image",
             "key": "Lab3_preview",
             "url": "assets/Mapas/Lab3_preview.png"
+        },
+        {
+            "type": "image",
+            "key": "Lab4_preview",
+            "url": "assets/Mapas/Lab4_preview.png"
         }
     ]
 }

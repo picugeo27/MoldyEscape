@@ -13,15 +13,29 @@ export class SelectScreen extends Phaser.Scene {
     #titleText;
 
     preload() {
-        this.cache.json.get('maps_pack').preview.forEach((element) => {
+        const mapData = this.cache.json.get('maps_pack');
+    
+        // Cargar las vistas previas de los mapas
+        mapData.preview.forEach((element) => {
             if (!this.#mapList.includes(element.key)) {
-                this.load.image(element.key, element.url);
-                this.#mapList.push(element.key);
-                console.log('Mapa cargado:', element.key); // Verifica que los mapas se cargan correctamente
-
+                try {
+                    this.load.image(element.key, element.url);
+                    this.#mapList.push(element.key);
+                    console.log('Vista previa cargada:', element.key);
+                } catch (error) {
+                    console.error('Error al cargar la vista previa:', element.key, error);
+                }
             }
         });
+    
+        console.log('Número de vistas previas cargadas:', this.#mapList.length);
+    
+        mapData.maps.forEach((map) => {
+            this.load.tilemapTiledJSON(map.key, map.path);
+            console.log('Cargando mapa:', map.key);
+        });
     }
+    
 
     create() {
         this.add.image(0, 0, 'credits_background').setOrigin(0, 0);
@@ -50,11 +64,16 @@ export class SelectScreen extends Phaser.Scene {
             this.cameras.main.once('camerafadeoutcomplete', () => {
                 menuMusic.stop();
                 this.scene.stop("SelectScreen");
+
+                var selectedMap = this.#indexSelectedMap;
+                if (this.#indexSelectedMap === 3) {
+                    selectedMap = Math.floor(Math.random() * 3); // Genera un índice aleatorio entre 0 y 2
+                    console.log('Nivel 4 seleccionado, eligiendo aleatorio:', selectedMap);
+                }
+
+
                 this.scene.add('GameScreen', GameScreen);
-
-                console.log('Índice seleccionado:', this.#indexSelectedMap); // Esto te ayudará a verificar el valor
-
-                this.scene.start("GameScreen", { data: this.#indexSelectedMap });
+                this.scene.start("GameScreen", { data: selectedMap });
             });
         });
     
@@ -105,8 +124,7 @@ export class SelectScreen extends Phaser.Scene {
     incrementClickCount() {
         this.#clickCount++; // Incrementa el contador
     
-        // Verificar si el contador supera el valor deseado
-        if (this.#clickCount > 10) {
+        if (this.#clickCount > 20) {
             this.#titleText.setText('¡ESCOGE UN NIVEL YA!'); // Cambia el texto del título
         }
     }
