@@ -58,7 +58,7 @@ export class StartScreen extends Phaser.Scene {
             this.cameras.main.fadeOut(500, 0, 0, 0);
             this.cameras.main.once('camerafadeoutcomplete', () => {
                 this.scene.stop("StartScreen");
-                this.scene.start("SelectScreen");
+                this.scene.start("SelectScreen", { data: boton_red.visible });
             });
 
         })
@@ -128,6 +128,10 @@ export class StartScreen extends Phaser.Scene {
             boton_red.setVisible(false);
             boton_local.setVisible(true);
         }
+    }
+
+    init(data) {
+        //this.mapValue = data.data;
     }
 
 }

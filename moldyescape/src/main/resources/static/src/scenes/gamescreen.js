@@ -77,7 +77,8 @@ export class GameScreen extends Phaser.Scene {
 
         this.#player = new Player(this, this.#playerCoordinates, this.#keyManager);
         this.#enemy = new Enemy(this, this.#enemyCoordinates, this.#keyManager);
-
+        this.#player.setDepth(10);
+        this.#enemy.setDepth(10);
         this.physics.add.overlap(this.#player, this.#enemy, this.enemyWin.bind(this));
 
         // aqui llamamos el metodo que crea los botones, lo separe para que create no sea tan grande
@@ -91,8 +92,6 @@ export class GameScreen extends Phaser.Scene {
         this._gameMusic.play();
 
 
-
-        /////////////////////////////////////
     }
 
     createButtons() {
