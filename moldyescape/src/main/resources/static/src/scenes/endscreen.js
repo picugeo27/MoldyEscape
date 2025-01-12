@@ -8,8 +8,16 @@ export class EndScreen extends Phaser.Scene {
 
     //Si es true, es que la cientifica ha ganado, sino ha ganado la seta
     #playerIsWinner;
+    #iWon;
     _victorySound;
     _mapValue;
+
+
+    init(data) {
+        this.#playerIsWinner = data.playerIsWinner;
+        this.#iWon = data.iWon;
+        this._mapValue = data.map;
+    }
 
     preload() {
         this.load.image('particle', 'assets/Interactuables/particula.png');
@@ -76,12 +84,6 @@ export class EndScreen extends Phaser.Scene {
         this.saveWin();
     }
 
-    init(data) {
-        this.#playerIsWinner = data.playerIsWinner;
-        this._mapValue = data.map;
-        console.log(data.map)
-    }
-
     victoryParticle() {
         const particleDuration = 4000;
         const emitter = this.add.particles(this.scale.width / 2, -40, 'particle', {
@@ -97,8 +99,7 @@ export class EndScreen extends Phaser.Scene {
     }
 
     saveWin() {
-        if (this.#playerIsWinner) {
-            console.log(connectedUser.username);
+        if (this.#iWon) {
             $.ajax({
                 method: "PUT",
                 url: "/users/win",

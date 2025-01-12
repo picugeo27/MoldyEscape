@@ -10,32 +10,32 @@ const turboCooldown = 10000;
 const speed = 5;
 const accelerationMultiplier = 2;
 
-export class Character extends Phaser.GameObjects.Container{
-     /**@type {InputManager} */
-     _keyboardInput;
-     _movement;
-     _sprite;
-     _coordinates;
-     _target;
-     _speed;
-     _acceleration;
-     _turboActive;
-     _online;
-     /**@type {GameScreen} */
-     _scene;
-     _turboSound;
-     _wrongButton;
-     _facing;
-     // Creamos el player, la escena donde aparece y la posicion
-     /**
-      * @param {GameScreen} scene 
-      * @param {Coordinates} coordinates 
-      */
-     
-     constructor(scene, coordinates, keyboardInput){
-         // el [] es por si le pasamos otros objetos del juego
-         super(scene, coordinates.getRealX(), coordinates.getRealY(), [])    //constructor base
-         
+export class Character extends Phaser.GameObjects.Container {
+    /**@type {InputManager} */
+    _keyboardInput;
+    _movement;
+    _sprite;
+    _coordinates;
+    _target;
+    _speed;
+    _acceleration;
+    _turboActive;
+    _online;
+    /**@type {GameScreen} */
+    _scene;
+    _turboSound;
+    _wrongButton;
+    _facing;
+    // Creamos el player, la escena donde aparece y la posicion
+    /**
+     * @param {GameScreen} scene 
+     * @param {Coordinates} coordinates 
+     */
+
+    constructor(scene, coordinates, keyboardInput) {
+        // el [] es por si le pasamos otros objetos del juego
+        super(scene, coordinates.getRealX(), coordinates.getRealY(), [])    //constructor base
+
         this._scene = scene;
         this._coordinates = coordinates;
         this._target = new Coordinates(coordinates.x, coordinates.y);
@@ -47,17 +47,17 @@ export class Character extends Phaser.GameObjects.Container{
         this.scene.add.existing(this);          // lo añadimos a la escena
         this.scene.physics.add.existing(this);  // le añadimos las fisicas de phaser 
         this.body.setSize(24, 24);              // le ponemos el colisionador a ese tamaño
-        this.body.setOffset(-12,-12);
+        this.body.setOffset(-12, -12);
         this.body.setCollideWorldBounds(true);  // colision con las paredes
 
         // le añadimos los componentes
         this._keyboardInput = keyboardInput;
-        this._movement =  new Move(this, scene);
+        this._movement = new Move(this, scene);
 
         //Sonidos
         //Sonido para el turbo
-        this._turboSound = this._scene.sound.add('turbo_whoosh', {volume:1})
-        this._wrongButton = this._scene.sound.add('boton_erroneo', {volume:1})
+        this._turboSound = this._scene.sound.add('turbo_whoosh', { volume: 1 })
+        this._wrongButton = this._scene.sound.add('boton_erroneo', { volume: 1 })
 
         //listeners
         //Basicamente hacemos que cuando la escena use update, llame el update del player
@@ -78,48 +78,27 @@ export class Character extends Phaser.GameObjects.Container{
         }, this);
     }
 
-    update(){
+    update() {
         this._keyboardInput.update();
 
-        if(this._keyboardInput.isTurboKeyPlayerPressed() && !this._turboActive){
-            this.activateTurbo(); 
-            
-        }
-        //Si el turbo esta activo o en cooldown, al pulsar la tecla da error
-        else if(this._keyboardInput.isTurboKeyPlayerPressed() && this._turboActive && !this._wrongButton.isPlaying && !this._turboSound.isPlaying){
-            this._wrongButton.play();
-        }
-
-        if (this._keyboardInput.isMovingKeyPressedPlayer() && !this._movement.isMoving()){
-
-            this.setTarget(this._keyboardInput.getDirectionPlayer());
-            
-
-            if (this._scene.isWalkable(this._target))
-                this._movement.move(this._target, this._speed, this._acceleration);
-            else {
-                this.resetTarget();
-                console.log("No me muevo")
-            }
-        }
     }
 
-    activateTurbo(){ 
+    activateTurbo() {
         this._turboSound.play();
         this._acceleration = accelerationMultiplier;
         this._turboActive = true;
         this._scene.time.delayedCall(turboTime, this.deactivateTurbo, null, this);
     }
 
-    deactivateTurbo(){
+    deactivateTurbo() {
         this._acceleration = 1;
-        this._scene.time.delayedCall(turboCooldown, ()=>{
+        this._scene.time.delayedCall(turboCooldown, () => {
             this._turboActive = false;
         }, null, this);
     }
 
-    setTarget(direction){
-        switch(direction){
+    setTarget(direction) {
+        switch (direction) {
             case DIRECTION.UP:
                 this._facing = DIRECTION.UP;
                 this._target.y -= 1
@@ -139,24 +118,24 @@ export class Character extends Phaser.GameObjects.Container{
             default:
                 return;
         }
-        
+
     }
 
-    resetFacing(){
+    resetFacing() {
         this._facing = DIRECTION.DOWN;
     }
 
-    getFacing(){
+    getFacing() {
         return this._facing;
     }
-    
-    resetTarget(){
+
+    resetTarget() {
         this._target.x = this._coordinates.x;
         this._target.y = this._coordinates.y;
     }
 
-    updateCoordinates(){
-        this._coordinates.x  = this._target.x;
+    updateCoordinates() {
+        this._coordinates.x = this._target.x;
         this._coordinates.y = this._target.y;
     }
 }
