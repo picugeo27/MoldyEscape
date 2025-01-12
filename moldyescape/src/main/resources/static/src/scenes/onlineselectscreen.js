@@ -114,7 +114,8 @@ export class OnlineSelectScreen extends Phaser.Scene {
                 const data = JSON.parse(message.data);
                 console.log(data.type);
                 if (data.type == "start") {
-                    menuMusic.stop();
+                    if (menuMusic)
+                        menuMusic.stop();
                     this.startGame(data.value, data.role)
                 }
                 else
@@ -130,7 +131,7 @@ export class OnlineSelectScreen extends Phaser.Scene {
 
         this.socket.onclose = () => {
             console.log('Conexión cerrada');
-
+            this.registry.remove(this.socket);
         };
 
     }

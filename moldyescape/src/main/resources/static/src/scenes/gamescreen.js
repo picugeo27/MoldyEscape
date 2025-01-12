@@ -139,7 +139,7 @@ export class GameScreen extends Phaser.Scene {
         this._gameMusic.stop();
         this._socket.close();
         this.scene.remove('GameScreen');
-        this.scene.start('EndScreen', { playerIsWinner: true, map: this.mapValue, iWon: (this._online && this._onlineEnemy) });
+        this.scene.start('EndScreen', { playerIsWinner: true, online: this._online, iWon: (this._online && this._onlineEnemy) });
     }
 
     // que hacer cuando gana el monstruo
@@ -147,7 +147,7 @@ export class GameScreen extends Phaser.Scene {
         this._gameMusic.stop();
         this._socket.close();
         this.scene.remove('GameScreen');
-        this.scene.start('EndScreen', { playerIsWinner: false, map: this.mapValue, iWon: (this._online && this._onlinePlayer) });
+        this.scene.start('EndScreen', { playerIsWinner: false, online: this._online, iWon: (this._online && this._onlinePlayer) });
     }
 
 

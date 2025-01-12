@@ -10,13 +10,13 @@ export class EndScreen extends Phaser.Scene {
     #playerIsWinner;
     #iWon;
     _victorySound;
-    _mapValue;
+    _online;
 
 
     init(data) {
         this.#playerIsWinner = data.playerIsWinner;
         this.#iWon = data.iWon;
-        this._mapValue = data.map;
+        this._online = data.online;
     }
 
     preload() {
@@ -65,8 +65,10 @@ export class EndScreen extends Phaser.Scene {
             this.cameras.main.once('camerafadeoutcomplete', () => {
                 this._victorySound.stop();
                 this.scene.stop("EndScreen");
-                this.scene.add('GameScreen', GameScreen);
-                this.scene.start("GameScreen", { data: this._mapValue });
+                if (this._online) {
+                    this.scene.start("OnlineSelectScreen");
+                } else
+                    this.scene.start("SelectScreen")
             })
         })
 
