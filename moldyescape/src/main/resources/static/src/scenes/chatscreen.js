@@ -55,9 +55,9 @@ export class ChatScreen extends Phaser.Scene {
 						console.log("El mensaje se ha añadido satisfactoriamente al servidor.");
 						that.addMessage(mensaje);
 						that.scrollChat();
-					}).fail(function (data, textStatus, jqXHR) {
-						console.log("Error, no se ha añadido el mensaje al servidor.");
-					});
+					}).fail(disconnectPopUp);//.fail(function (data, textStatus, jqXHR) {
+						//console.log("Error, no se ha añadido el mensaje al servidor.");
+					//});
 				}
 			}
 
@@ -126,9 +126,9 @@ export class ChatScreen extends Phaser.Scene {
 				that.scrollChat();
 			}
 
-		}).fail((data) => {
-			console.log(data);
-		});
+		}).fail(disconnectPopUp);//.fail((data) => {
+			//console.log(data);
+		//});
 
 	};
 }

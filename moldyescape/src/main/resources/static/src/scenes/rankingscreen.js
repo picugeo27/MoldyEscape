@@ -83,9 +83,9 @@ export class RankingScreen extends Phaser.Scene {
 
             this.showRanking(startX, startY, lineHeight);
 
-        }).fail(function (data, message) {
-            console.log(message);
-        })
+        }).fail(disconnectPopUp);//.fail(function (data, message) {
+            //console.log(message);
+        //})
 
     }
 
@@ -123,7 +123,8 @@ export class RankingScreen extends Phaser.Scene {
                         url: "/users/getwins?username=" + item,
                         success: resolve,
                         error: reject
-                    });
+                    })
+                    .fail(disconnectPopUp);
                 });
                 this.messageText.text = "Número de partidas ganadas: " + data;
                 // Mostrar el mensaje
@@ -149,7 +150,8 @@ export class RankingScreen extends Phaser.Scene {
                         url: "/users/getwins?username=" + connectedUser.username,
                         success: resolve,
                         error: reject
-                    });
+                    })
+                    .fail(disconnectPopUp);
                 });
                 this.messageText.text = "Número de partidas ganadas: " + data;
                 // Mostrar el mensaje

@@ -127,9 +127,9 @@ export class UsersOverlay extends Phaser.Scene {
             this._maxPages = Math.ceil(this.connectedUsers.length / this._usersPerPage);
             this.showConnectedUsers();
             this.hideTexts();
-        }).fail(function (data, message) {
-            console.log(message);
-        })
+        }).fail(disconnectPopUp);//.fail(function (data, message) {
+            //console.log(message);
+        //})
 
     }
 

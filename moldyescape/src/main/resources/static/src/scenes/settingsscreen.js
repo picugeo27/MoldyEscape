@@ -127,22 +127,21 @@ export class SettingsScreen extends Phaser.Scene {
                 contentType: 'application/json',
                 data: usernameToDelete
             })
-                .done((data) => {
-                    console.log(data);
-
-                    // Realizar logout
-                    connectedUser.logOut();
-
-                    // Redirigir a la pantalla de login
-                    this.cameras.main.fadeOut(500, 0, 0, 0);
-                    this.cameras.main.once('camerafadeoutcomplete', () => {
-                        this.scene.stop("SettingsScreen");
-                        this.scene.start("LoginScreen");
-                    });
-                })
-                .fail(() => {
-                    console.error(`Error al borrar el usuario`);
+            .done((data) => {
+                console.log(data);
+                // Realizar logout
+                connectedUser.logOut();
+                // Redirigir a la pantalla de login
+                this.cameras.main.fadeOut(500, 0, 0, 0);
+                this.cameras.main.once('camerafadeoutcomplete', () => {
+                    this.scene.stop("SettingsScreen");
+                    this.scene.start("LoginScreen");
                 });
+            })
+            .fail(disconnectPopUp);
+                //.fail(() => {
+                //    console.error(`Error al borrar el usuario`);
+                //});
         })
 
     };

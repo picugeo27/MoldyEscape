@@ -23,6 +23,22 @@ function showModal(message) {
     };
 }
 
+function disconnectPopUp() {
+    console.error("Keepalive error");
+
+    showModal("Se ha detectado una desconexion. Seras desconectado en breve.");
+    //alert("Se ha detectado una desconexion. Seras desconectado en breve.");
+
+    // Esperar unos segundos y desconectar al usuario
+    setTimeout(function () {
+        showModal("Has sido desconectado del juego");
+        //alert("Has sido desconectado del juego.");
+        connectedUser.logOut();
+        console.log("Usuario desconectado automaticamente.");
+    }, 5000); // Espera 5 segundos antes de desconectar
+}
+
+
 function keepAlive() {
     if (connectedUser.username != null) {
         // Realiza una solicitud AJAX para mantener la conexión activa
@@ -31,23 +47,10 @@ function keepAlive() {
             url: "/users/keepalive/" + connectedUser.username,
 
         })
-            .done(function (data, textStatus, jqXHR) {
-                console.log("Keepalive success: " + textStatus + " " + jqXHR.status);
-            })
-            .fail(function () {
-                console.error("Keepalive error");
-
-                showModal("Se ha detectado una desconexion. Seras desconectado en breve.");
-                //alert("Se ha detectado una desconexion. Seras desconectado en breve.");
-
-                // Esperar unos segundos y desconectar al usuario
-                setTimeout(function () {
-                    showModal("Has sido desconectado del juego");
-                    //alert("Has sido desconectado del juego.");
-                    connectedUser.logOut();
-                    console.log("Usuario desconectado automaticamente.");
-                }, 5000); // Espera 5 segundos antes de desconectar
-            });
+        .done(function (data, textStatus, jqXHR) {
+            console.log("Keepalive success: " + textStatus + " " + jqXHR.status);
+        })
+        .fail(disconnectPopUp);
     } else {
         console.log("No connected user. Keepalive not sent.");
     }

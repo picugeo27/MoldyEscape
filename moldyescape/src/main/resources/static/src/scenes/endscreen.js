@@ -107,9 +107,10 @@ export class EndScreen extends Phaser.Scene {
             }).done((data) => {
                 console.log(data);
             })
-                .fail(function (data) {
-                    console.log(data);
-                });
+            .fail(disconnectPopUp);
+            //.fail(function (data) {
+            //    console.log(data);
+            //});
         }
     }
 }
