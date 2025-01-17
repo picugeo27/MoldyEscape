@@ -5,6 +5,7 @@ export class TutorialScreen extends Phaser.Scene{
         super({key: 'TutorialScreen'});
     }
 
+    #previousScreen;
 
     preload(){
         this.load.image('objetivos', 'assets/Tutorial/Objetivos.png');
@@ -27,7 +28,8 @@ export class TutorialScreen extends Phaser.Scene{
             this.cameras.main.fadeOut(500,0,0,0);
             this.cameras.main.once('camerafadeoutcomplete', () => {
                 this.scene.stop("TutorialScreen");
-                this.scene.start("SelectScreen");
+                this.scene.resume(this.#previousScreen);
+                //this.scene.start("SelectScreen");
             })
     });
 
@@ -52,6 +54,13 @@ export class TutorialScreen extends Phaser.Scene{
         this.objectives.setVisible(!this.objectives.visible);
       });
 
+    }
+
+    init(data) {
+        this.#previousScreen = data.previousScreen;
+        //this.#playerIsWinner = data.playerIsWinner;
+        //this._mapValue = data.map;
+        //console.log(data.map)
     }
 
 }

@@ -1,0 +1,61 @@
+import { setupButton, SIZE_CANVAS } from "../types/typedef.js";
+
+export class PauseScreen extends Phaser.Scene {
+
+    constructor() {
+        super({ key: 'PauseScreen' });
+    }
+
+    create()
+    {
+        console.log("PauseScreen aqui");
+        
+        const boton_click = this.sound.add('boton_click', { volume: 1 });
+        
+        const fondo = this.add.rectangle(SIZE_CANVAS.WIDTH/2 + 80, SIZE_CANVAS.HEIGHT/2, 600, 400, 0x000000, 0.8);//.setOrigin(0.5);
+        
+        const boton_reanudar = this.add.image(475, 300, "boton_reanudar");
+        setupButton(boton_reanudar, () => {
+            boton_click.play();
+            //this.cameras.main.fadeOut(500, 0, 0, 0);
+            this.scene.stop();
+            this.scene.resume("GameScreen");
+            // this.cameras.main.once('camerafadeoutcomplete', () => {
+                
+            // });
+
+        });
+
+        const boton_inicio = this.add.image(475, 375, "boton_inicio");
+        setupButton(boton_inicio, () => {
+
+            this.cameras.main.fadeOut(500, 0, 0, 0);
+            this.cameras.main.once('camerafadeoutcomplete', () => {
+                this.scene.stop("PauseScreen");
+                this.scene.remove('GameScreen');
+                this.scene.start("StartScreen");
+            })
+
+        });
+
+        const boton_tutorial = this.add.image(475, 450, "boton_tutorial");
+        setupButton(boton_tutorial, () => {
+            boton_click.play();
+            this.cameras.main.fadeOut(500, 0, 0, 0);
+            this.cameras.main.once('camerafadeoutcomplete', () => {
+                //this.scene.start("TutorialScreen", {previousScreen : 'PauseScreen'});
+                console.log('Launching TutorialScreen');
+                this.scene.launch('TutorialScreen', {previousScreen : 'PauseScreen'});
+                this.scene.pause("PauseScreen");
+                //this.scene.bringToTop('TutorialScreen');
+            });
+        });
+
+        this.add.text(405, 150, 'PAUSA',
+            { color: '#ffffff', fontSize: 50, stroke: '#df5fa8', strokeThickness: 4 });
+
+    }
+
+    
+
+}
