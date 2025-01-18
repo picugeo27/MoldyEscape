@@ -48,20 +48,34 @@ export class UsersOverlay extends Phaser.Scene {
             });
 
 
+        this.overlayKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB);
 
+        
         // Mostrar y ocultar
-        this.input.keyboard.on('keydown-SPACE', () => {
+        // this.input.keyboard.on('keydown-TAB', () => {
+        //     if (this.overlay.visible) {
+        //         this.toggleOverlay(false);
+        //     }
+        //     else {
+        //         this.toggleOverlay(true);
+        //     }
+        // });
+
+        await this.getConnectedUsers();
+
+        this.intervalo = setInterval(() => this.getConnectedUsers(), 10 * 1000);
+    }
+
+    update()
+    {
+        if (Phaser.Input.Keyboard.JustDown(this.overlayKey)) {
             if (this.overlay.visible) {
                 this.toggleOverlay(false);
             }
             else {
                 this.toggleOverlay(true);
             }
-        });
-
-        await this.getConnectedUsers();
-
-        this.intervalo = setInterval(() => this.getConnectedUsers(), 10 * 1000);
+        }
     }
 
     toggleOverlay(show) {
