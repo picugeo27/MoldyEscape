@@ -132,7 +132,6 @@ export class Player extends Character {
 
             else {
                 this.resetTarget();
-                console.log("No me muevo")
             }
         }
 
@@ -172,7 +171,7 @@ export class Player extends Character {
             }
 
             default: {
-                console.log("Comando no reconocido");
+                console.log("Comando no reconocido: " + data.type);
             }
         }
     }

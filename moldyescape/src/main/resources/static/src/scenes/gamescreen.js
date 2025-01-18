@@ -3,6 +3,7 @@ import { Enemy } from "../objects/enemy.js";
 import { Coordinates, MAP_INIT } from "../types/typedef.js";
 import { InputManager } from "../components/inputManager.js";
 import { Trap } from "../objects/trap.js";
+import { InfoType, PlayerType, Winner } from "../types/messages.js";
 
 const buttonsToWin = 3;
 
@@ -49,7 +50,6 @@ export class GameScreen extends Phaser.Scene {
         this._onlinePlayer = false;
         this._onlineEnemy = false;
         this.mapValue = data.map;
-        console.log(data)
         if (data.online) {
             this._online = data.online;
             if (data.role == 0)
@@ -137,6 +137,7 @@ export class GameScreen extends Phaser.Scene {
     // que hacer cuando gana el jugador
     playerWin() {
         this._gameMusic.stop();
+        this.sendWinner(PlayerType.player)
         this._socket.close();
         this.scene.remove('GameScreen');
         this.scene.start('EndScreen', { playerIsWinner: true, online: this._online, iWon: (this._online && this._onlineEnemy) });
@@ -145,6 +146,7 @@ export class GameScreen extends Phaser.Scene {
     // que hacer cuando gana el monstruo
     enemyWin() {
         this._gameMusic.stop();
+        this.sendWinner(PlayerType.enemy)
         this._socket.close();
         this.scene.remove('GameScreen');
         this.scene.start('EndScreen', { playerIsWinner: false, online: this._online, iWon: (this._online && this._onlinePlayer) });
@@ -227,14 +229,42 @@ export class GameScreen extends Phaser.Scene {
 
             try {
                 const data = JSON.parse(message.data);
-                if (this._onlinePlayer) {
-                    this.#player.onlineUpdate(data);
-                } else if (this._onlineEnemy) {
-                    this.#enemy.onlineUpdate(data);
+                console.log(data);
+                if (data.type == InfoType.winner) {
+                    this.onlineWinner(data.who);
+                } else if (data.type == InfoType.disconnect) {
+                    if (this._onlinePlayer)
+                        this.onlineWinner(PlayerType.enemy)
+                    else
+                        this.onlineWinner(PlayerType.player);
+                }
+                else {
+                    if (this._onlinePlayer) {
+                        this.#player.onlineUpdate(data);
+                    } else if (this._onlineEnemy) {
+                        this.#enemy.onlineUpdate(data);
+                    }
                 }
             } catch (error) {
                 console.log(error)
             }
         }
     }
+
+    onlineWinner(who) {
+        this._gameMusic.stop();
+        this._socket.close();
+
+        if (who == PlayerType.enemy) {
+            this.scene.start('EndScreen', { playerIsWinner: false, online: this._online, iWon: (this._online && this._onlinePlayer) });
+        } else {
+            this.scene.start('EndScreen', { playerIsWinner: true, online: this._online, iWon: (this._online && this._onlineEnemy) });
+        }
+        this.scene.remove('GameScreen');
+    }
+
+    sendWinner(who) {
+        this._socket.send(JSON.stringify(new Winner(who)));
+    }
+
 }

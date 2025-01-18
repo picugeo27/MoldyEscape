@@ -3,12 +3,15 @@ export const InfoType = {
     movement: "movement",
     trap: "trap",
     sprint: "sprint",
-    update: "update"
+    update: "update",
+    winner: "winner",
+    disconnect: "disconnect"
 }
 
 export const PlayerType = {
     player: "player",
-    enemy: "enemy"
+    enemy: "enemy",
+    none: "none"
 }
 
 export function Vote(vote) {
@@ -36,5 +39,10 @@ export function Sprint(who) {
 
 export function Update() {
     this.type = InfoType.update
+}
+
+export function Winner(who) {
+    this.type = InfoType.winner,
+        this.who = who;
 }
 
