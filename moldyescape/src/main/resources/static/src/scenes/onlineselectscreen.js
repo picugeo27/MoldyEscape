@@ -36,15 +36,29 @@ export class OnlineSelectScreen extends Phaser.Scene {
             strokeThickness: 4,
         });
 
+        this.votePopupText = this.add.text(400, 70, 'HAS VOTADO ESTE NIVEL', {
+            fontSize: 35,
+            color: '#df5fa8',
+            stroke: '#df5fa8',
+            strokeThickness: 2,
+            backgroundColor: '#ffffff',
+            padding: { x: 10, y: 5 }
+        })
+        .setVisible(false)
+        .setOrigin(0.5);
+
         const host = window.location.host;
 
         const menuMusic = this.registry.get('menuMusic');
         const boton_click = this.sound.add('boton_click', { volume: 1 });
         const boton_flecha_click = this.sound.add('boton_flecha_click', { volume: 1 });
 
-        const boton_jugar = this.add.image(400, 550, "boton_jugar").setScale(0.95);
+        //const boton_jugar = this.add.image(400, 550, "boton_jugar").setScale(0.95);
         const boton_atras = this.add.image(100, 550, "boton_volver");
         const boton_tutorial = this.add.image(680, 550, "boton_tutorial");
+        this.boton_votar = this.add.image(400, 550, "boton_votar");
+        this.boton_cancelar = this.add.image(400, 550, "boton_cancelar").setVisible(false);
+
 
         this.#selectedMap = this.add.image(this.scale.width / 2, this.scale.height / 2, this.#mapList[this.#indexSelectedMap]).setScale(0.6);
 
@@ -53,12 +67,16 @@ export class OnlineSelectScreen extends Phaser.Scene {
         Ajustes de botones
         */
         // CAMBIAR POR BOTON VOTAR
-        setupButton(boton_jugar, () => {
+        setupButton(this.boton_votar, () => {
+            boton_click.play();
+            if (!this.voted)
+                this.vote()
+        });
+
+        setupButton(this.boton_cancelar, () => {
             boton_click.play();
             if (this.voted)
                 this.cancelVote()
-            else
-                this.vote()
         });
 
         setupButton(boton_atras, () => {
@@ -80,16 +98,16 @@ export class OnlineSelectScreen extends Phaser.Scene {
             });
         });
 
-        const boton_flecha = this.add.image(520, 550, "boton_flecha").setScale(0.9)
+        this.boton_flecha = this.add.image(520, 550, "boton_flecha").setScale(0.9)
             .setInteractive()
             .on('pointerdown', () => {
                 boton_flecha_click.play();
                 this.nextMap();
             });
 
-        boton_flecha.flipX = true;
+        this.boton_flecha.flipX = true;
 
-        const boton_flecha_2 = this.add.image(280, 550, "boton_flecha").setScale(0.9)
+        this.boton_flecha_2 = this.add.image(280, 550, "boton_flecha").setScale(0.9)
             .setInteractive()
             .on('pointerdown', () => {
                 boton_flecha_click.play();
@@ -173,6 +191,11 @@ export class OnlineSelectScreen extends Phaser.Scene {
         this.voted = true;
         const vote = new Vote(this.#indexSelectedMap)
         this.socket.send(JSON.stringify(vote));
+        this.boton_votar.setVisible(false);
+        this.boton_cancelar.setVisible(true);
+        this.boton_flecha.setVisible(false);
+        this.boton_flecha_2.setVisible(false);
+        this.showPopupText();
 
     }
 
@@ -180,5 +203,18 @@ export class OnlineSelectScreen extends Phaser.Scene {
         this.voted = false;
         const vote = new Vote(-1);
         this.socket.send(JSON.stringify(vote));
+        this.boton_votar.setVisible(true);
+        this.boton_cancelar.setVisible(false);
+        this.boton_flecha.setVisible(true);
+        this.boton_flecha_2.setVisible(true);
+    }
+
+    showPopupText() {
+        this.votePopupText.setVisible(true);
+        this.time.delayedCall(800, () => {
+            this.votePopupText.setVisible(false);
+        });
+
+
     }
 }

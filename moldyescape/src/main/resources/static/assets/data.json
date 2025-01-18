@@ -117,6 +117,16 @@
                 "type": "image",
                 "key": "boton_borrar_usuario",
                 "url": "BotonBorrarUsuario.png"
+            },
+            {
+                "type": "image",
+                "key": "boton_votar",
+                "url": "BotonVotar.png"
+            },
+            {
+                "type": "image",
+                "key": "boton_cancelar",
+                "url": "BotonCancelar.png"
             }
 
         ]
