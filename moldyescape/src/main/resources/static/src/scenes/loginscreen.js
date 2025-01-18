@@ -121,7 +121,6 @@ export class LoginScreen extends Phaser.Scene {
     loginExitoso(username) {
         connectedUser.logIn(username);
 
-        console.log("keep alive")
         if (connectedUser.username != null) {
             // Realiza una solicitud AJAX para mantener la conexión activa
             $.ajax({

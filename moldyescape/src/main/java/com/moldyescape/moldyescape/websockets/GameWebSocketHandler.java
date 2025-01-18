@@ -2,8 +2,10 @@ package com.moldyescape.moldyescape.websockets;
 
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.CloseStatus;
@@ -70,22 +72,29 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
 
         Random rand = new Random();
         int number = rand.nextInt(2);
+        int map = lobbys.get(lobby).getRandomVote();
 
-        String message = "{\"type\":\"start\",\"value\": \"" + lobbys.get(lobby).getRandomVote()
-                + "\", \"" + number + "\"}";
-        String message1 = "{\"type\":\"start\",\"value\": \"" + lobbys.get(lobby).getRandomVote()
-                + "\", \"" + (1 - number) + "\"}";
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectNode message = objectMapper.createObjectNode();
+        message.put("type", "start");
+        message.put("value", map);
+        message.put("role", number);
 
-        lobbys.get(lobby).getConnectedUsers().get(0).sendMessage(new TextMessage(message));
-        lobbys.get(lobby).getConnectedUsers().get(1).sendMessage(new TextMessage(message1));
+        ObjectNode message1 = objectMapper.createObjectNode();
+        message1.put("type", "start");
+        message1.put("value", map);
+        message1.put("role", 1 - number);
 
+        lobbys.get(lobby).getConnectedUsers().get(0)
+                .sendMessage(new TextMessage(objectMapper.writeValueAsString(message)));
+        lobbys.get(lobby).getConnectedUsers().get(1)
+                .sendMessage(new TextMessage(objectMapper.writeValueAsString(message1)));
     }
 
     private void mannageVotes(JsonNode jsonNode, WebSocketSession session) throws IOException {
-        if (jsonNode.get("vote").asText().equals("remove vote"))
+        if (jsonNode.get("vote").asText().equals("-1"))
             lobbys.get(session.getId()).removeVote();
         else {
-            System.out.println("else");
             lobbys.get(session.getId()).vote(jsonNode.get("vote").asInt());
             if (lobbys.get(session.getId()).isReadyToStart()) {
                 sendStartMessage(session.getId());
@@ -95,14 +104,29 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
     }
 
     @Override
-    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
+    public void afterConnectionClosed(WebSocketSession session, CloseStatus status)
+            throws JsonProcessingException, IOException {
         removePlayer(session);
         System.out.println("Jugador desconectado: " + session.getId());
     }
 
-    public void removePlayer(WebSocketSession session) {
+    public void removePlayer(WebSocketSession session) throws JsonProcessingException, IOException {
         Lobby value = lobbys.get(session.getId());
         value.removePlayer(session);
+
+        if (!value.getConnectedUsers().isEmpty())
+            informDisconnection(value);
+
+        lobbys.remove(session.getId());
+        System.out.println(lobbys);
+    }
+
+    public void informDisconnection(Lobby lobby) throws JsonProcessingException, IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectNode message = objectMapper.createObjectNode();
+        message.put("type", "disconnect");
+
+        lobby.getConnectedUsers().get(0).sendMessage(new TextMessage(objectMapper.writeValueAsString(message)));
     }
 
 }
