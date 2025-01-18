@@ -18,6 +18,8 @@ export class TutorialScreen extends Phaser.Scene {
 
     create() {
 
+        const boton_click = this.sound.add('boton_click', { volume: 1 });
+
         this.registry.get('menuMusic');
 
         this.controls = this.add.image(this.scale.width / 2, this.scale.height / 2, "controles").setScale(0.7);
@@ -32,34 +34,28 @@ export class TutorialScreen extends Phaser.Scene {
             })
         });
 
-        const boton_2 = this.add.image(650, 550, "boton_siguiente");
-        boton_2.setInteractive();
-        boton_2.on('pointerover', () => {
-            boton_2.postFX.addShine(0.8, 0.05, 1);
-        });
-
-        boton_2.on('pointerout', () => {
-            boton_2.setScale(0.95);
-            boton_2.postFX.clear();
-        });
-
-        boton_2.on('pointerup', () => {
-            boton_2.setScale(boton_2.scale += 0.05);
-        });
-
-        boton_2.on('pointerdown', () => {
-            boton_2.setScale(boton_2.scale -= 0.05);
+        const boton_siguiente = this.add.image(650, 550, "boton_siguiente");
+        setupButton(boton_siguiente, () => {
+            boton_click.play();
             this.controls.setVisible(!this.controls.visible);
             this.objectives.setVisible(!this.objectives.visible);
+            boton_siguiente.setVisible(false);
+            boton_anterior.setVisible(true);
+        });
+
+        const boton_anterior = this.add.image(650, 550, "boton_anterior").setVisible(false);
+        setupButton(boton_anterior, () => {
+            boton_click.play();
+            this.controls.setVisible(!this.controls.visible);
+            this.objectives.setVisible(!this.objectives.visible);
+            boton_siguiente.setVisible(true);
+            boton_anterior.setVisible(false);
         });
 
     }
 
     init(data) {
         this.#previousScreen = data.previousScreen;
-        //this.#playerIsWinner = data.playerIsWinner;
-        //this._mapValue = data.map;
-        //console.log(data.map)
     }
 
 }
