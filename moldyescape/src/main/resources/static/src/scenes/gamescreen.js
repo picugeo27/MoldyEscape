@@ -43,6 +43,8 @@ export class GameScreen extends Phaser.Scene {
     _onlinePlayer;  // el player es controlado de fuera (no local)
     _onlineEnemy;   // el enemigo es controlado de fuera (no local)
 
+    _currentMusic;
+
     /**@type {WebSocket} */
     _socket;
 
@@ -85,6 +87,8 @@ export class GameScreen extends Phaser.Scene {
 
         // Creamos el tilemap y las capas
         const map = this.make.tilemap({ key: this.#mapKey, tileHeight: 24, tileWidth: 24 });    //1 para mapa 1, 2 para mapa 2, 3 para el 3
+        console.log("Valor de mapUsed " + this.#mapUsed);
+        console.log("Tipo de mapUsed " + typeof this.#mapUsed);
         const tileset = map.addTilesetImage(this.#mapUsed, "lab_tiles");   //1 para mapa 1, 2 para mapa 2, 3 para el 3
         const backgroundLayer = map.createLayer("Fondo", tileset, MAP_INIT, 0);     //Capa de fondo
         this.#colliderLayer = map.createLayer("Paredes", tileset, MAP_INIT, 0);    //Capa de colliders
@@ -110,8 +114,19 @@ export class GameScreen extends Phaser.Scene {
 
         this._pressButtonSound = this.sound.add('take_button', { volume: 1 });
         this._gameMusic = this.sound.add('game_music', { loop: true, volume: 1 });
-        this._gameMusic.play();
-
+        this._pacmanMusic = this.sound.add('pacman_music', { loop: true, volume: 1 });
+        if(this.#mapKey === "Laboratorio3")
+        {
+            this._currentMusic = this._pacmanMusic;
+            //this._pacmanMusic.play();
+        }
+        else
+        {
+            //this._gameMusic.play();
+            this._currentMusic = this._gameMusic;
+        }
+    
+        this._currentMusic.play();
         this.pauseKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
     }
 
@@ -144,7 +159,7 @@ export class GameScreen extends Phaser.Scene {
 
     // que hacer cuando gana el jugador
     playerWin() {
-        this._gameMusic.stop();
+        this._currentMusic.stop();
         this.sendWinner(PlayerType.player)
         this._socket.close();
         this.scene.remove('GameScreen');
@@ -153,7 +168,7 @@ export class GameScreen extends Phaser.Scene {
 
     // que hacer cuando gana el monstruo
     enemyWin() {
-        this._gameMusic.stop();
+        this._currentMusic.stop();
         this.sendWinner(PlayerType.enemy)
         this._socket.close();
         this.scene.remove('GameScreen');

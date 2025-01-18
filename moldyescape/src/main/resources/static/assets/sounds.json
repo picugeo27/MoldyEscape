@@ -51,6 +51,11 @@
           "type": "audio",
           "key": "end_victory",
           "url": "end_screen_victory.mp3"
+        },
+        {
+          "type": "audio",
+          "key": "pacman_music",
+          "url": "pac_man.mp3"
         }
       ]
     }
