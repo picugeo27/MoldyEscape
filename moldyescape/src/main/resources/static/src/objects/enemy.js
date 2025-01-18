@@ -168,7 +168,7 @@ export class Enemy extends Character {
             }
 
             default: {
-                console.log("Comando no reconocido");
+                console.log("Comando no reconocido: " + data.type);
             }
         }
 

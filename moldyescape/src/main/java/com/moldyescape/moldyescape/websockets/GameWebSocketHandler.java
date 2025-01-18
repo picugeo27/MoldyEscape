@@ -2,6 +2,7 @@ package com.moldyescape.moldyescape.websockets;
 
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -82,10 +83,12 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
         ObjectNode message1 = objectMapper.createObjectNode();
         message1.put("type", "start");
         message1.put("value", map);
-        message1.put("role", 1-number);
+        message1.put("role", 1 - number);
 
-        lobbys.get(lobby).getConnectedUsers().get(0).sendMessage(new TextMessage(objectMapper.writeValueAsString(message)));
-        lobbys.get(lobby).getConnectedUsers().get(1).sendMessage(new TextMessage(objectMapper.writeValueAsString(message1)));
+        lobbys.get(lobby).getConnectedUsers().get(0)
+                .sendMessage(new TextMessage(objectMapper.writeValueAsString(message)));
+        lobbys.get(lobby).getConnectedUsers().get(1)
+                .sendMessage(new TextMessage(objectMapper.writeValueAsString(message1)));
     }
 
     private void mannageVotes(JsonNode jsonNode, WebSocketSession session) throws IOException {
@@ -101,16 +104,29 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
     }
 
     @Override
-    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
+    public void afterConnectionClosed(WebSocketSession session, CloseStatus status)
+            throws JsonProcessingException, IOException {
         removePlayer(session);
         System.out.println("Jugador desconectado: " + session.getId());
     }
 
-    public void removePlayer(WebSocketSession session) {
+    public void removePlayer(WebSocketSession session) throws JsonProcessingException, IOException {
         Lobby value = lobbys.get(session.getId());
         value.removePlayer(session);
+
+        if (!value.getConnectedUsers().isEmpty())
+            informDisconnection(value);
+
         lobbys.remove(session.getId());
         System.out.println(lobbys);
+    }
+
+    public void informDisconnection(Lobby lobby) throws JsonProcessingException, IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectNode message = objectMapper.createObjectNode();
+        message.put("type", "disconnect");
+
+        lobby.getConnectedUsers().get(0).sendMessage(new TextMessage(objectMapper.writeValueAsString(message)));
     }
 
 }

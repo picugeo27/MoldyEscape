@@ -125,7 +125,6 @@ export class OnlineSelectScreen extends Phaser.Scene {
             } catch (error) {
                 console.log(error)
             }
-
             console.log(message.data);
         }
 
@@ -162,6 +161,7 @@ export class OnlineSelectScreen extends Phaser.Scene {
 
     startGame(mapValue, thisRole) {
         this.cameras.main.fadeOut(500, 0, 0, 0);
+        this.socket.onmessage = null;
         this.cameras.main.once('camerafadeoutcomplete', () => {
             this.scene.stop("SelectScreen");
             this.scene.add('GameScreen', GameScreen);
