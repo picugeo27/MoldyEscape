@@ -6,14 +6,13 @@ export class PauseScreen extends Phaser.Scene {
         super({ key: 'PauseScreen' });
     }
 
-    create()
-    {
+    create() {
         console.log("PauseScreen aqui");
-        
+
         const boton_click = this.sound.add('boton_click', { volume: 1 });
-        
-        const fondo = this.add.rectangle(SIZE_CANVAS.WIDTH/2 + 80, SIZE_CANVAS.HEIGHT/2, 600, 400, 0x000000, 0.8);//.setOrigin(0.5);
-        
+
+        const fondo = this.add.rectangle(SIZE_CANVAS.WIDTH / 2 + 80, SIZE_CANVAS.HEIGHT / 2, 600, 400, 0x000000, 0.8);//.setOrigin(0.5);
+
         const boton_reanudar = this.add.image(475, 300, "boton_reanudar");
         setupButton(boton_reanudar, () => {
             boton_click.play();
@@ -21,7 +20,7 @@ export class PauseScreen extends Phaser.Scene {
             this.scene.stop();
             this.scene.resume("GameScreen");
             // this.cameras.main.once('camerafadeoutcomplete', () => {
-                
+
             // });
 
         });
@@ -41,13 +40,12 @@ export class PauseScreen extends Phaser.Scene {
         const boton_tutorial = this.add.image(475, 450, "boton_tutorial");
         setupButton(boton_tutorial, () => {
             boton_click.play();
-            this.cameras.main.fadeOut(500, 0, 0, 0);
+            this.cameras.main.fadeOut(250, 0, 0, 0);
             this.cameras.main.once('camerafadeoutcomplete', () => {
-                //this.scene.start("TutorialScreen", {previousScreen : 'PauseScreen'});
                 console.log('Launching TutorialScreen');
-                this.scene.launch('TutorialScreen', {previousScreen : 'PauseScreen'});
-                this.scene.pause("PauseScreen");
-                //this.scene.bringToTop('TutorialScreen');
+                this.scene.bringToTop('TutorialScreen');
+                this.scene.start('TutorialScreen', { previousScreen: 'PauseScreen' });
+
             });
         });
 
@@ -56,6 +54,6 @@ export class PauseScreen extends Phaser.Scene {
 
     }
 
-    
+
 
 }
