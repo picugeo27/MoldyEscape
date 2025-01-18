@@ -14,7 +14,7 @@ export class SelectScreen extends Phaser.Scene {
 
     preload() {
         const mapData = this.cache.json.get('maps_pack');
-    
+
         // Cargar las vistas previas de los mapas
         mapData.preview.forEach((element) => {
             if (!this.#mapList.includes(element.key)) {
@@ -27,19 +27,19 @@ export class SelectScreen extends Phaser.Scene {
                 }
             }
         });
-    
+
         console.log('Número de vistas previas cargadas:', this.#mapList.length);
-    
+
         mapData.maps.forEach((map) => {
             this.load.tilemapTiledJSON(map.key, map.path);
             console.log('Cargando mapa:', map.key);
         });
     }
-    
+
 
     create() {
         this.add.image(0, 0, 'credits_background').setOrigin(0, 0);
-    
+
         // Almacenar la referencia al texto inicial
         this.#titleText = this.add.text(115, 40, 'SELECCIONA UN NIVEL', {
             color: '#ffffff',
@@ -47,17 +47,17 @@ export class SelectScreen extends Phaser.Scene {
             stroke: '#df5fa8',
             strokeThickness: 4,
         });
-    
+
         const menuMusic = this.registry.get('menuMusic');
         const boton_click = this.sound.add('boton_click', { volume: 1 });
         const boton_flecha_click = this.sound.add('boton_flecha_click', { volume: 1 });
-    
+
         const boton_jugar = this.add.image(400, 550, "boton_jugar").setScale(0.95);
         const boton_atras = this.add.image(100, 550, "boton_volver");
         const boton_tutorial = this.add.image(680, 550, "boton_tutorial");
-    
+
         this.#selectedMap = this.add.image(this.scale.width / 2, this.scale.height / 2, this.#mapList[this.#indexSelectedMap]).setScale(0.6);
-    
+
         setupButton(boton_jugar, () => {
             boton_click.play();
             this.cameras.main.fadeOut(500, 0, 0, 0);
@@ -74,7 +74,7 @@ export class SelectScreen extends Phaser.Scene {
 
             });
         });
-    
+
         setupButton(boton_atras, () => {
             boton_click.play();
             this.cameras.main.fadeOut(500, 0, 0, 0);
@@ -83,16 +83,16 @@ export class SelectScreen extends Phaser.Scene {
                 this.scene.start("StartScreen");
             });
         });
-    
+
         setupButton(boton_tutorial, () => {
             boton_click.play();
             this.cameras.main.fadeOut(500, 0, 0, 0);
             this.cameras.main.once('camerafadeoutcomplete', () => {
                 this.scene.stop("SelectScreen");
-                this.scene.start("TutorialScreen");
+                this.scene.start("TutorialScreen", { previousScreen: 'SelectScreen' });
             });
         });
-    
+
         const boton_flecha = this.add.image(520, 550, "boton_flecha").setScale(0.9)
             .setInteractive()
             .on('pointerdown', () => {
@@ -102,9 +102,9 @@ export class SelectScreen extends Phaser.Scene {
                     this.nextMap();
                 });
             });
-    
+
         boton_flecha.flipX = true;
-    
+
         const boton_flecha_2 = this.add.image(280, 550, "boton_flecha").setScale(0.9)
             .setInteractive()
             .on('pointerdown', () => {
@@ -121,7 +121,7 @@ export class SelectScreen extends Phaser.Scene {
 
     incrementClickCount() {
         this.#clickCount++; // Incrementa el contador
-    
+
         if (this.#clickCount > 20) {
             this.#titleText.setText('¡ESCOGE UN NIVEL YA!'); // Cambia el texto del título
         }

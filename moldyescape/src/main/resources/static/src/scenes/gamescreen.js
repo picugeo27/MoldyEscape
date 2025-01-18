@@ -112,7 +112,15 @@ export class GameScreen extends Phaser.Scene {
         this._gameMusic = this.sound.add('game_music', { loop: true, volume: 1 });
         this._gameMusic.play();
 
+        this.pauseKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
+    }
 
+    update() {
+        if (Phaser.Input.Keyboard.JustDown(this.pauseKey)) {
+            this.scene.launch('PauseScreen');
+            this.scene.pause();
+            this.scene.bringToTop('PauseScreen');
+        }
     }
 
     createButtons() {

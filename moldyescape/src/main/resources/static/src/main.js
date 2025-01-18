@@ -11,6 +11,7 @@ import { UsersOverlay } from "./scenes/usersoverlay.js";
 import { LoginScreen } from "./scenes/loginscreen.js";
 import { RankingScreen } from "./scenes/rankingscreen.js";
 import { ChatScreen } from "./scenes/chatscreen.js";
+import { PauseScreen } from "./scenes/pausescreen.js";
 import { OnlineSelectScreen } from "./scenes/onlineselectscreen.js";
 
 
@@ -47,6 +48,7 @@ game.scene.add('UsersOverlay', UsersOverlay);
 game.scene.add('LoginScreen', LoginScreen);
 game.scene.add('RankingScreen', RankingScreen);
 game.scene.add("ChatScreen", ChatScreen);
+game.scene.add("PauseScreen", PauseScreen);
 
 game.scene.start('LoginScreen');
 game.scene.start('UsersOverlay', UsersOverlay); 
