@@ -40,7 +40,6 @@ export class SelectScreen extends Phaser.Scene {
     create() {
         this.add.image(0, 0, 'credits_background').setOrigin(0, 0);
 
-        // Almacenar la referencia al texto inicial
         this.#titleText = this.add.text(115, 40, 'SELECCIONA UN NIVEL', {
             color: '#ffffff',
             fontSize: 50,
@@ -54,7 +53,7 @@ export class SelectScreen extends Phaser.Scene {
 
         const boton_jugar = this.add.image(400, 550, "boton_jugar").setScale(0.95);
         const boton_atras = this.add.image(100, 550, "boton_volver");
-        const boton_tutorial = this.add.image(680, 550, "boton_tutorial");
+        //const boton_tutorial = this.add.image(680, 550, "boton_tutorial");
 
         this.#selectedMap = this.add.image(this.scale.width / 2, this.scale.height / 2, this.#mapList[this.#indexSelectedMap]).setScale(0.6);
 
@@ -84,14 +83,14 @@ export class SelectScreen extends Phaser.Scene {
             });
         });
 
-        setupButton(boton_tutorial, () => {
-            boton_click.play();
-            this.cameras.main.fadeOut(500, 0, 0, 0);
-            this.cameras.main.once('camerafadeoutcomplete', () => {
-                this.scene.stop("SelectScreen");
-                this.scene.start("TutorialScreen", { previousScreen: 'SelectScreen' });
-            });
-        });
+        // setupButton(boton_tutorial, () => {
+        //     boton_click.play();
+        //     this.cameras.main.fadeOut(500, 0, 0, 0);
+        //     this.cameras.main.once('camerafadeoutcomplete', () => {
+        //         this.scene.stop("SelectScreen");
+        //         this.scene.start("TutorialScreen", { previousScreen: 'SelectScreen' });
+        //     });
+        // });
 
         const boton_flecha = this.add.image(520, 550, "boton_flecha").setScale(0.9)
             .setInteractive()

@@ -131,6 +131,11 @@
                 "type": "image",
                 "key": "boton_cancelar",
                 "url": "BotonCancelar.png"
+            },
+            {
+                "type": "image",
+                "key": "boton_anterior",
+                "url": "BotonAnterior.png"
             }
 
         ]

@@ -19,6 +19,13 @@ export class SettingsScreen extends Phaser.Scene {
         // Crear un rectángulo semi-transparente encima de la imagen
         const overlay = this.add.rectangle(630, 550, 360, 160, 0x000000, 0.5);
 
+        this.add.text(300, 40, 'AJUSTES', {
+            color: '#ffffff',
+            fontSize: 50,
+            stroke: '#df5fa8',
+            strokeThickness: 4,
+        });
+
         this.add.text(460, 490, 'IMPORTANTE\n Los cambios en los ajustes\n se guardan\nautomáticamente\n durante la misma sesión\n',
             { color: '#ffffff', fontSize: 20, stroke: '#df5fa8', align: 'center' });//, strokeThickness: 4});
 
@@ -82,8 +89,10 @@ export class SettingsScreen extends Phaser.Scene {
 
 
         const boton_full_screen = this.add.image(400, 300, "boton_fullscreen");
+        const boton_tutorial = this.add.image(400, 360, "boton_tutorial");
+        const boton_borrar_usuario = this.add.image(400, 420, "boton_borrar_usuario");
         const boton_atras = this.add.image(200, 550, "boton_volver");
-        const boton_borrar_usuario = this.add.image(400, 380, "boton_borrar_usuario");
+        
 
 
 
@@ -106,6 +115,15 @@ export class SettingsScreen extends Phaser.Scene {
             this.cameras.main.once('camerafadeoutcomplete', () => {
                 this.scene.stop("SettingsScreen");
                 this.scene.start("StartScreen");
+            });
+        });
+
+        setupButton(boton_tutorial, () => {
+            boton_click.play();
+            this.cameras.main.fadeOut(500, 0, 0, 0);
+            this.cameras.main.once('camerafadeoutcomplete', () => {
+                this.scene.stop("SettingsScreen");
+                this.scene.start("TutorialScreen", { previousScreen: 'SettingsScreen' });
             });
         });
 

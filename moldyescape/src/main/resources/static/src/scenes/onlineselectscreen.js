@@ -55,7 +55,7 @@ export class OnlineSelectScreen extends Phaser.Scene {
 
         //const boton_jugar = this.add.image(400, 550, "boton_jugar").setScale(0.95);
         const boton_atras = this.add.image(100, 550, "boton_volver");
-        const boton_tutorial = this.add.image(680, 550, "boton_tutorial");
+        //const boton_tutorial = this.add.image(680, 550, "boton_tutorial");
         this.boton_votar = this.add.image(400, 550, "boton_votar");
         this.boton_cancelar = this.add.image(400, 550, "boton_cancelar").setVisible(false);
 
@@ -89,14 +89,14 @@ export class OnlineSelectScreen extends Phaser.Scene {
             });
         });
 
-        setupButton(boton_tutorial, () => {
-            boton_click.play();
-            this.cameras.main.fadeOut(500, 0, 0, 0);
-            this.cameras.main.once('camerafadeoutcomplete', () => {
-                this.scene.stop("SelectScreen");
-                this.scene.start("TutorialScreen");
-            });
-        });
+        // setupButton(boton_tutorial, () => {
+        //     boton_click.play();
+        //     this.cameras.main.fadeOut(500, 0, 0, 0);
+        //     this.cameras.main.once('camerafadeoutcomplete', () => {
+        //         this.scene.stop("SelectScreen");
+        //         this.scene.start("TutorialScreen");
+        //     });
+        // });
 
         this.boton_flecha = this.add.image(520, 550, "boton_flecha").setScale(0.9)
             .setInteractive()
