@@ -122,6 +122,15 @@
                 "type": "image",
                 "key": "boton_reanudar",
                 "url": "BotonReanudar.png"
+            },
+            {   "type": "image",
+                "key": "boton_votar",
+                "url": "BotonVotar.png"
+            },
+            {
+                "type": "image",
+                "key": "boton_cancelar",
+                "url": "BotonCancelar.png"
             }
 
         ]
