@@ -1,9 +1,10 @@
 import { GameScreen } from "./gamescreen.js";
 import { setupButton } from "../types/typedef.js";
+import { Vote } from "../types/messages.js";
 
-export class SelectScreen extends Phaser.Scene {
+export class OnlineSelectScreen extends Phaser.Scene {
     constructor() {
-        super({ key: 'SelectScreen' });
+        super({ key: 'OnlineSelectScreen' });
     }
 
     #selectedMap;
@@ -11,35 +12,22 @@ export class SelectScreen extends Phaser.Scene {
     #mapList = [];
     #clickCount = 0;
     #titleText;
+    voted = false;
+    socket;
 
     preload() {
-        const mapData = this.cache.json.get('maps_pack');
-    
-        // Cargar las vistas previas de los mapas
-        mapData.preview.forEach((element) => {
+        this.cache.json.get('maps_pack').preview.forEach((element) => {
             if (!this.#mapList.includes(element.key)) {
-                try {
-                    this.load.image(element.key, element.url);
-                    this.#mapList.push(element.key);
-                    console.log('Vista previa cargada:', element.key);
-                } catch (error) {
-                    console.error('Error al cargar la vista previa:', element.key, error);
-                }
+                this.load.image(element.key, element.url);
+                this.#mapList.push(element.key);
+
             }
         });
-    
-        console.log('Número de vistas previas cargadas:', this.#mapList.length);
-    
-        mapData.maps.forEach((map) => {
-            this.load.tilemapTiledJSON(map.key, map.path);
-            console.log('Cargando mapa:', map.key);
-        });
     }
-    
 
     create() {
         this.add.image(0, 0, 'credits_background').setOrigin(0, 0);
-    
+
         // Almacenar la referencia al texto inicial
         this.#titleText = this.add.text(115, 40, 'SELECCIONA UN NIVEL', {
             color: '#ffffff',
@@ -47,43 +35,42 @@ export class SelectScreen extends Phaser.Scene {
             stroke: '#df5fa8',
             strokeThickness: 4,
         });
-    
+
+        const host = window.location.host;
+
         const menuMusic = this.registry.get('menuMusic');
         const boton_click = this.sound.add('boton_click', { volume: 1 });
         const boton_flecha_click = this.sound.add('boton_flecha_click', { volume: 1 });
-    
+
         const boton_jugar = this.add.image(400, 550, "boton_jugar").setScale(0.95);
         const boton_atras = this.add.image(100, 550, "boton_volver");
         const boton_tutorial = this.add.image(680, 550, "boton_tutorial");
-    
+
         this.#selectedMap = this.add.image(this.scale.width / 2, this.scale.height / 2, this.#mapList[this.#indexSelectedMap]).setScale(0.6);
-    
+
+
+        /*  
+        Ajustes de botones
+        */
+        // CAMBIAR POR BOTON VOTAR
         setupButton(boton_jugar, () => {
             boton_click.play();
-            this.cameras.main.fadeOut(500, 0, 0, 0);
-            var selectedMap = this.#indexSelectedMap;
-                if (this.#indexSelectedMap === 3) {
-                    selectedMap = Math.floor(Math.random() * 3); // Genera un índice aleatorio entre 0 y 2
-                    console.log('Nivel 4 seleccionado, eligiendo aleatorio:', selectedMap);
-                }
-            this.cameras.main.once('camerafadeoutcomplete', () => {
-                menuMusic.stop();
-                this.scene.stop("SelectScreen");
-              this.scene.add('GameScreen', GameScreen);
-                this.scene.start("GameScreen", { map: selectedMap, online: false, role: null });
-
-            });
+            if (this.voted)
+                this.cancelVote()
+            else
+                this.vote()
         });
-    
+
         setupButton(boton_atras, () => {
             boton_click.play();
             this.cameras.main.fadeOut(500, 0, 0, 0);
             this.cameras.main.once('camerafadeoutcomplete', () => {
-                this.scene.stop("SelectScreen");
+                this.socket.close();
+                this.scene.stop("OnlineSelectScreen");
                 this.scene.start("StartScreen");
             });
         });
-    
+
         setupButton(boton_tutorial, () => {
             boton_click.play();
             this.cameras.main.fadeOut(500, 0, 0, 0);
@@ -92,47 +79,106 @@ export class SelectScreen extends Phaser.Scene {
                 this.scene.start("TutorialScreen");
             });
         });
-    
+
         const boton_flecha = this.add.image(520, 550, "boton_flecha").setScale(0.9)
             .setInteractive()
             .on('pointerdown', () => {
                 boton_flecha_click.play();
-                this.time.delayedCall(500, () => {
-                    this.incrementClickCount(); // Incrementa el contador
-                    this.nextMap();
-                });
+                this.nextMap();
             });
-    
+
         boton_flecha.flipX = true;
-    
+
         const boton_flecha_2 = this.add.image(280, 550, "boton_flecha").setScale(0.9)
             .setInteractive()
             .on('pointerdown', () => {
                 boton_flecha_click.play();
-                this.time.delayedCall(500, () => {
-                    this.incrementClickCount(); // Incrementa el contador
-                    this.previousMap();
-                });
+                this.previousMap();
             });
 
         this.#clickCount = 0; // Reinicia el contador a 0
+
+        /**
+         * COMUNICACION
+         */
+
+        this.socket = new WebSocket("ws://" + host + "/game");
+        this.socket.onopen = () => {
+            console.log("Conexion abierta");
+            this.registry.set("socket", this.socket);
+
+        }
+
+        this.socket.onmessage = (message) => {
+            try {
+                const data = JSON.parse(message.data);
+                console.log(data.type);
+                if (data.type == "start") {
+                    if (menuMusic)
+                        menuMusic.stop();
+                    this.startGame(data.value, data.role)
+                }
+                else
+                    console.log(data.type + " No soportado");
+
+
+            } catch (error) {
+                console.log(error)
+            }
+
+            console.log(message.data);
+        }
+
+        this.socket.onclose = () => {
+            console.log('Conexión cerrada');
+            this.registry.remove(this.socket);
+        };
 
     }
 
     incrementClickCount() {
         this.#clickCount++; // Incrementa el contador
-    
-        if (this.#clickCount > 20) {
+
+        // Verificar si el contador supera el valor deseado
+        if (this.#clickCount > 10) {
             this.#titleText.setText('¡ESCOGE UN NIVEL YA!'); // Cambia el texto del título
         }
     }
 
     nextMap() {
+        if (this.voted)
+            return
+        this.incrementClickCount();
         this.#indexSelectedMap = (this.#indexSelectedMap + 1) % this.#mapList.length;
         this.#selectedMap.setTexture(this.#mapList[this.#indexSelectedMap]);
     }
     previousMap() {
+        if (this.voted)
+            return
+        this.incrementClickCount();
         this.#indexSelectedMap = (this.#indexSelectedMap - 1 + this.#mapList.length) % this.#mapList.length;
         this.#selectedMap.setTexture(this.#mapList[this.#indexSelectedMap]);
+    }
+
+    startGame(mapValue, thisRole) {
+        this.cameras.main.fadeOut(500, 0, 0, 0);
+        this.cameras.main.once('camerafadeoutcomplete', () => {
+            this.scene.stop("SelectScreen");
+            this.scene.add('GameScreen', GameScreen);
+            this.scene.start("GameScreen", { map: mapValue, online: true, role: thisRole });
+        });
+    }
+
+    vote() {
+        this.voted = true;
+        const vote = new Vote(this.#indexSelectedMap)
+        this.socket.send(JSON.stringify(vote));
+
+    }
+
+    cancelVote() {
+        this.voted = false;
+        const vote = new Vote(-1);
+        this.socket.send(JSON.stringify(vote));
     }
 }

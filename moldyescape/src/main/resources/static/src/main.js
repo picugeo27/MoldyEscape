@@ -11,6 +11,7 @@ import { UsersOverlay } from "./scenes/usersoverlay.js";
 import { LoginScreen } from "./scenes/loginscreen.js";
 import { RankingScreen } from "./scenes/rankingscreen.js";
 import { ChatScreen } from "./scenes/chatscreen.js";
+import { OnlineSelectScreen } from "./scenes/onlineselectscreen.js";
 
 
 export const game = new Phaser.Game({
@@ -37,6 +38,7 @@ export const game = new Phaser.Game({
 
 game.scene.add('StartScreen', StartScreen);
 game.scene.add('SelectScreen', SelectScreen);
+game.scene.add('OnlineSelectScreen', OnlineSelectScreen);
 game.scene.add('TutorialScreen', TutorialScreen);
 game.scene.add('EndScreen', EndScreen);
 game.scene.add('CreditsScreen', CreditsScreen);

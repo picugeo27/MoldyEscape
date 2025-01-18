@@ -38,8 +38,27 @@ export class GameScreen extends Phaser.Scene {
     _pressButtonSound;
     _gameMusic;
 
+    _online;
+    _onlinePlayer;  // el player es controlado de fuera (no local)
+    _onlineEnemy;   // el enemigo es controlado de fuera (no local)
+
+    /**@type {WebSocket} */
+    _socket;
+
     init(data) {
-        this.mapValue = data.data;
+        this._onlinePlayer = false;
+        this._onlineEnemy = false;
+        this.mapValue = data.map;
+        console.log(data)
+        if (data.online) {
+            this._online = data.online;
+            if (data.role == 0)
+                this._onlinePlayer = true;
+            else
+                this._onlineEnemy = true;
+            var socket = this.registry.get("socket");
+            this.configSocket(socket);
+        }
     }
 
     preload() {
@@ -50,7 +69,7 @@ export class GameScreen extends Phaser.Scene {
         this.load.image('trapParticle', 'assets/Interactuables/particulaTrampa.png');
 
         const tileMapData = this.cache.json.get('maps_pack');
-        if (this.mapValue <0 || this.mapValue >= tileMapData.maps.length)
+        if (this.mapValue < 0 || this.mapValue >= tileMapData.maps.length)
             this.mapValue = 1;
 
         this.load.tilemapTiledJSON(tileMapData.maps[this.mapValue].key, tileMapData.maps[this.mapValue].path);
@@ -61,6 +80,8 @@ export class GameScreen extends Phaser.Scene {
     }
 
     create() {
+
+        this._socket = this.registry.get("socket");
 
         // Creamos el tilemap y las capas
         const map = this.make.tilemap({ key: this.#mapKey, tileHeight: 24, tileWidth: 24 });    //1 para mapa 1, 2 para mapa 2, 3 para el 3
@@ -75,8 +96,8 @@ export class GameScreen extends Phaser.Scene {
         // Creamos key manager, jugador, enemigo y su colision
         this.#keyManager = new InputManager(this);
 
-        this.#player = new Player(this, this.#playerCoordinates, this.#keyManager);
-        this.#enemy = new Enemy(this, this.#enemyCoordinates, this.#keyManager);
+        this.#player = new Player(this, this.#playerCoordinates, this.#keyManager, this._onlinePlayer, this._onlineEnemy, this._socket); // equivale a "me controlan" o controlo
+        this.#enemy = new Enemy(this, this.#enemyCoordinates, this.#keyManager, this._onlineEnemy, this._onlinePlayer, this._socket);
         this.#player.setDepth(10);
         this.#enemy.setDepth(10);
         this.physics.add.overlap(this.#player, this.#enemy, this.enemyWin.bind(this));
@@ -116,15 +137,17 @@ export class GameScreen extends Phaser.Scene {
     // que hacer cuando gana el jugador
     playerWin() {
         this._gameMusic.stop();
+        this._socket.close();
         this.scene.remove('GameScreen');
-        this.scene.start('EndScreen', { playerIsWinner: true, map: this.mapValue });
+        this.scene.start('EndScreen', { playerIsWinner: true, online: this._online, iWon: (this._online && this._onlineEnemy) });
     }
 
     // que hacer cuando gana el monstruo
     enemyWin() {
         this._gameMusic.stop();
+        this._socket.close();
         this.scene.remove('GameScreen');
-        this.scene.start('EndScreen', { playerIsWinner: false, map: this.mapValue });
+        this.scene.start('EndScreen', { playerIsWinner: false, online: this._online, iWon: (this._online && this._onlinePlayer) });
     }
 
 
@@ -193,5 +216,25 @@ export class GameScreen extends Phaser.Scene {
         this.time.delayedCall(particleDuration, () => {
             emitter.stop();
         })
+    }
+
+    /**
+     * 
+     * @param {WebSocket} socket 
+     */
+    configSocket(socket) {
+        socket.onmessage = (message) => {
+
+            try {
+                const data = JSON.parse(message.data);
+                if (this._onlinePlayer) {
+                    this.#player.onlineUpdate(data);
+                } else if (this._onlineEnemy) {
+                    this.#enemy.onlineUpdate(data);
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        }
     }
 }
