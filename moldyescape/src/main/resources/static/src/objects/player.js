@@ -7,7 +7,7 @@ import { PlayerType, InfoType, Sprint, Movement } from "../types/messages.js";
 
 const slowTime = 5000;
 const slowAmount = 0.5;
-
+const animatorTimer = 500;
 
 export class Player extends Character {
 
@@ -81,7 +81,8 @@ export class Player extends Character {
     }
 
     // Método de actualización para cambiar las animaciones
-    update() {
+    update(timer, delta) {
+        this._timer += delta;
         if (this._reciveInfo) {
             this.updateAnimations();
         } else {
@@ -101,7 +102,8 @@ export class Player extends Character {
             } else if (this.getFacing() === DIRECTION.RIGHT) {
                 this._sprite.anims.play('CWalkL', true);
             }
-        } else {
+            this._timer = 0;
+        } else if (this._timer >= animatorTimer) {
             // Si no se está moviendo, se pone la animación de idle
             this._sprite.anims.play('CWalkIdle', true);
         }
