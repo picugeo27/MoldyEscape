@@ -18,7 +18,6 @@ export class StartScreen extends Phaser.Scene {
         const boton_click = this.sound.add('boton_click', { volume: 1 });
         const boton_flecha_click = this.sound.add('boton_flecha_click', { volume: 1 });
 
-
         let menuMusic = this.registry.get('menuMusic');
 
         if (!menuMusic) {
@@ -32,6 +31,17 @@ export class StartScreen extends Phaser.Scene {
         const boton_jugar = this.add.image(415, 550, "boton_jugar");
         const boton_ajustes = this.add.image(675, 475, "boton_ajustes");
         const boton_creditos = this.add.image(675, 550, "boton_creditos");
+
+        const boton_logout = this.add.image(650, 100, "boton_logout").setScale(0.1).setInteractive()
+            .on('pointerdown', () => {
+                boton_flecha_click.play();
+                connectedUser.logOut;
+                this.cameras.main.fadeOut(500, 0, 0, 0);
+                this.cameras.main.once('camerafadeoutcomplete', () => {
+                    this.scene.stop("StartScreen");
+                    this.scene.start("LoginScreen");
+                });
+            });;
 
         setupButton(boton_ranking, () => {
             if (connectedUser.logged) {
