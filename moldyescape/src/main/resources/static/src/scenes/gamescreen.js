@@ -112,6 +112,7 @@ export class GameScreen extends Phaser.Scene {
         /** @type {Phaser.GameObjects.Group} */
         this.#traps = this.physics.add.group();
 
+        this._metalPipeSound = this.sound.add("metal_pipe", {volume : 0.5});
         this._pressButtonSound = this.sound.add('take_button', { volume: 1 });
         this._gameMusic = this.sound.add('game_music', { loop: true, volume: 1 });
         this._pacmanMusic = this.sound.add('pacman_music', { loop: true, volume: 1 });
@@ -256,10 +257,17 @@ export class GameScreen extends Phaser.Scene {
                 if (data.type == InfoType.winner) {
                     this.onlineWinner(data.who);
                 } else if (data.type == InfoType.disconnect) {
-                    if (this._onlinePlayer)
-                        this.onlineWinner(PlayerType.enemy)
-                    else
-                        this.onlineWinner(PlayerType.player);
+                    this._metalPipeSound.play();
+                    setTimeout(() => {
+                        if (this._onlinePlayer)
+                            this.onlineWinner(PlayerType.enemy);
+                        else
+                            this.onlineWinner(PlayerType.player);
+                    }, 3000);
+                    // if (this._onlinePlayer)
+                    //     this.onlineWinner(PlayerType.enemy)
+                    // else
+                    //     this.onlineWinner(PlayerType.player);
                 }
                 else {
                     if (this._onlinePlayer) {

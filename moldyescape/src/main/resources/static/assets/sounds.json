@@ -56,6 +56,11 @@
           "type": "audio",
           "key": "pacman_music",
           "url": "pac_man.mp3"
+        },
+        {
+          "type": "audio",
+          "key": "metal_pipe",
+          "url": "metal_pipe_clang.mp3"
         }
       ]
     }
