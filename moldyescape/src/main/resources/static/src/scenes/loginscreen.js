@@ -5,7 +5,7 @@ const LOGIN_INCOMPLETE = "Por favor, rellena todos los campos";
 const REGISTER_ERROR = "Ya hay un usuario con ese nombre";
 
 const POPUP_TIME = 2000;
-const POPUP_OFFSET = -200;
+const POPUP_OFFSET = -220;
 
 let currentScene;
 
@@ -32,7 +32,7 @@ export class LoginScreen extends Phaser.Scene {
 
         const text = this.add.text(10, 10, 'Registrate o inicia sesión para jugar', { color: 'white', fontFamily: 'Arial', fontSize: '20px ' });
 
-        const element = this.add.dom(300, 250).createFromCache('loginform');
+        const element = this.add.dom(this.cameras.main.centerX, this.cameras.main.centerY).createFromCache('loginform');
 
         element.setPerspective(800);
         element.addListener('click');
