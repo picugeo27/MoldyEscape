@@ -115,25 +115,25 @@ export class GameScreen extends Phaser.Scene {
         this._pressButtonSound = this.sound.add('take_button', { volume: 1 });
         this._gameMusic = this.sound.add('game_music', { loop: true, volume: 1 });
         this._pacmanMusic = this.sound.add('pacman_music', { loop: true, volume: 1 });
-        if(this.#mapKey === "Laboratorio3")
-        {
+        if (this.#mapKey === "Laboratorio3") {
             this._currentMusic = this._pacmanMusic;
             //this._pacmanMusic.play();
         }
-        else
-        {
+        else {
             //this._gameMusic.play();
             this._currentMusic = this._gameMusic;
         }
-    
+
         this._currentMusic.play();
         this.pauseKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
     }
 
     update() {
         if (Phaser.Input.Keyboard.JustDown(this.pauseKey)) {
-            this.scene.launch('PauseScreen');
-            this.scene.pause();
+            this.scene.launch('PauseScreen', { online: this._online });
+            if (!this._online)
+                this.scene.pause();
+
             this.scene.bringToTop('PauseScreen');
         }
     }

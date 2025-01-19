@@ -58,7 +58,7 @@ export class StartScreen extends Phaser.Scene {
             this.cameras.main.fadeOut(500, 0, 0, 0);
             this.cameras.main.once('camerafadeoutcomplete', () => {
                 this.scene.stop("StartScreen");
-                if(boton_red.visible)
+                if (boton_red.visible)
                     this.scene.start("OnlineSelectScreen");
                 else
                     this.scene.start("SelectScreen");
@@ -115,7 +115,7 @@ export class StartScreen extends Phaser.Scene {
             .on('pointerdown', () => {
                 boton_flecha_click.play();
                 this.switchBoton(boton_local, boton_red)
-                
+
             });
     }
 

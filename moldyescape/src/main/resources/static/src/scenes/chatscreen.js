@@ -80,7 +80,6 @@ export class ChatScreen extends Phaser.Scene {
 	}
 
 	update(time, delta) {
-		let that = this;
 		if (this.accumulated_time > 1000 * this.seconds_per_petition) {
 			this.getMessages(this.shouldScroll());
 			this.accumulated_time = 0;

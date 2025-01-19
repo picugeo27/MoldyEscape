@@ -6,6 +6,13 @@ export class PauseScreen extends Phaser.Scene {
         super({ key: 'PauseScreen' });
     }
 
+    _online;
+    _socket;
+
+    init(data) {
+        this._online = data.online;
+    }
+
     create() {
         console.log("PauseScreen aqui");
 
@@ -16,12 +23,8 @@ export class PauseScreen extends Phaser.Scene {
         const boton_reanudar = this.add.image(475, 300, "boton_reanudar");
         setupButton(boton_reanudar, () => {
             boton_click.play();
-            //this.cameras.main.fadeOut(500, 0, 0, 0);
             this.scene.stop();
             this.scene.resume("GameScreen");
-            // this.cameras.main.once('camerafadeoutcomplete', () => {
-
-            // });
 
         });
 
@@ -32,6 +35,10 @@ export class PauseScreen extends Phaser.Scene {
             this.cameras.main.once('camerafadeoutcomplete', () => {
                 this.scene.stop("PauseScreen");
                 this.scene.remove('GameScreen');
+                if (this._online) {
+                    this._socket = this.registry.get("socket");
+                    this._socket.close();
+                }
                 this.scene.start("StartScreen");
             })
 

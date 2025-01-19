@@ -21,18 +21,15 @@ export class SelectScreen extends Phaser.Scene {
                 try {
                     this.load.image(element.key, element.url);
                     this.#mapList.push(element.key);
-                    console.log('Vista previa cargada:', element.key);
                 } catch (error) {
                     console.error('Error al cargar la vista previa:', element.key, error);
                 }
             }
         });
 
-        console.log('Número de vistas previas cargadas:', this.#mapList.length);
 
         mapData.maps.forEach((map) => {
             this.load.tilemapTiledJSON(map.key, map.path);
-            console.log('Cargando mapa:', map.key);
         });
     }
 
@@ -61,14 +58,14 @@ export class SelectScreen extends Phaser.Scene {
             boton_click.play();
             this.cameras.main.fadeOut(500, 0, 0, 0);
             var selectedMap = this.#indexSelectedMap;
-                if (this.#indexSelectedMap === 3) {
-                    selectedMap = Math.floor(Math.random() * 3); // Genera un índice aleatorio entre 0 y 2
-                    console.log('Nivel 4 seleccionado, eligiendo aleatorio:', selectedMap);
-                }
+            if (this.#indexSelectedMap === 3) {
+                selectedMap = Math.floor(Math.random() * 3); // Genera un índice aleatorio entre 0 y 2
+                console.log('Nivel 4 seleccionado, eligiendo aleatorio:', selectedMap);
+            }
             this.cameras.main.once('camerafadeoutcomplete', () => {
                 menuMusic.stop();
                 this.scene.stop("SelectScreen");
-              this.scene.add('GameScreen', GameScreen);
+                this.scene.add('GameScreen', GameScreen);
                 this.scene.start("GameScreen", { map: selectedMap, online: false, role: null });
 
             });
@@ -96,10 +93,8 @@ export class SelectScreen extends Phaser.Scene {
             .setInteractive()
             .on('pointerdown', () => {
                 boton_flecha_click.play();
-                this.time.delayedCall(500, () => {
-                    this.incrementClickCount(); // Incrementa el contador
-                    this.nextMap();
-                });
+                this.incrementClickCount(); // Incrementa el contador
+                this.nextMap();
             });
 
         boton_flecha.flipX = true;
@@ -108,10 +103,8 @@ export class SelectScreen extends Phaser.Scene {
             .setInteractive()
             .on('pointerdown', () => {
                 boton_flecha_click.play();
-                this.time.delayedCall(500, () => {
-                    this.incrementClickCount(); // Incrementa el contador
-                    this.previousMap();
-                });
+                this.incrementClickCount(); // Incrementa el contador
+                this.previousMap();
             });
 
         this.#clickCount = 0; // Reinicia el contador a 0
