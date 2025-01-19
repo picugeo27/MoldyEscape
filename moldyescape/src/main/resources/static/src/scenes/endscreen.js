@@ -65,12 +65,13 @@ export class EndScreen extends Phaser.Scene {
             this.cameras.main.once('camerafadeoutcomplete', () => {
                 this._victorySound.stop();
                 this.scene.stop("EndScreen");
-                if (this._online) {
-                    this.scene.start("OnlineSelectScreen");
-                } else
-                    this.scene.start("SelectScreen")
+                this.scene.start("SelectScreen");
             })
         })
+
+        if (this._online)
+            boton_nueva_partida.setVisible(false);
+        else boton_nueva_partida.setVisible(true);
 
         const boton_ajustes = this.add.image(600, 550, "boton_ajustes").setScale(0.95);
         setupButton(boton_ajustes, () => {

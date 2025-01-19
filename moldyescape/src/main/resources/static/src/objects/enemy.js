@@ -6,6 +6,7 @@ import { Character } from "./character.js";
 import { InfoType, Movement, PlayerType, Sprint, Trap } from "../types/messages.js";
 
 const trapCooldown = 15000;
+const animatorTimer = 500;
 
 export class Enemy extends Character {
 
@@ -13,6 +14,7 @@ export class Enemy extends Character {
     _setTrapSound;
     _sendInfo;
     _reciveInfo;
+
     /**@type {WebSocket} */
     socket;
 
@@ -23,6 +25,7 @@ export class Enemy extends Character {
      */
 
     constructor(scene, coordinates, keyManager, reciveInfo, sendInfo, socket) {
+
         super(scene, coordinates, keyManager);    //constructor de character
         this._speed = 6;
         this._reciveInfo = reciveInfo;
@@ -71,7 +74,8 @@ export class Enemy extends Character {
         });
     }
 
-    update() {
+    update(timer, delta) {
+        this._timer += delta;
         if (this._reciveInfo) {
             this.updateAnimations();
         } else {
@@ -138,7 +142,8 @@ export class Enemy extends Character {
             } else if (super.getFacing() === DIRECTION.RIGHT) {
                 this._sprite.anims.play('FWalkL', true);
             }
-        } else {
+            this._timer = 0;
+        } else if (this._timer >= animatorTimer) {
             // Si no se está moviendo, se pone la animación de idle
             this._sprite.anims.play('FWaLkIdle', true);
         }

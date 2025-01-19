@@ -21,11 +21,13 @@ export class Character extends Phaser.GameObjects.Container {
     _acceleration;
     _turboActive;
     _online;
+
     /**@type {GameScreen} */
     _scene;
     _turboSound;
     _wrongButton;
     _facing;
+    _timer;
     // Creamos el player, la escena donde aparece y la posicion
     /**
      * @param {GameScreen} scene 
@@ -43,6 +45,7 @@ export class Character extends Phaser.GameObjects.Container {
         this._turboActive = false;
         this._acceleration = 1;
         this._facing = DIRECTION.DOWN;
+        this._timer = 0;
 
         this.scene.add.existing(this);          // lo añadimos a la escena
         this.scene.physics.add.existing(this);  // le añadimos las fisicas de phaser 

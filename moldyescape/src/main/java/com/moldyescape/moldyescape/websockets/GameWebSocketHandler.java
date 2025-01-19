@@ -98,6 +98,7 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
             lobbys.get(session.getId()).vote(jsonNode.get("vote").asInt());
             if (lobbys.get(session.getId()).isReadyToStart()) {
                 sendStartMessage(session.getId());
+                lobbys.get(session.getId()).restartVotes();
             }
         }
 

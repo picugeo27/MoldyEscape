@@ -92,9 +92,6 @@ export class SettingsScreen extends Phaser.Scene {
         const boton_tutorial = this.add.image(400, 360, "boton_tutorial");
         const boton_borrar_usuario = this.add.image(400, 420, "boton_borrar_usuario");
         const boton_atras = this.add.image(200, 550, "boton_volver");
-        
-
-
 
         setupButton(boton_full_screen, () => {
             boton_click.play();

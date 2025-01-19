@@ -1,4 +1,6 @@
-import { setupButton } from "../types/typedef.js";
+import { popUpText, setupButton } from "../types/typedef.js";
+
+const OFFLINE_MESSAGE = "no esta disponible sin conexion";
 
 export class StartScreen extends Phaser.Scene {
     constructor() {
@@ -16,7 +18,6 @@ export class StartScreen extends Phaser.Scene {
         const boton_click = this.sound.add('boton_click', { volume: 1 });
         const boton_flecha_click = this.sound.add('boton_flecha_click', { volume: 1 });
 
-
         let menuMusic = this.registry.get('menuMusic');
 
         if (!menuMusic) {
@@ -31,38 +32,67 @@ export class StartScreen extends Phaser.Scene {
         const boton_ajustes = this.add.image(675, 475, "boton_ajustes");
         const boton_creditos = this.add.image(675, 550, "boton_creditos");
 
+        const boton_logout = this.add.image(650, 100, "boton_logout").setScale(0.1).setInteractive()
+            .on('pointerdown', () => {
+                boton_flecha_click.play();
+                connectedUser.logOut;
+                this.cameras.main.fadeOut(500, 0, 0, 0);
+                this.cameras.main.once('camerafadeoutcomplete', () => {
+                    this.scene.stop("StartScreen");
+                    this.scene.start("LoginScreen");
+                });
+            });;
+
         setupButton(boton_ranking, () => {
-            boton_click.play();
-            this.cameras.main.fadeOut(500, 0, 0, 0);
-            this.cameras.main.once('camerafadeoutcomplete', () => {
-                this.scene.stop("StartScreen");
-                this.scene.start("RankingScreen");
-            });
+            if (connectedUser.logged) {
+                boton_click.play();
+                this.cameras.main.fadeOut(500, 0, 0, 0);
+                this.cameras.main.once('camerafadeoutcomplete', () => {
+                    this.scene.stop("StartScreen");
+                    this.scene.start("RankingScreen");
+                });
+            } else {
+                popUpText(this, OFFLINE_MESSAGE);
+            }
 
         })
 
         const boton_chat = this.add.image(140, 475, "boton_chat");
 
         setupButton(boton_chat, () => {
-            boton_click.play();
-            this.cameras.main.fadeOut(500, 0, 0, 0);
-            this.cameras.main.once('camerafadeoutcomplete', () => {
-                this.scene.stop("StartScreen");
-                this.scene.start("ChatScreen");
-            });
+            if (connectedUser.logged) {
+                boton_click.play();
+                this.cameras.main.fadeOut(500, 0, 0, 0);
+                this.cameras.main.once('camerafadeoutcomplete', () => {
+                    this.scene.stop("StartScreen");
+                    this.scene.start("ChatScreen");
+                });
+            } else {
+                popUpText(this, OFFLINE_MESSAGE);
+            }
+
 
         })
 
         setupButton(boton_jugar, () => {
-            boton_click.play();
-            this.cameras.main.fadeOut(500, 0, 0, 0);
-            this.cameras.main.once('camerafadeoutcomplete', () => {
-                this.scene.stop("StartScreen");
-                if(boton_red.visible)
-                    this.scene.start("OnlineSelectScreen");
-                else
+            if (boton_local.visible) {
+                boton_click.play();
+                this.cameras.main.fadeOut(500, 0, 0, 0);
+                this.cameras.main.once('camerafadeoutcomplete', () => {
+                    this.scene.stop("StartScreen");
                     this.scene.start("SelectScreen");
-            });
+                });
+            } else if (connectedUser.logged && boton_red.visible) {
+                boton_click.play();
+                this.cameras.main.fadeOut(500, 0, 0, 0);
+                this.cameras.main.once('camerafadeoutcomplete', () => {
+                    this.scene.stop("StartScreen");
+                    this.scene.start("OnlineSelectScreen");
+                });
+            } else {
+                popUpText(this, OFFLINE_MESSAGE);
+            }
+
 
         })
 
@@ -115,7 +145,7 @@ export class StartScreen extends Phaser.Scene {
             .on('pointerdown', () => {
                 boton_flecha_click.play();
                 this.switchBoton(boton_local, boton_red)
-                
+
             });
     }
 

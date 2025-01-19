@@ -1,42 +1,49 @@
 <!DOCTYPE html>
 <html>
-    <head>
-      <meta charset="UTF-8">
-      <title>Login Page</title>
-      <link rel="stylesheet" href="assets/loginformstyle.css">
 
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-      <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    
-    </head>
-    <body>
-    <!-- partial:index.partial.html -->
-    <!-- <div id="bg" style="display: none;"></div> -->
-    
-    <div class="bienvenida">
-      <p>¡Bienvenidx!</p>
+<head>
+  <meta charset="UTF-8">
+  <title>Login Page</title>
+  <link rel="stylesheet" href="assets/loginformstyle.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+  <!-- partial:index.partial.html -->
+  <!-- <div id="bg" style="display: none;"></div> -->
+
+  <div class="bienvenida">
+    <p>¡Bienvenidx!</p>
+  </div>
+
+  <form>
+    <div class="form-field">
+      <input type="text" id="username" placeholder="Usuario" name="username" required />
     </div>
-    
-    <form>
-      <div class="form-field">
-        <input type="text" id="username" placeholder="Usuario" name="username" required/>
-      </div>
-      
-      <div class="form-field">
-        <input type="password" id="password" placeholder="Contraseña" name="password" required/>
-      </div>
-      
-      <div class="form-field">
-        <button type="button" class="btn" name="loginButton">Iniciar sesión</button>
-      </div>
 
-      <div class="form-field">
-        <button type="button" class="btn" name="registerButton">Registrarse</button>
-      </div>
-    </form>
-    <!-- partial -->
+    <div class="form-field">
+      <input type="password" id="password" placeholder="Contraseña" name="password" required />
+    </div>
 
-    
-    </body>
+    <div class="form-field">
+      <button type="button" class="btn" name="loginButton">Iniciar sesión</button>
+    </div>
+
+    <div class="form-field">
+      <button type="button" class="btn" name="registerButton">Registrarse</button>
+    </div>
+
+    <div class="form-field">
+      <button type="button" class="btn" name="offlineButton">Sin conexion</button>
+    </div>
+  </form>
+  <!-- partial -->
+
+
+</body>
+
 </html>

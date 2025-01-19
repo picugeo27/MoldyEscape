@@ -18,6 +18,7 @@ export class RankingScreen extends Phaser.Scene {
     boton_click;
 
     async preload() {
+        this.cameras.main.fadeIn(500, 0, 0, 0);
         await this.getRankedUsers();
     }
 

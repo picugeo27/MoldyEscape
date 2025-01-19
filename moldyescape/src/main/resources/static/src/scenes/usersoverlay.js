@@ -1,3 +1,6 @@
+import { popUpText } from "../types/typedef.js";
+
+const OFFLINE_MESSAGE = "Funcion solo disponible con conexión";
 
 export class UsersOverlay extends Phaser.Scene {
     constructor() {
@@ -50,7 +53,7 @@ export class UsersOverlay extends Phaser.Scene {
 
         this.overlayKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB);
 
-        
+
         // Mostrar y ocultar
         // this.input.keyboard.on('keydown-TAB', () => {
         //     if (this.overlay.visible) {
@@ -66,15 +69,20 @@ export class UsersOverlay extends Phaser.Scene {
         this.intervalo = setInterval(() => this.getConnectedUsers(), 10 * 1000);
     }
 
-    update()
-    {
+    update() {
         if (Phaser.Input.Keyboard.JustDown(this.overlayKey)) {
-            if (this.overlay.visible) {
-                this.toggleOverlay(false);
+            if (connectedUser.logged) {
+                console.log("usuario conectado")
+                if (this.overlay.visible) {
+                    this.toggleOverlay(false);
+                }
+                else {
+                    this.toggleOverlay(true);
+                }
+            } else {
+                popUpText(this, OFFLINE_MESSAGE, 500);
             }
-            else {
-                this.toggleOverlay(true);
-            }
+
         }
     }
 

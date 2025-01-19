@@ -31,8 +31,12 @@
                 "type": "image",
                 "key": "altavoz_mute",
                 "url": "Speaker_Icon_Mute.png"
+            },
+            {
+                "type": "image",
+                "key": "boton_logout",
+                "url": "logout.png"
             }
-
         ]
     },
     {
@@ -123,7 +127,8 @@
                 "key": "boton_reanudar",
                 "url": "BotonReanudar.png"
             },
-            {   "type": "image",
+            {
+                "type": "image",
                 "key": "boton_votar",
                 "url": "BotonVotar.png"
             },
@@ -137,7 +142,6 @@
                 "key": "boton_anterior",
                 "url": "BotonAnterior.png"
             }
-
         ]
     },
     {
@@ -157,31 +161,46 @@
                 "type": "spritesheet",
                 "key": "Cient-Idle-Sheet",
                 "url": "Cient-Idle-Sheet.png",
-                "frameConfig": { "frameWidth": 25, "frameHeight": 40 }
+                "frameConfig": {
+                    "frameWidth": 25,
+                    "frameHeight": 40
+                }
             },
             {
                 "type": "spritesheet",
                 "key": "Cient-WalkB-Sheet",
                 "url": "Cient-WalkB-Sheet.png",
-                "frameConfig": { "frameWidth": 32, "frameHeight": 40 }
+                "frameConfig": {
+                    "frameWidth": 32,
+                    "frameHeight": 40
+                }
             },
             {
                 "type": "spritesheet",
                 "key": "Cient-WalkF-Sheet",
                 "url": "Cient-WalkF-Sheet.png",
-                "frameConfig": { "frameWidth": 32, "frameHeight": 40 }
+                "frameConfig": {
+                    "frameWidth": 32,
+                    "frameHeight": 40
+                }
             },
             {
                 "type": "spritesheet",
                 "key": "Cient-WalkL-Sheet",
                 "url": "Cient-WalkL-Sheet.png",
-                "frameConfig": { "frameWidth": 32, "frameHeight": 40 }
+                "frameConfig": {
+                    "frameWidth": 32,
+                    "frameHeight": 40
+                }
             },
             {
                 "type": "spritesheet",
                 "key": "Cient-WalkR-Sheet",
                 "url": "Cient-WalkR-Sheet.png",
-                "frameConfig": { "frameWidth": 32, "frameHeight": 40 }
+                "frameConfig": {
+                    "frameWidth": 32,
+                    "frameHeight": 40
+                }
             }
         ]
     },
@@ -192,31 +211,46 @@
                 "type": "spritesheet",
                 "key": "Fungo-Idle-Sheet",
                 "url": "Fungo-Idle-Sheet.png",
-                "frameConfig": { "frameWidth": 29, "frameHeight": 36 }
+                "frameConfig": {
+                    "frameWidth": 29,
+                    "frameHeight": 36
+                }
             },
             {
                 "type": "spritesheet",
                 "key": "Fungo-WalkB-Sheet",
                 "url": "Fungo-WalkB-Sheet.png",
-                "frameConfig": { "frameWidth": 29, "frameHeight": 36 }
+                "frameConfig": {
+                    "frameWidth": 29,
+                    "frameHeight": 36
+                }
             },
             {
                 "type": "spritesheet",
                 "key": "Fungo-WalkF-Sheet",
                 "url": "Fungo-WalkF-Sheet.png",
-                "frameConfig": { "frameWidth": 29, "frameHeight": 36 }
+                "frameConfig": {
+                    "frameWidth": 29,
+                    "frameHeight": 36
+                }
             },
             {
                 "type": "spritesheet",
                 "key": "Fungo-WalkL-Sheet",
                 "url": "Fungo-WalkL-Sheet.png",
-                "frameConfig": { "frameWidth": 29, "frameHeight": 36 }
+                "frameConfig": {
+                    "frameWidth": 29,
+                    "frameHeight": 36
+                }
             },
             {
                 "type": "spritesheet",
                 "key": "Fungo-WalkR-Sheet",
                 "url": "Fungo-WalkR-Sheet.png",
-                "frameConfig": { "frameWidth": 29, "frameHeight": 36 }
+                "frameConfig": {
+                    "frameWidth": 29,
+                    "frameHeight": 36
+                }
             }
         ]
     },
@@ -227,7 +261,10 @@
                 "type": "spritesheet",
                 "key": "button",
                 "url": "Lever.png",
-                "frameConfig": { "frameWidth": 24, "frameHeight": 24 }
+                "frameConfig": {
+                    "frameWidth": 24,
+                    "frameHeight": 24
+                }
             },
             {
                 "type": "image",
@@ -251,6 +288,4 @@
             }
         ]
     }
-
-   
 ]

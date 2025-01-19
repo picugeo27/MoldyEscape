@@ -79,4 +79,8 @@ public class Lobby {
         int random = rand.nextInt(votes.size());
         return votes.get(random);
     }
+
+    public void restartVotes() {
+        votes.clear();
+    }
 }
