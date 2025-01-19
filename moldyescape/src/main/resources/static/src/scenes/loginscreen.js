@@ -1,11 +1,18 @@
-import { setupButton } from "../types/typedef.js";
+import { popUpText } from "../types/typedef.js";
+
+const LOGIN_ERROR = "Los datos no coinciden";
+const LOGIN_INCOMPLETE = "Por favor, rellena todos los campos";
+const REGISTER_ERROR = "Ya hay un usuario con ese nombre";
+
+const POPUP_TIME = 2000;
+const POPUP_OFFSET = -200;
+
+let currentScene;
 
 export class LoginScreen extends Phaser.Scene {
     constructor() {
         super({ key: 'LoginScreen' });
     }
-
-
 
     preload() {
         this.load.pack('image_pack', "assets/data.json");
@@ -17,6 +24,7 @@ export class LoginScreen extends Phaser.Scene {
     }
 
     create() {
+        currentScene = this;
         this.add.image(0, 0, 'credits_background').setOrigin(0, 0).setScale(1);
         const boton_click = this.sound.add('boton_click', { volume: 1 });
 
@@ -54,11 +62,12 @@ export class LoginScreen extends Phaser.Scene {
 
                         })
                         .fail(function () {
+                            popUpText(currentScene, LOGIN_ERROR, POPUP_TIME, POPUP_OFFSET);
                             console.log("Login rechazado");
                         });
                 }
                 else {
-
+                    popUpText(currentScene, LOGIN_INCOMPLETE, POPUP_TIME, POPUP_OFFSET);
                     text.setText('Inicio de sesión inválido');
                 }
             } else if (event.target.name === 'registerButton') {
@@ -81,14 +90,13 @@ export class LoginScreen extends Phaser.Scene {
                         this.loginExitoso(inputUsername);
                     })
                         .fail(function (data) {
-                            console.log(data);
+                            popUpText(currentScene, REGISTER_ERROR, POPUP_TIME, POPUP_OFFSET);
                             text.setText("Este usuario ya existe");
                         });
 
 
                 }
             } else if (event.target.name === 'offlineButton') {
-                console.log("offline")
                 this.changeScreen();
             } else {
                 text.setText('Rellene todos los campos');

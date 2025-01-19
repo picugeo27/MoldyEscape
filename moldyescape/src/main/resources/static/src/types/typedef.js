@@ -56,7 +56,7 @@ export function setupButton(button, onClick) {
   });
 }
 
-export function popUpText(scene, text, duration = 2000) {
+export function popUpText(scene, text, duration = 2000, yOffset = 0) {
   const message = scene.add.text(scene.cameras.main.centerX, scene.cameras.main.centerY, text, {
     fontSize: '32px',
     color: '#ffffff',
@@ -81,6 +81,8 @@ export function popUpText(scene, text, duration = 2000) {
   background.setOrigin(0.5);
 
   const group = scene.add.container(0, 0, [background, message]);
+
+  group.y += yOffset;
 
   scene.tweens.add({
     targets: group,
