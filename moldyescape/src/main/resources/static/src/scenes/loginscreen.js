@@ -82,40 +82,19 @@ export class LoginScreen extends Phaser.Scene {
                     })
                         .fail(function (data) {
                             console.log(data);
-                        });
-
-                    text.setText('Inicio de sesión inválido');
-                }
-            } else if (event.target.name === 'registerButton') {
-                // Lógica de registro
-                if (inputUsername !== '' && inputPassword !== '') {
-                    const requestBody = {
-                        username: inputUsername,
-                        password: inputPassword,
-                    };
-
-                    $.ajax({
-                        method: "POST",
-                        url: "/users/register",
-                        data: JSON.stringify({ username: inputUsername, password: inputPassword }),
-                        processData: false,
-                        headers: {
-                            "Content-type": "application/json"
-                        }
-                    }).done(() => {
-                        this.loginExitoso(inputUsername);
-                    })
-                        .fail(function (data) {
-                            console.log(data);
                             text.setText("Este usuario ya existe");
                         });
 
 
-                } else {
-                    text.setText('Rellene todos los campos');
                 }
+            } else if (event.target.name === 'offlineButton') {
+                console.log("offline")
+                this.changeScreen();
+            } else {
+                text.setText('Rellene todos los campos');
             }
-        });
+        }
+        );
     }
 
     loginExitoso(username) {
@@ -138,11 +117,14 @@ export class LoginScreen extends Phaser.Scene {
             console.log("No connected user. Keepalive not sent.");
         }
 
+        this.changeScreen();
+    }
+
+    changeScreen() {
         this.cameras.main.fadeOut(500, 0, 0, 0);
         this.cameras.main.once('camerafadeoutcomplete', () => {
             this.scene.stop("LoginScreen");
             this.scene.start("StartScreen");
         })
     }
-
 }

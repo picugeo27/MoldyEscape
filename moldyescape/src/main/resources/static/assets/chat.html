@@ -1,30 +1,33 @@
 <html>
-    <head>
 
-      <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    
-    </head>
+<head>
+
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+</head>
 
 <style>
-    body{
-      font-family: "Press Start 2P", system-ui;
-      font-weight: 400;
-      font-style: normal;
-      color: #4A4A4A;
-      display: flex;
-    }
+  body {
+    font-family: "Press Start 2P", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    color: #4A4A4A;
+    display: flex;
+  }
+
   .foro {
     background: #e686ce;
     border: 1px solid #cc5fb1;
     border-radius: 0px;
     height: 350px;
     margin: 20px auto 0;
-    width: 400px;
+    width: 600px;
     padding: 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
   }
+
   .message-container {
     flex-grow: 1;
     overflow-y: auto;
@@ -34,26 +37,31 @@
     padding: 5px;
     margin-bottom: 10px;
   }
+
   .message {
     margin-bottom: 5px;
     padding: 5px;
     border-radius: 0px;
   }
+
   .my-message {
     background-color: #d4edda;
     text-align: right;
   }
+
   .other-message {
     background-color: #f8d7da;
     text-align: left;
   }
+
   input[type="text"] {
-    width: 100%;
+    width: 98%;
     padding: 5px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
   }
+
   input[type="submit"] {
     width: 100%;
     background-color: #d841bf;
@@ -64,22 +72,25 @@
     cursor: pointer;
     font-weight: bold;
   }
+
   input[type="submit"]:hover {
     background-color: #8a1767;
   }
 </style>
+
 <body>
-<div class="foro">
-  <!-- Contenedor para mensajes -->
-  <div id="forum-messages-box" class="message-container">
-    <!-- Aquí aparecerán los mensajes -->
+  <div class="foro">
+    <!-- Contenedor para mensajes -->
+    <div id="forum-messages-box" class="message-container">
+      <!-- Aquí aparecerán los mensajes -->
+    </div>
+
+    <!-- Input para el mensaje -->
+    <input type="text" id="message-input" name="message-input" placeholder="Escribe...">
+
+    <!-- Botón de envío -->
+    <input type="submit" value="Enviar" name="send-message">
   </div>
-
-  <!-- Input para el mensaje -->
-  <input type="text" id="message-input" name="message-input" placeholder="Escribe...">
-
-  <!-- Botón de envío -->
-  <input type="submit" value="Enviar" name="send-message">
-</div>
 </body>
+
 </html>

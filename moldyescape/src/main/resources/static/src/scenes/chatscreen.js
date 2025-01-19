@@ -15,12 +15,15 @@ export class ChatScreen extends Phaser.Scene {
 
 	preload() {
 		this.load.html('chat', 'assets/chat.html');
+		this.cameras.main.fadeIn(500, 0, 0, 0);
 	}
 
 	create() {
 		// Añadir el background a la escena.
 		this.menuBackground = this.add.image(0, 0, 'start_background').setOrigin(0, 0).setDisplaySize(this.scale.width, this.scale.height);
 
+		this.input.keyboard.manager.enabled = false;
+		console.log(this.input.keyboard);
 		this.accumulated_time = 0;
 
 		const element = this.add.dom(this.scale.width / 2, this.scale.height / 2).createFromCache('chat');
@@ -72,6 +75,7 @@ export class ChatScreen extends Phaser.Scene {
 		setupButton(boton_volver, () => {
 			this.cameras.main.fadeOut(500, 0, 0, 0);
 			this.cameras.main.once('camerafadeoutcomplete', () => {
+				this.input.keyboard.manager.enabled = true;
 				this.scene.stop("ChatScreen");
 				this.scene.start("StartScreen");
 			});

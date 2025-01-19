@@ -1,5 +1,5 @@
 import { GameScreen } from "./gamescreen.js";
-import { setupButton } from "../types/typedef.js";
+import { popUpText, setupButton } from "../types/typedef.js";
 import { Vote } from "../types/messages.js";
 
 export class OnlineSelectScreen extends Phaser.Scene {
@@ -16,6 +16,7 @@ export class OnlineSelectScreen extends Phaser.Scene {
     socket;
 
     preload() {
+        this.cameras.main.fadeIn(500, 0, 0, 0);
         this.cache.json.get('maps_pack').preview.forEach((element) => {
             if (!this.#mapList.includes(element.key)) {
                 this.load.image(element.key, element.url);
@@ -44,8 +45,8 @@ export class OnlineSelectScreen extends Phaser.Scene {
             backgroundColor: '#ffffff',
             padding: { x: 10, y: 5 }
         })
-        .setVisible(false)
-        .setOrigin(0.5);
+            .setVisible(false)
+            .setOrigin(0.5);
 
         const host = window.location.host;
 
@@ -195,7 +196,8 @@ export class OnlineSelectScreen extends Phaser.Scene {
         this.boton_cancelar.setVisible(true);
         this.boton_flecha.setVisible(false);
         this.boton_flecha_2.setVisible(false);
-        this.showPopupText();
+        popUpText(this, "votacion recibida");
+        //this.showPopupText();
 
     }
 
@@ -208,13 +210,13 @@ export class OnlineSelectScreen extends Phaser.Scene {
         this.boton_flecha.setVisible(true);
         this.boton_flecha_2.setVisible(true);
     }
-
-    showPopupText() {
-        this.votePopupText.setVisible(true);
-        this.time.delayedCall(800, () => {
-            this.votePopupText.setVisible(false);
-        });
-
-
-    }
+    /*
+        showPopupText() {
+            this.votePopupText.setVisible(true);
+            this.time.delayedCall(800, () => {
+                this.votePopupText.setVisible(false);
+            });
+    
+    
+        }*/
 }

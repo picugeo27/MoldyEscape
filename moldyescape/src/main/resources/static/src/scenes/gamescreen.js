@@ -160,8 +160,10 @@ export class GameScreen extends Phaser.Scene {
     // que hacer cuando gana el jugador
     playerWin() {
         this._currentMusic.stop();
-        this.sendWinner(PlayerType.player)
-        this._socket.close();
+        if (this._online) {
+            this.sendWinner(PlayerType.player)
+            this._socket.close();
+        }
         this.scene.remove('GameScreen');
         this.scene.start('EndScreen', { playerIsWinner: true, online: this._online, iWon: (this._online && this._onlineEnemy) });
     }
@@ -169,8 +171,10 @@ export class GameScreen extends Phaser.Scene {
     // que hacer cuando gana el monstruo
     enemyWin() {
         this._currentMusic.stop();
-        this.sendWinner(PlayerType.enemy)
-        this._socket.close();
+        if (this._online) {
+            this.sendWinner(PlayerType.enemy)
+            this._socket.close();
+        }
         this.scene.remove('GameScreen');
         this.scene.start('EndScreen', { playerIsWinner: false, online: this._online, iWon: (this._online && this._onlinePlayer) });
     }
@@ -287,7 +291,8 @@ export class GameScreen extends Phaser.Scene {
     }
 
     sendWinner(who) {
-        this._socket.send(JSON.stringify(new Winner(who)));
+        if (this._online)
+            this._socket.send(JSON.stringify(new Winner(who)));
     }
 
 }

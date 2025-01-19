@@ -13,6 +13,7 @@ export class SelectScreen extends Phaser.Scene {
     #titleText;
 
     preload() {
+        this.cameras.main.fadeIn(500, 0, 0, 0);
         const mapData = this.cache.json.get('maps_pack');
 
         // Cargar las vistas previas de los mapas
@@ -63,7 +64,13 @@ export class SelectScreen extends Phaser.Scene {
                 console.log('Nivel 4 seleccionado, eligiendo aleatorio:', selectedMap);
             }
             this.cameras.main.once('camerafadeoutcomplete', () => {
-                menuMusic.stop();
+
+                try {
+                    menuMusic.stop();
+                } catch (error) {
+                    console.log(error)
+                }
+
                 this.scene.stop("SelectScreen");
                 this.scene.add('GameScreen', GameScreen);
                 this.scene.start("GameScreen", { map: selectedMap, online: false, role: null });
