@@ -34,10 +34,6 @@ export function Sprint(who) {
         this.who = who
 }
 
-export function Update() {
-    this.type = InfoType.update
-}
-
 export function Winner(who) {
     this.type = InfoType.winner,
         this.who = who;
