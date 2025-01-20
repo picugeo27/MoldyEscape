@@ -359,7 +359,7 @@ Para instalarlo se puede descargar del siguiente enlace: https://learn.microsoft
 Para iniciar el servidor lo haremos a través de la consola.
 
   - Abrimos una terminal
-  - Entramos en la carpeta donde se encuentra el archivo "moldyescape-0.0.1-SNAPSHOT". Que está en la ruta moldyescape.
+  - Entramos en la carpeta donde se encuentra el archivo "moldyescape-0.0.1-SNAPSHOT". Está en la ruta moldyescape.
     - Esto se puede hacer de varias maneras. Una de ellas es abrir una terminal de sistema operativo e ir navegando por las carpetas del ordenador (en windows utilizando cd) hasta la ruta.
     - La segunda opciones click derecho en la carpeta y abrir con terminal.
   - Una vez en el direcorio ejecutamos el comando java -jar moldyescape-0.0.1-SNAPSHOT
@@ -373,3 +373,28 @@ Para empezar a jugar
     - para conectarse en el equipo que ha abierto el servidor: **localhost:8080** 
     - para conectarse a un servidor en la misma red: *ip del servidor*:8080
 Una vez cargada la página habrá que iniciar sesión o registrarse, después de lo cual se entra en el juego.
+
+## WebSockets
+
+Este putno se va a dividir entre dos subpuntos. La comunicacion que tiene cada cliente con el servidor, que son los mensajes que no son enviados de un cliente para que lleguen al otro, sino para que el servidor los procese. El segundo apartado comenta la comuncación que tienen los clientes con el servidor donde se envía información que se espera que llegue al resto de clientes.
+
+Todos los mensajes de este apartado pasan por el servidor, los lea o no. Los mensajes se pueden ver en el archivo "mesages.js" (src > main > resources > static > src > types). Se usan directamente estos mensajes como objetos para garantizar que son todos iguales y evitar posibles errores. También facilitan su gestión, además todas las peticiones llevan un apartado "type" que indica el cuerpo del mensaje que se envía. Aquí no se incluyen los mensajes que crea el servidor para los jugadores. 
+
+### Comunicación cliente - servidor
+
+Los mensajes que envían los clientes al servidor son:
+- Conexiones abiertas: El servidor añade al jugador que acaba de abrir una conexión a una sala que tenga un hueco libre o en caso de no haberlo crea una sala para él.
+- Votación: Cuando el jugador está en una sala puede votar el mapa que quiere jugar. Este voto solamente llega al servidor y este espera a recibir ambos votos de la sala para empezar la partida.
+- Comienzo de partida y rol: Cuando el servidor ha recibido ambos votos, elige uno de ellos aleatoriamente. También elige un rol aleatorio para cada jugador (si es la seta o la científica). Posteriormente envía a cada jugador el mapa y su rol.
+- Desconexión: cuando un jugador se desconecta, con el socket.close() el servidor recibe un mensaje. Con la desconexión el servidor informa al otro jugador del lobby (en caso de haberlo)
+
+### Comunicación entre clientes
+
+Todos estos movimientos se validan en el cliente que envía el mensaje. Para esta práctica el servidor solamente reenvia mensajes, no valida movimientos. Los movimientos se valian en los clientes y solamente envían los válidos. Por ejemplo si un jugador se mueve hacia una pared y no va a avanzar más, no se envía ese input.
+
+- Movimientos: Envían quien ha mandado el mensaje (en caso de añadir más jugadores o similares habría que saber quien lo envió) y la dirección del movimiento.
+- Trap: Envían las coordenadas de la trampa que ha puesto el monstruo.
+- Sprint: Envía el jugador que ha activado su sprint.
+- Winner: Envía el jugador que ha ganado. Esto es una comprobación por si alguien ha tenido demasiada latencia y en la pantalla no se ha llegado a la victoria pero en el otro jugador sí.
+
+  
