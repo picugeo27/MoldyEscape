@@ -3,7 +3,6 @@ export const InfoType = {
     movement: "movement",
     trap: "trap",
     sprint: "sprint",
-    update: "update",
     winner: "winner",
     disconnect: "disconnect"
 }
@@ -22,8 +21,7 @@ export function Vote(vote) {
 export function Movement(direction, who) {
     this.type = InfoType.movement,
         this.who = who,
-        this.direction = direction,
-        this.timestamp = Date.now()
+        this.direction = direction
 }
 
 export function Trap(coordinates) {
@@ -33,8 +31,7 @@ export function Trap(coordinates) {
 
 export function Sprint(who) {
     this.type = InfoType.sprint,
-        this.who = who,
-        this.timestamp = Date.now()
+        this.who = who
 }
 
 export function Update() {
