@@ -119,10 +119,8 @@ export class GameScreen extends Phaser.Scene {
         this._pacmanMusic = this.sound.add('pacman_music', { loop: true, volume: 1 });
         if (this.#mapKey === "Laboratorio3") {
             this._currentMusic = this._pacmanMusic;
-            //this._pacmanMusic.play();
         }
         else {
-            //this._gameMusic.play();
             this._currentMusic = this._gameMusic;
         }
 
@@ -168,7 +166,7 @@ export class GameScreen extends Phaser.Scene {
             this._socket.close();
         }
         this.scene.remove('GameScreen');
-        this.scene.start('EndScreen', { playerIsWinner: true, online: this._online, iWon: (this._online && this._onlineEnemy), music: this._gameMusic });
+        this.scene.start('EndScreen', { playerIsWinner: true, online: this._online, iWon: (this._online && this._onlineEnemy) });
     }
 
     // que hacer cuando gana el monstruo
@@ -179,7 +177,7 @@ export class GameScreen extends Phaser.Scene {
             this._socket.close();
         }
         this.scene.remove('GameScreen');
-        this.scene.start('EndScreen', { playerIsWinner: false, online: this._online, iWon: (this._online && this._onlinePlayer), music: this._gameMusic });
+        this.scene.start('EndScreen', { playerIsWinner: false, online: this._online, iWon: (this._online && this._onlinePlayer) });
     }
 
 
@@ -291,16 +289,16 @@ export class GameScreen extends Phaser.Scene {
 
     onlineWinner(who) {
         try {
-            this._gameMusic.stop();
+            this._currentMusic.stop();
         } catch (error) {
             console.log(error);
         }
         this._socket.close();
 
         if (who == PlayerType.enemy) {
-            this.scene.start('EndScreen', { playerIsWinner: false, online: this._online, iWon: (this._online && this._onlinePlayer), music: this._gameMusic });
+            this.scene.start('EndScreen', { playerIsWinner: false, online: this._online, iWon: (this._online && this._onlinePlayer) });
         } else {
-            this.scene.start('EndScreen', { playerIsWinner: true, online: this._online, iWon: (this._online && this._onlineEnemy), music: this._gameMusic });
+            this.scene.start('EndScreen', { playerIsWinner: true, online: this._online, iWon: (this._online && this._onlineEnemy) });
         }
         this.scene.remove('GameScreen');
     }

@@ -12,6 +12,8 @@ export class StartScreen extends Phaser.Scene {
     }
 
     create() {
+        console.log(this.cameras.main.height)
+        console.log(this.cameras.main.width)
         this.input.keyboard.manager.enabled = true;
         this.add.image(0, 0, 'start_background').setOrigin(0, 0);
 
@@ -25,10 +27,12 @@ export class StartScreen extends Phaser.Scene {
             menuMusic = this.sound.add('menu_music', { loop: true, volume: 0.5 });
             menuMusic.play();
             this.registry.set('menuMusic', menuMusic);
+        } else if (!menuMusic.isPlaying) {
+            menuMusic.play();
         }
 
         const boton_ranking = this.add.image(140, 550, "boton_ranking");
-        const boton_jugar = this.add.image(415, 550, "boton_jugar");
+        const boton_jugar = this.add.image(415, 550, "boton_jugar").setScale(1.5);
         const boton_ajustes = this.add.image(675, 475, "boton_ajustes");
         const boton_creditos = this.add.image(675, 550, "boton_creditos");
 
@@ -158,10 +162,6 @@ export class StartScreen extends Phaser.Scene {
             boton_red.setVisible(false);
             boton_local.setVisible(true);
         }
-    }
-
-    init(data) {
-        //this.mapValue = data.data;
     }
 
 }

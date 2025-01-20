@@ -17,12 +17,6 @@ export class EndScreen extends Phaser.Scene {
         this.#playerIsWinner = data.playerIsWinner;
         this.#iWon = data.iWon;
         this._online = data.online;
-        try {
-            data.music.stop();
-        } catch (error) {
-            console.log(error);
-        }
-
     }
 
     preload() {
@@ -35,7 +29,6 @@ export class EndScreen extends Phaser.Scene {
 
         this.scale.resize(800, this.scale.height);
 
-        const menuMusic = this.registry.get('menuMusic');
         this.registry.remove('menuMusic');
 
         this._victorySound = this.sound.add('end_victory', { volume: 1 })

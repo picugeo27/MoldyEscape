@@ -1,68 +1,72 @@
 [
-    {
-      "path": "assets/sonidos",
-      "files": [
-        {
-            "type": "audio",
-            "key": "boton_click",
-            "url": "button_click.mp3"
-        },
-        {
-            "type": "audio",
-            "key": "boton_flecha_click",
-            "url": "button_arrow_click.mp3"
-        },
-        {
-          "type": "audio",
-          "key": "turbo_whoosh",
-          "url": "fast_whoosh.mp3"
-        },
-        {
-          "type": "audio",
-          "key": "boton_erroneo",
-          "url": "wrong_button.mp3"
-        },
-        {
-          "type": "audio",
-          "key": "boton_hover",
-          "url": "hover_button.mp3"
-        },
-        {
-          "type": "audio",
-          "key": "take_button",
-          "url": "take_button.mp3"
-        },
-        {
-          "type": "audio",
-          "key": "set_trap",
-          "url": "set_trap.mp3"
-        },
-        {
-          "type": "audio",
-          "key": "game_music",
-          "url": "game_music.mp3"
-        },
-        {
-          "type": "audio",
-          "key": "menu_music",
-          "url": "menu_music.mp3"
-        },
-        {
-          "type": "audio",
-          "key": "end_victory",
-          "url": "end_screen_victory.mp3"
-        },
-        {
-          "type": "audio",
-          "key": "pacman_music",
-          "url": "pac_man.mp3"
-        },
-        {
-          "type": "audio",
-          "key": "metal_pipe",
-          "url": "metal_pipe_clang.mp3"
-        }
-      ]
-    }
-    
-  ]
+  {
+    "path": "assets/sonidos",
+    "files": [
+      {
+        "type": "audio",
+        "key": "boton_click",
+        "url": "button_click.mp3"
+      },
+      {
+        "type": "audio",
+        "key": "boton_flecha_click",
+        "url": "button_arrow_click.mp3"
+      },
+      {
+        "type": "audio",
+        "key": "turbo_whoosh",
+        "url": "fast_whoosh.mp3"
+      },
+      {
+        "type": "audio",
+        "key": "boton_erroneo",
+        "url": "wrong_button.mp3"
+      },
+      {
+        "type": "audio",
+        "key": "boton_hover",
+        "url": "hover_button.mp3"
+      },
+      {
+        "type": "audio",
+        "key": "take_button",
+        "url": "take_button.mp3"
+      },
+      {
+        "type": "audio",
+        "key": "set_trap",
+        "url": "set_trap.mp3"
+      },
+      {
+        "type": "audio",
+        "key": "game_music",
+        "url": "game_music.mp3"
+      },
+      {
+        "type": "audio",
+        "key": "menu_music",
+        "url": "menu_music.mp3"
+      },
+      {
+        "type": "audio",
+        "key": "end_victory",
+        "url": "end_screen_victory.mp3"
+      },
+      {
+        "type": "audio",
+        "key": "pacman_music",
+        "url": "pac_man.mp3"
+      },
+      {
+        "type": "audio",
+        "key": "metal_pipe",
+        "url": "metal_pipe_clang.mp3"
+      },
+      {
+        "type": "audio",
+        "key": "chill_music",
+        "url": "chill_music_ilitia.mp3"
+      }
+    ]
+  }
+]
