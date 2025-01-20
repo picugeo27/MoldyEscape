@@ -27,7 +27,7 @@ export class LoginScreen extends Phaser.Scene {
         this.input.keyboard.manager.enabled = false;
 
         currentScene = this;
-        this.add.image(0, 0, 'credits_background').setOrigin(0, 0).setScale(1);
+        this.add.image(0, 0, 'credits_background').setOrigin(0, 0).setScale(0.17);
         const boton_click = this.sound.add('boton_click', { volume: 1 });
 
         //Login form

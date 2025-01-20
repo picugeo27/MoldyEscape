@@ -27,7 +27,7 @@ export class OnlineSelectScreen extends Phaser.Scene {
     }
 
     create() {
-        this.add.image(0, 0, 'credits_background').setOrigin(0, 0);
+        this.add.image(0, 0, 'credits_background').setOrigin(0, 0).setScale(0.17);
 
         // Almacenar la referencia al texto inicial
         this.#titleText = this.add.text(115, 40, 'SELECCIONA UN NIVEL', {
@@ -53,12 +53,9 @@ export class OnlineSelectScreen extends Phaser.Scene {
         const menuMusic = this.registry.get('menuMusic');
         const boton_click = this.sound.add('boton_click', { volume: 1 });
         const boton_flecha_click = this.sound.add('boton_flecha_click', { volume: 1 });
-
-        //const boton_jugar = this.add.image(400, 550, "boton_jugar").setScale(0.95);
-        const boton_atras = this.add.image(100, 550, "boton_volver");
-        //const boton_tutorial = this.add.image(680, 550, "boton_tutorial");
-        this.boton_votar = this.add.image(400, 550, "boton_votar");
-        this.boton_cancelar = this.add.image(400, 550, "boton_cancelar").setVisible(false);
+        const boton_atras = this.add.image(100, 550, "boton_volver").setScale(1.3);
+        this.boton_votar = this.add.image(400, 550, "boton_votar").setScale(1.3);
+        this.boton_cancelar = this.add.image(400, 550, "boton_cancelar").setVisible(false).setScale(1.3);
 
 
         this.#selectedMap = this.add.image(this.scale.width / 2, this.scale.height / 2, this.#mapList[this.#indexSelectedMap]).setScale(0.6);
@@ -100,7 +97,7 @@ export class OnlineSelectScreen extends Phaser.Scene {
         //     });
         // });
 
-        this.boton_flecha = this.add.image(520, 550, "boton_flecha").setScale(0.9)
+        this.boton_flecha = this.add.image(520, 550, "boton_flecha").setScale(1.3)
             .setInteractive()
             .on('pointerdown', () => {
                 boton_flecha_click.play();
@@ -109,7 +106,7 @@ export class OnlineSelectScreen extends Phaser.Scene {
 
         this.boton_flecha.flipX = true;
 
-        this.boton_flecha_2 = this.add.image(280, 550, "boton_flecha").setScale(0.9)
+        this.boton_flecha_2 = this.add.image(280, 550, "boton_flecha").setScale(1.3)
             .setInteractive()
             .on('pointerdown', () => {
                 boton_flecha_click.play();

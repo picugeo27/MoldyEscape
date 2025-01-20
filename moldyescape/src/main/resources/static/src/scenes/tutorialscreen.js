@@ -25,7 +25,7 @@ export class TutorialScreen extends Phaser.Scene {
         this.controls = this.add.image(this.scale.width / 2, this.scale.height / 2, "controles").setScale(0.7);
         this.objectives = this.add.image(this.scale.width / 2, this.scale.height / 2, "objetivos").setScale(0.7).setVisible(false);
 
-        const boton_volver = this.add.image(100, 550, "boton_volver");
+        const boton_volver = this.add.image(100, 550, "boton_volver").setScale(1.3);
         setupButton(boton_volver, () => {
             this.cameras.main.fadeOut(500, 0, 0, 0);
             this.cameras.main.once('camerafadeoutcomplete', () => {
@@ -34,7 +34,7 @@ export class TutorialScreen extends Phaser.Scene {
             })
         });
 
-        const boton_siguiente = this.add.image(650, 550, "boton_siguiente");
+        const boton_siguiente = this.add.image(850, 550, "boton_siguiente").setScale(1.3);
         setupButton(boton_siguiente, () => {
             boton_click.play();
             this.controls.setVisible(!this.controls.visible);
@@ -43,7 +43,7 @@ export class TutorialScreen extends Phaser.Scene {
             boton_anterior.setVisible(true);
         });
 
-        const boton_anterior = this.add.image(650, 550, "boton_anterior").setVisible(false);
+        const boton_anterior = this.add.image(850, 550, "boton_anterior").setVisible(false).setScale(1.3);
         setupButton(boton_anterior, () => {
             boton_click.play();
             this.controls.setVisible(!this.controls.visible);

@@ -80,7 +80,7 @@ export class SettingsScreen extends Phaser.Scene {
         this.input.on('drag', (pointer, gameObject, dragX) => { //Al deslizar el handle, se cambia el volumen y se almacena en el datamanager
             if (gameObject === handle) {
                 handle.x = Phaser.Math.Clamp(dragX, minX, maxX);
-                const newVolume = ((handle.x - minX) / sliderWidth)*3;
+                const newVolume = ((handle.x - minX) / sliderWidth);
                 this.sound.volume = newVolume;
                 this.registry.set('volume', newVolume);
                 volumeText.setText(`Volumen: ${(newVolume * 100).toFixed(0)}%`);
@@ -89,8 +89,7 @@ export class SettingsScreen extends Phaser.Scene {
 
 
         const boton_full_screen = this.add.image(400, 300, "boton_fullscreen").setScale(1.3);
-        const boton_tutorial = this.add.image(400, 360, "boton_tutorial").setScale(1.3);
-        const boton_borrar_usuario = this.add.image(400, 420, "boton_borrar_usuario").setScale(1.3);
+        const boton_borrar_usuario = this.add.image(400, 380, "boton_borrar_usuario").setScale(1.3);
         const boton_atras = this.add.image(200, 550, "boton_volver").setScale(1.3);
 
         setupButton(boton_full_screen, () => {
@@ -112,15 +111,6 @@ export class SettingsScreen extends Phaser.Scene {
             this.cameras.main.once('camerafadeoutcomplete', () => {
                 this.scene.stop("SettingsScreen");
                 this.scene.start("StartScreen");
-            });
-        });
-
-        setupButton(boton_tutorial, () => {
-            boton_click.play();
-            this.cameras.main.fadeOut(500, 0, 0, 0);
-            this.cameras.main.once('camerafadeoutcomplete', () => {
-                this.scene.stop("SettingsScreen");
-                this.scene.start("TutorialScreen", { previousScreen: 'SettingsScreen' });
             });
         });
 

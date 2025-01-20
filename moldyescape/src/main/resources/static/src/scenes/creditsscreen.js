@@ -11,7 +11,7 @@ export class CreditsScreen extends Phaser.Scene {
 
     create() {
         //Creación del background
-        this.add.image(0, 0, 'credits_background').setOrigin(0, 0).setScale(1);
+        this.add.image(0, 0, 'credits_background').setOrigin(0, 0).setScale(0.17);
         const boton_click = this.sound.add('boton_click', { volume: 1 });
         const boton_hover = this.sound.add('boton_hover', { volume: 1 });
 
