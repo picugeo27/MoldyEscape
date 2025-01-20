@@ -83,4 +83,12 @@ public class Lobby {
     public void restartVotes() {
         votes.clear();
     }
+
+    public WebSocketSession getOheter(String who) {
+        if (players.get(0).getId() == who) {
+            return players.get(1);
+        } else {
+            return players.get(0);
+        }
+    }
 }

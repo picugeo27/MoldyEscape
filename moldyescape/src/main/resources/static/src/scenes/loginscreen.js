@@ -32,7 +32,7 @@ export class LoginScreen extends Phaser.Scene {
 
         const text = this.add.text(10, 10, 'Registrate o inicia sesión para jugar', { color: 'white', fontFamily: 'Arial', fontSize: '20px ' });
 
-        const element = this.add.dom(this.cameras.main.centerX, this.cameras.main.centerY).createFromCache('loginform');
+        const element = this.add.dom(300, 250).createFromCache('loginform');
 
         element.setPerspective(800);
         element.addListener('click');

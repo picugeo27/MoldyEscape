@@ -51,13 +51,18 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
         String type = jsonNode.get("type").asText();
 
         if (!type.equalsIgnoreCase("vote")) {
-            sendMessageToLobby(session.getId(), message.getPayload());
+            sendMessageToOther(session.getId(), message.getPayload());
         } else if (type.equalsIgnoreCase("vote")) {
             mannageVotes(jsonNode, session);
         }
 
     }
 
+    private void sendMessageToOther(String lobby, String message) throws IOException {
+        lobbys.get(lobby).getOheter(lobby).sendMessage(new TextMessage(message));
+    }
+
+    // manda mensaje a todos los del lobby
     private void sendMessageToLobby(String lobby, String message) throws IOException {
         System.out.println(lobbys.get(lobby));
         for (WebSocketSession session : lobbys.get(lobby).getConnectedUsers()) {

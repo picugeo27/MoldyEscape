@@ -24,7 +24,7 @@ export class Player extends Character {
 
     constructor(scene, coordinates, keyboardInput, reciveInfo, sendInfo, socket) {
         super(scene, coordinates, keyboardInput);   // constructor de character
-        this.turboTime = 6000;
+        this.turboTime = 7000;
         this.turboCooldown = 8000;
         this._reciveInfo = reciveInfo;
         this._sendInfo = sendInfo;

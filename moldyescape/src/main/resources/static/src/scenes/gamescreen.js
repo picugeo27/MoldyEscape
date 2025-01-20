@@ -1,11 +1,12 @@
 import { Player } from "../objects/player.js";
 import { Enemy } from "../objects/enemy.js";
-import { Coordinates, MAP_INIT } from "../types/typedef.js";
+import { Coordinates, MAP_INIT, popUpText } from "../types/typedef.js";
 import { InputManager } from "../components/inputManager.js";
 import { Trap } from "../objects/trap.js";
 import { InfoType, PlayerType, Winner } from "../types/messages.js";
 
 const buttonsToWin = 3;
+const LEAVING_PLAYER_TEXT = "¡El oponente ha abandonado la partida!";
 
 export class GameScreen extends Phaser.Scene {
     constructor() {
@@ -112,7 +113,7 @@ export class GameScreen extends Phaser.Scene {
         /** @type {Phaser.GameObjects.Group} */
         this.#traps = this.physics.add.group();
 
-        this._metalPipeSound = this.sound.add("metal_pipe", {volume : 0.5});
+        this._metalPipeSound = this.sound.add("metal_pipe", { volume: 0.5 });
         this._pressButtonSound = this.sound.add('take_button', { volume: 1 });
         this._gameMusic = this.sound.add('game_music', { loop: true, volume: 1 });
         this._pacmanMusic = this.sound.add('pacman_music', { loop: true, volume: 1 });
@@ -131,7 +132,7 @@ export class GameScreen extends Phaser.Scene {
 
     update() {
         if (Phaser.Input.Keyboard.JustDown(this.pauseKey)) {
-            this.scene.launch('PauseScreen', { online: this._online });
+            this.scene.launch('PauseScreen', { online: this._online, music: this._currentMusic });
             if (!this._online)
                 this.scene.pause();
 
@@ -166,7 +167,7 @@ export class GameScreen extends Phaser.Scene {
             this._socket.close();
         }
         this.scene.remove('GameScreen');
-        this.scene.start('EndScreen', { playerIsWinner: true, online: this._online, iWon: (this._online && this._onlineEnemy) });
+        this.scene.start('EndScreen', { playerIsWinner: true, online: this._online, iWon: (this._online && this._onlineEnemy), music: this._gameMusic });
     }
 
     // que hacer cuando gana el monstruo
@@ -177,7 +178,7 @@ export class GameScreen extends Phaser.Scene {
             this._socket.close();
         }
         this.scene.remove('GameScreen');
-        this.scene.start('EndScreen', { playerIsWinner: false, online: this._online, iWon: (this._online && this._onlinePlayer) });
+        this.scene.start('EndScreen', { playerIsWinner: false, online: this._online, iWon: (this._online && this._onlinePlayer), music: this._gameMusic });
     }
 
 
@@ -261,6 +262,7 @@ export class GameScreen extends Phaser.Scene {
                 if (data.type == InfoType.winner) {
                     this.onlineWinner(data.who);
                 } else if (data.type == InfoType.disconnect) {
+                    popUpText(this, LEAVING_PLAYER_TEXT);
                     this._metalPipeSound.play();
                     setTimeout(() => {
                         if (this._onlinePlayer)
@@ -287,13 +289,17 @@ export class GameScreen extends Phaser.Scene {
     }
 
     onlineWinner(who) {
-        this._gameMusic.stop();
+        try {
+            this._gameMusic.stop();
+        } catch (error) {
+            console.log(error);
+        }
         this._socket.close();
 
         if (who == PlayerType.enemy) {
-            this.scene.start('EndScreen', { playerIsWinner: false, online: this._online, iWon: (this._online && this._onlinePlayer) });
+            this.scene.start('EndScreen', { playerIsWinner: false, online: this._online, iWon: (this._online && this._onlinePlayer), music: this._gameMusic });
         } else {
-            this.scene.start('EndScreen', { playerIsWinner: true, online: this._online, iWon: (this._online && this._onlineEnemy) });
+            this.scene.start('EndScreen', { playerIsWinner: true, online: this._online, iWon: (this._online && this._onlineEnemy), music: this._gameMusic });
         }
         this.scene.remove('GameScreen');
     }

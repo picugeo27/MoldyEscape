@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
- #bg {
+#bg {
   background: transparent;
   position: fixed;
   left: 0;
@@ -24,13 +24,15 @@ body {
   overflow: hidden;
   margin: 0;
   padding: 0;
-  background-color: #f0f0f0; 
+  background-color: #f0f0f0;
 }
 
 p {
   display: flex;
-  justify-content: center;  /* Centra horizontalmente */
-  align-items: center;      /* Centra verticalmente */
+  justify-content: center;
+  /* Centra horizontalmente */
+  align-items: center;
+  /* Centra verticalmente */
   font-family: "Press Start 2P", system-ui;
   font-weight: 400;
   font-style: normal;
@@ -39,17 +41,20 @@ p {
   cursor: pointer;
   margin: 0 auto;
   padding: 0.9rem 2.5rem;
-  text-align: center;       /* Asegura que el texto dentro esté centrado */
+  text-align: center;
+  /* Asegura que el texto dentro esté centrado */
   color: #fff;
   font-size: 17px;
-  height: 0px;            /* Necesario para que el centrado vertical funcione */
+  height: 0px;
+  /* Necesario para que el centrado vertical funcione */
 }
 
 
 form {
   width: 350px;
-  position: relative;
+  position: absolute;
 }
+
 form .form-field::before {
   font-size: 20px;
   position: absolute;
@@ -61,15 +66,18 @@ form .form-field::before {
   background-size: cover;
   background-repeat: no-repeat;
 }
+
 form .form-field:nth-child(1)::before {
   width: 20px;
   height: 20px;
   top: 15px;
 }
+
 form .form-field:nth-child(2)::before {
   width: 16px;
   height: 16px;
 }
+
 form .form-field {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -83,6 +91,7 @@ form .form-field {
   margin-bottom: 1rem;
   position: relative;
 }
+
 form input {
   font-family: inherit;
   width: 100%;
@@ -97,6 +106,7 @@ form input {
   color: #4A4A4A;
   text-indent: 40px;
 }
+
 form .btn {
   font-family: "Press Start 2P", system-ui;
   font-weight: 400;

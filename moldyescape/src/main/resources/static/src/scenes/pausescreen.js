@@ -7,10 +7,12 @@ export class PauseScreen extends Phaser.Scene {
     }
 
     _online;
+    _music;
     _socket;
 
     init(data) {
         this._online = data.online;
+        this._music = data.music;
     }
 
     create() {
@@ -34,6 +36,7 @@ export class PauseScreen extends Phaser.Scene {
             this.cameras.main.fadeOut(500, 0, 0, 0);
             this.cameras.main.once('camerafadeoutcomplete', () => {
                 this.scene.stop("PauseScreen");
+                this._music.stop();
                 this.scene.remove('GameScreen');
                 if (this._online) {
                     this._socket = this.registry.get("socket");

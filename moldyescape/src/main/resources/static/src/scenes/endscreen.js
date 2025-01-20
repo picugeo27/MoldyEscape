@@ -17,9 +17,16 @@ export class EndScreen extends Phaser.Scene {
         this.#playerIsWinner = data.playerIsWinner;
         this.#iWon = data.iWon;
         this._online = data.online;
+        try {
+            data.music.stop();
+        } catch (error) {
+            console.log(error);
+        }
+
     }
 
     preload() {
+        this.cameras.main.fadeIn(500, 0, 0, 0);
         this.load.image('particle', 'assets/Interactuables/particula.png');
     }
 
