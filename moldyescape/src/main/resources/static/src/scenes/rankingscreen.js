@@ -26,7 +26,7 @@ export class RankingScreen extends Phaser.Scene {
         this.boton_click = this.sound.add('boton_click', { volume: 1 });
         this.boton_hover = this.sound.add('boton_hover', { volume: 1 });
 
-        this.add.text(200, 30, 'RANKING TOP 5', { color: '#ffffff', fontSize: 50, fontStyle: 'bold', stroke: '#df5fa8', strokeThickness: 4 });
+        this.add.text(250, 30, 'RANKING TOP 5', { color: '#ffffff', fontSize: 50, fontStyle: 'bold', stroke: '#df5fa8', strokeThickness: 4 });
         // Posición inicial para el texto
         // Espacio entre líneas
 
@@ -57,7 +57,7 @@ export class RankingScreen extends Phaser.Scene {
 
 
 
-        const boton_atras = this.add.image(400, 550, "boton_volver");
+        const boton_atras = this.add.image(460, 550, "boton_volver").setScale(1.3);
         setupButton(boton_atras, () => {
             this.boton_click.play();
             this.cameras.main.fadeOut(500, 0, 0, 0);
@@ -78,7 +78,7 @@ export class RankingScreen extends Phaser.Scene {
             this.connectedUsers = Array.from(this.connectedUsersSet);
             this._rankingList = this.connectedUsers;
 
-            const startX = 300;
+            const startX = 360;
             const startY = 115;
             const lineHeight = 40;
 
@@ -136,7 +136,7 @@ export class RankingScreen extends Phaser.Scene {
             });
         });
 
-        const playerText = this.add.text(125, 330, "Usuario conectado: " + connectedUser.username, { color: '#ffffff', fontSize: 32, stroke: '#3A5FCE', strokeThickness: 4 }).setInteractive()
+        const playerText = this.add.text(startX - 120, 330, "Usuario conectado: " + connectedUser.username, { color: '#ffffff', fontSize: 32, stroke: '#3A5FCE', strokeThickness: 4 }).setInteractive()
             .on('pointerover', () => {
                 this.boton_hover.play();
             });

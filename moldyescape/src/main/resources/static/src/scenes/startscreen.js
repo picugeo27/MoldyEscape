@@ -1,6 +1,6 @@
 import { popUpText, setupButton } from "../types/typedef.js";
 
-const OFFLINE_MESSAGE = "no esta disponible sin conexion";
+const OFFLINE_MESSAGE = "No está disponible sin conexión";
 
 export class StartScreen extends Phaser.Scene {
     constructor() {
@@ -120,7 +120,7 @@ export class StartScreen extends Phaser.Scene {
                 this.scene.start("CreditsScreen");
             });
         })
-        
+
         setupButton(boton_tutorialtxt, () => {
             boton_click.play();
             this.cameras.main.fadeOut(500, 0, 0, 0);

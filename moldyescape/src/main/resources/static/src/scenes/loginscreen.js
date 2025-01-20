@@ -31,10 +31,9 @@ export class LoginScreen extends Phaser.Scene {
         const boton_click = this.sound.add('boton_click', { volume: 1 });
 
         //Login form
-
         const text = this.add.text(10, 10, 'Registrate o inicia sesión para jugar', { color: 'white', fontFamily: 'Arial', fontSize: '20px ' });
 
-        const element = this.add.dom(300, 250).createFromCache('loginform');
+        let element = this.add.dom((this.cameras.main.width / 2) - 100, (this.cameras.main.height / 2 - 20)).createFromCache('loginform');
 
         element.setPerspective(800);
         element.addListener('click');

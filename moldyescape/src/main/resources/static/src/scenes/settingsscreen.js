@@ -17,16 +17,16 @@ export class SettingsScreen extends Phaser.Scene {
 
 
         // Crear un rectángulo semi-transparente encima de la imagen
-        const overlay = this.add.rectangle(630, 550, 360, 160, 0x000000, 0.5);
+        const overlay = this.add.rectangle(730, 550, 360, 160, 0x000000, 0.5);
 
-        this.add.text(300, 40, 'AJUSTES', {
+        this.add.text(400, 40, 'AJUSTES', {
             color: '#ffffff',
             fontSize: 50,
             stroke: '#df5fa8',
             strokeThickness: 4,
         });
 
-        this.add.text(460, 490, 'IMPORTANTE\n Los cambios en los ajustes\n se guardan\nautomáticamente\n durante la misma sesión\n',
+        this.add.text(560, 490, 'IMPORTANTE\n Los cambios en los ajustes\n se guardan\nautomáticamente\n durante la misma sesión\n',
             { color: '#ffffff', fontSize: 20, stroke: '#df5fa8', align: 'center' });//, strokeThickness: 4});
 
 
@@ -38,13 +38,13 @@ export class SettingsScreen extends Phaser.Scene {
             this.registry.set('menuMusic', menuMusic);
         }
 
-        const sliderX = 400; // Posición x del slider
+        const sliderX = 500; // Posición x del slider
         const sliderY = 200; // Posición Y del slider
         const sliderWidth = 400; // Ancho del slider
         const sliderHeight = 30; // Alto del slider
 
-        this.add.image(125, 170, 'altavoz_mute').setOrigin(0, 0).setScale(0.05);
-        this.add.image(615, 170, 'altavoz').setOrigin(0, 0).setScale(0.06);
+        this.add.image(225, 170, 'altavoz_mute').setOrigin(0, 0).setScale(0.05);
+        this.add.image(715, 170, 'altavoz').setOrigin(0, 0).setScale(0.06);
 
         // Barra del slider
         const sliderBar = this.add.rectangle(sliderX, sliderY, sliderWidth, sliderHeight, 0xaaaaaa);
@@ -53,7 +53,7 @@ export class SettingsScreen extends Phaser.Scene {
         const handle = this.add.rectangle(sliderX, sliderY, 40, 40, 0xdf5fa8).setInteractive();
 
         // Texto con el porcentaje del volumen
-        const volumeText = this.add.text(320, sliderY - 50, 'Volumen: 50%', { color: '#ffffff', fontSize: '24px', stroke: '#df5fa8', strokeThickness: 4 });
+        const volumeText = this.add.text(420, sliderY - 50, 'Volumen: 50%', { color: '#ffffff', fontSize: '24px', stroke: '#df5fa8', strokeThickness: 4 });
 
 
         //El datamanager de Phaser (registry) almacena la configuración del volumen y la mantiene durante la sesión de juego
@@ -88,9 +88,9 @@ export class SettingsScreen extends Phaser.Scene {
         });
 
 
-        const boton_full_screen = this.add.image(400, 300, "boton_fullscreen").setScale(1.3);
-        const boton_borrar_usuario = this.add.image(400, 380, "boton_borrar_usuario").setScale(1.3);
-        const boton_atras = this.add.image(200, 550, "boton_volver").setScale(1.3);
+        const boton_full_screen = this.add.image(500, 300, "boton_fullscreen").setScale(1.3);
+        const boton_borrar_usuario = this.add.image(500, 380, "boton_borrar_usuario").setScale(1.3);
+        const boton_atras = this.add.image(300, 550, "boton_volver").setScale(1.3);
 
         setupButton(boton_full_screen, () => {
             boton_click.play();

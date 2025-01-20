@@ -70,7 +70,7 @@ export class ChatScreen extends Phaser.Scene {
 
 
 		// Botón para volver a la pantalla de inicio startscreen.
-		const boton_volver = this.add.image(400, 550, "boton_volver");
+		const boton_volver = this.add.image(480, 550, "boton_volver").setScale(1.3);
 
 		setupButton(boton_volver, () => {
 			this.cameras.main.fadeOut(500, 0, 0, 0);

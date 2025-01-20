@@ -52,7 +52,7 @@ p {
 
 form {
   width: 350px;
-  position: absolute;
+  position: relative;
 }
 
 form .form-field::before {

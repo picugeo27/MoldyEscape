@@ -1,6 +1,6 @@
 import { popUpText } from "../types/typedef.js";
 
-const OFFLINE_MESSAGE = "Funcion solo disponible con conexión";
+const OFFLINE_MESSAGE = "Función solo disponible con conexión";
 
 export class UsersOverlay extends Phaser.Scene {
     constructor() {
