@@ -22,7 +22,7 @@ export class PauseScreen extends Phaser.Scene {
 
         const fondo = this.add.rectangle(SIZE_CANVAS.WIDTH / 2 + 80, SIZE_CANVAS.HEIGHT / 2, 600, 400, 0x000000, 0.8);//.setOrigin(0.5);
 
-        const boton_reanudar = this.add.image(475, 300, "boton_reanudar");
+        const boton_reanudar = this.add.image(475, 300, "boton_reanudar").setScale(1.3);
         setupButton(boton_reanudar, () => {
             boton_click.play();
             this.scene.stop();
@@ -30,7 +30,7 @@ export class PauseScreen extends Phaser.Scene {
 
         });
 
-        const boton_inicio = this.add.image(475, 375, "boton_inicio");
+        const boton_inicio = this.add.image(475, 395, "boton_inicio").setScale(1.3);
         setupButton(boton_inicio, () => {
 
             this.cameras.main.fadeOut(500, 0, 0, 0);
@@ -47,7 +47,7 @@ export class PauseScreen extends Phaser.Scene {
 
         });
 
-        const boton_tutorial = this.add.image(475, 450, "boton_tutorial");
+        const boton_tutorial = this.add.image(220, 140, "boton_tutorial").setScale(1.3);
         setupButton(boton_tutorial, () => {
             boton_click.play();
             this.cameras.main.fadeOut(250, 0, 0, 0);
@@ -59,7 +59,7 @@ export class PauseScreen extends Phaser.Scene {
             });
         });
 
-        this.add.text(405, 150, 'PAUSA',
+        this.add.text(395, 150, 'PAUSA',
             { color: '#ffffff', fontSize: 50, stroke: '#df5fa8', strokeThickness: 4 });
 
     }

@@ -12,10 +12,8 @@ export class StartScreen extends Phaser.Scene {
     }
 
     create() {
-        console.log(this.cameras.main.height)
-        console.log(this.cameras.main.width)
         this.input.keyboard.manager.enabled = true;
-        this.add.image(0, 0, 'start_background').setOrigin(0, 0);
+        this.add.image(0, 0, 'start_background').setOrigin(0, 0).setScale(0.17);
 
         const boton_click = this.sound.add('boton_click', { volume: 1 });
         const boton_flecha_click = this.sound.add('boton_flecha_click', { volume: 1 });
@@ -31,12 +29,13 @@ export class StartScreen extends Phaser.Scene {
             menuMusic.play();
         }
 
-        const boton_ranking = this.add.image(140, 550, "boton_ranking");
-        const boton_jugar = this.add.image(415, 550, "boton_jugar");
-        const boton_ajustes = this.add.image(675, 475, "boton_ajustes");
-        const boton_creditos = this.add.image(675, 550, "boton_creditos");
+        const boton_ranking = this.add.image(860, 560, "boton_ranking").setScale(1.3);
+        const boton_jugar = this.add.image(480, 365, "boton_jugar").setScale(1.3);
+        const boton_ajustes = this.add.image(920, 560, "boton_ajustes").setScale(1.3);
+        const boton_creditos = this.add.image(480, 430, "boton_creditos").setScale(1.3);
+        const boton_tutorialtxt = this.add.image(480, 495, "boton_tutorialtxt").setScale(1.3);
 
-        const boton_logout = this.add.image(650, 100, "boton_logout").setInteractive()
+        const boton_logout = this.add.image(920, 40, "boton_logout").setInteractive().setScale(1.3)
             .on('pointerdown', () => {
                 boton_flecha_click.play();
                 connectedUser.logOut;
@@ -61,7 +60,7 @@ export class StartScreen extends Phaser.Scene {
 
         })
 
-        const boton_chat = this.add.image(140, 475, "boton_chat");
+        const boton_chat = this.add.image(800, 560, "boton_chat").setScale(1.3);
 
         setupButton(boton_chat, () => {
             if (connectedUser.logged) {
@@ -120,31 +119,25 @@ export class StartScreen extends Phaser.Scene {
                 this.scene.stop("StartScreen");
                 this.scene.start("CreditsScreen");
             });
+        })
+        
+        setupButton(boton_tutorialtxt, () => {
+            boton_click.play();
+            this.cameras.main.fadeOut(500, 0, 0, 0);
+            this.cameras.main.once('camerafadeoutcomplete', () => {
+                this.scene.stop("SettingsScreen");
+                this.scene.start("TutorialScreen", { previousScreen: 'StartScreen' });
+            });
         });
 
-        var boton_local = this.add.image(415, 475, "boton_local")
+        var boton_local = this.add.image(480, 300, "boton_local").setScale(1.3)
             .setInteractive()
-            .on('pointerdown', () => {
-                boton_click.play();
-            });
-
-        var boton_red = this.add.image(415, 475, "boton_en_red").setVisible(false)
-            .setInteractive()
-            .on('pointerdown', () => {
-                console.log("No soportado todavía");
-            });
-
-        boton_red.setDisplaySize(165, 50);
-
-        const boton_flecha = this.add.image(520, 475, "boton_flecha")
-        boton_flecha.flipX = true;
-        boton_flecha.setInteractive()
             .on('pointerdown', () => {
                 boton_flecha_click.play();
                 this.switchBoton(boton_local, boton_red)
             });
 
-        const boton_flecha_2 = this.add.image(310, 475, "boton_flecha")
+        var boton_red = this.add.image(480, 300, "boton_en_red").setVisible(false).setScale(1.3)
             .setInteractive()
             .on('pointerdown', () => {
                 boton_flecha_click.play();

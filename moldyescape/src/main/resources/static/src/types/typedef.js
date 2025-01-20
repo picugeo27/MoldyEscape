@@ -42,7 +42,7 @@ export function setupButton(button, onClick) {
   });
 
   button.on('pointerout', () => {
-    button.setScale(1);
+    button.setScale(1.3);
     button.postFX.clear();
   });
 

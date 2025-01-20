@@ -31,11 +31,6 @@
                 "type": "image",
                 "key": "altavoz_mute",
                 "url": "Speaker_Icon_Mute.png"
-            },
-            {
-                "type": "image",
-                "key": "boton_logout",
-                "url": "logout.png"
             }
         ]
     },
@@ -141,6 +136,16 @@
                 "type": "image",
                 "key": "boton_anterior",
                 "url": "BotonAnterior.png"
+            },
+            {
+                "type": "image",
+                "key": "boton_logout",
+                "url": "logout.png"
+            },
+            {
+                "type": "image",
+                "key": "boton_tutorialtxt",
+                "url": "BotonTutorialTxt.png"
             }
         ]
     },

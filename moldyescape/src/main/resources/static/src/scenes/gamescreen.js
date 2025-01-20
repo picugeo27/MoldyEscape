@@ -65,8 +65,6 @@ export class GameScreen extends Phaser.Scene {
     }
 
     preload() {
-        this.scale.resize(960, this.scale.height);
-
         //Particulas
         this.load.image('particle', 'assets/Interactuables/particula.png');
         this.load.image('trapParticle', 'assets/Interactuables/particulaTrampa.png');
