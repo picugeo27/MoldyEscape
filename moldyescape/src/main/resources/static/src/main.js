@@ -17,8 +17,8 @@ import { OnlineSelectScreen } from "./scenes/onlineselectscreen.js";
 
 export const game = new Phaser.Game({
     type: Phaser.AUTO,
-    width: SIZE_CANVAS.WIDTH,
-    height: SIZE_CANVAS.HEIGHT,
+    width: 960,
+    height: 600,
     parent: 'game-canvas',
     backgroundColor: '#97c6e0',
     dom: {

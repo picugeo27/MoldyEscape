@@ -32,11 +32,11 @@ export class StartScreen extends Phaser.Scene {
         }
 
         const boton_ranking = this.add.image(140, 550, "boton_ranking");
-        const boton_jugar = this.add.image(415, 550, "boton_jugar").setScale(1.5);
+        const boton_jugar = this.add.image(415, 550, "boton_jugar");
         const boton_ajustes = this.add.image(675, 475, "boton_ajustes");
         const boton_creditos = this.add.image(675, 550, "boton_creditos");
 
-        const boton_logout = this.add.image(650, 100, "boton_logout").setScale(0.1).setInteractive()
+        const boton_logout = this.add.image(650, 100, "boton_logout").setInteractive()
             .on('pointerdown', () => {
                 boton_flecha_click.play();
                 connectedUser.logOut;
@@ -136,7 +136,7 @@ export class StartScreen extends Phaser.Scene {
 
         boton_red.setDisplaySize(165, 50);
 
-        const boton_flecha = this.add.image(520, 475, "boton_flecha").setScale(0.9)
+        const boton_flecha = this.add.image(520, 475, "boton_flecha")
         boton_flecha.flipX = true;
         boton_flecha.setInteractive()
             .on('pointerdown', () => {
@@ -144,12 +144,11 @@ export class StartScreen extends Phaser.Scene {
                 this.switchBoton(boton_local, boton_red)
             });
 
-        const boton_flecha_2 = this.add.image(310, 475, "boton_flecha").setScale(0.9)
+        const boton_flecha_2 = this.add.image(310, 475, "boton_flecha")
             .setInteractive()
             .on('pointerdown', () => {
                 boton_flecha_click.play();
                 this.switchBoton(boton_local, boton_red)
-
             });
     }
 
