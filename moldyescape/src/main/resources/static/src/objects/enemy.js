@@ -8,6 +8,7 @@ import { InfoType, Movement, PlayerType, Sprint, Trap } from "../types/messages.
 const trapCooldown = 15000;
 const animatorTimer = 500;
 const PLAYING_ENEMY = "Controlas al monstruo, ¡Atrapa a la científica!"
+const WARNING_TIME = 2700;
 
 export class Enemy extends Character {
 
@@ -75,7 +76,7 @@ export class Enemy extends Character {
         });
 
         if (sendInfo) {
-            popUpText(scene, PLAYING_ENEMY, 1000);
+            popUpText(scene, PLAYING_ENEMY, WARNING_TIME);
         }
     }
 

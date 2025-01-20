@@ -9,6 +9,7 @@ const slowTime = 5000;
 const slowAmount = 0.5;
 const animatorTimer = 500;
 const PLAYING_PLAYER = "Controlas a la científica, ¡Que no te atrapen!";
+const WARNING_TIME = 2700;
 
 export class Player extends Character {
 
@@ -72,7 +73,7 @@ export class Player extends Character {
         });
 
         if (sendInfo) {
-            popUpText(scene, PLAYING_PLAYER, 1000);
+            popUpText(scene, PLAYING_PLAYER, WARNING_TIME);
         }
     }
 

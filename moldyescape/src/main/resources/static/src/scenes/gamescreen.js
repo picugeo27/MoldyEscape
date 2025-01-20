@@ -307,7 +307,8 @@ export class GameScreen extends Phaser.Scene {
     }
 
     startColldown() {
-        this.time.delayedCall(1700, () => popUpText(this, "3", 300));
+        if (!this._online)
+            this.time.delayedCall(1700, () => popUpText(this, "3", 300));
         this.time.delayedCall(2700, () => popUpText(this, "2", 300));
         this.time.delayedCall(3700, () => popUpText(this, "1", 300));
         this.time.delayedCall(4700, () => popUpText(this, "¡Corre!", 300));
