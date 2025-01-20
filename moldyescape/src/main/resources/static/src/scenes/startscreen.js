@@ -25,6 +25,8 @@ export class StartScreen extends Phaser.Scene {
             menuMusic = this.sound.add('menu_music', { loop: true, volume: 0.5 });
             menuMusic.play();
             this.registry.set('menuMusic', menuMusic);
+        } else if (!menuMusic.isPlaying) {
+            menuMusic.play();
         }
 
         const boton_ranking = this.add.image(140, 550, "boton_ranking");
@@ -158,10 +160,6 @@ export class StartScreen extends Phaser.Scene {
             boton_red.setVisible(false);
             boton_local.setVisible(true);
         }
-    }
-
-    init(data) {
-        //this.mapValue = data.data;
     }
 
 }
