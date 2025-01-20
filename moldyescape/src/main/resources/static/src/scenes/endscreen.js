@@ -30,21 +30,21 @@ export class EndScreen extends Phaser.Scene {
 
         this._victorySound = this.sound.add('end_victory', { volume: 1 })
         this._victorySound.play();
-        const arte_seta = this.add.image(0, 0, 'arte_seta').setOrigin(0, 0).setScale(0.9);
-        const arte_cientifica = this.add.image(400, 5, 'arte_cientifica').setOrigin(0, 0).setScale(1);
+        const arte_seta = this.add.image(100, 10, 'arte_seta').setOrigin(0, 0).setScale(0.9);
+        const arte_cientifica = this.add.image(500, 5, 'arte_cientifica').setOrigin(0, 0).setScale(1);
 
         if (this.#playerIsWinner) {
             arte_seta.setTint(0x333333);
-            this.add.text(35, 400, 'MONSTRUO PIERDE', { color: '#ffffff', fontSize: 30, stroke: '#df5fa8', strokeThickness: 4 });
-            this.add.text(460, 400, 'CIENTÍFICA GANA', { color: '#ffffff', fontSize: 30, stroke: '#df5fa8', strokeThickness: 4 });
+            this.add.text(135, 400, 'MONSTRUO PIERDE', { color: '#ffffff', fontSize: 30, stroke: '#df5fa8', strokeThickness: 4 });
+            this.add.text(560, 400, 'CIENTÍFICA GANA', { color: '#ffffff', fontSize: 30, stroke: '#df5fa8', strokeThickness: 4 });
         }
         else {
             arte_cientifica.setTint(0x333333);
-            this.add.text(50, 400, 'MONSTRUO GANA', { color: '#ffffff', fontSize: 30, stroke: '#df5fa8', strokeThickness: 4 });
-            this.add.text(450, 400, 'CIENTÍFICA PIERDE', { color: '#ffffff', fontSize: 30, stroke: '#df5fa8', strokeThickness: 4 });
+            this.add.text(150, 400, 'MONSTRUO GANA', { color: '#ffffff', fontSize: 30, stroke: '#df5fa8', strokeThickness: 4 });
+            this.add.text(550, 400, 'CIENTÍFICA PIERDE', { color: '#ffffff', fontSize: 30, stroke: '#df5fa8', strokeThickness: 4 });
         }
 
-        const boton_inicio = this.add.image(200, 550, "boton_inicio");
+        const boton_inicio = this.add.image(300, 520, "boton_inicio").setScale(1.3);
         setupButton(boton_inicio, () => {
 
             this.cameras.main.fadeOut(500, 0, 0, 0);
@@ -56,7 +56,7 @@ export class EndScreen extends Phaser.Scene {
 
         });
 
-        const boton_nueva_partida = this.add.image(400, 550, "boton_nueva_partida");
+        const boton_nueva_partida = this.add.image(500, 520, "boton_nueva_partida").setScale(1.3);
         setupButton(boton_nueva_partida, () => {
             this.cameras.main.fadeOut(500, 0, 0, 0);
             this.cameras.main.once('camerafadeoutcomplete', () => {
@@ -70,7 +70,7 @@ export class EndScreen extends Phaser.Scene {
             boton_nueva_partida.setVisible(false);
         else boton_nueva_partida.setVisible(true);
 
-        const boton_ajustes = this.add.image(600, 550, "boton_ajustes").setScale(0.95);
+        const boton_ajustes = this.add.image(700, 520, "boton_ajustes").setScale(1.3);
         setupButton(boton_ajustes, () => {
             this.cameras.main.fadeOut(500, 0, 0, 0);
             this.cameras.main.once('camerafadeoutcomplete', () => {
