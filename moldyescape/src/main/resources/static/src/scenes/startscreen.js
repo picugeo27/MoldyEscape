@@ -12,7 +12,7 @@ export class StartScreen extends Phaser.Scene {
     }
 
     create() {
-
+        this.input.keyboard.manager.enabled = true;
         this.add.image(0, 0, 'start_background').setOrigin(0, 0);
 
         const boton_click = this.sound.add('boton_click', { volume: 1 });

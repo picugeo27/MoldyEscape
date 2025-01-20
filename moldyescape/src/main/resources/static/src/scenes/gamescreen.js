@@ -128,6 +128,7 @@ export class GameScreen extends Phaser.Scene {
 
         this._currentMusic.play();
         this.pauseKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
+        this.startColldown();
     }
 
     update() {
@@ -309,4 +310,12 @@ export class GameScreen extends Phaser.Scene {
             this._socket.send(JSON.stringify(new Winner(who)));
     }
 
+    startColldown() {
+        this.time.delayedCall(1700, () => popUpText(this, "3", 300));
+        this.time.delayedCall(2700, () => popUpText(this, "2", 300));
+        this.time.delayedCall(3700, () => popUpText(this, "1", 300));
+        this.time.delayedCall(4700, () => popUpText(this, "¡Corre!", 300));
+
+        this.time.delayedCall(5000, () => { this.#keyManager.unlockControls() })
+    }
 }

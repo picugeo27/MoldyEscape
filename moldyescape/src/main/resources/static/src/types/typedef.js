@@ -89,7 +89,7 @@ export function popUpText(scene, text, duration = 2000, yOffset = 0) {
     alpha: 0, // Desvanecer el grupo
     ease: 'Linear',
     y: scene.cameras.main.centerY - 500, // se mueve hacia arriba
-    duration: 1000,
+    duration: 700,
     delay: duration,
     onComplete: () => {
       group.destroy();

@@ -1,12 +1,13 @@
 // se puede importar un archivo de config para ajustar los valores
 
-import { Coordinates, DIRECTION } from "../types/typedef.js";
+import { Coordinates, DIRECTION, popUpText } from "../types/typedef.js";
 import { GameScreen } from "../scenes/gamescreen.js";
 import { Character } from "./character.js";
 import { InfoType, Movement, PlayerType, Sprint, Trap } from "../types/messages.js";
 
 const trapCooldown = 15000;
 const animatorTimer = 500;
+const PLAYING_ENEMY = "Controlas al monstruo, ¡Atrapa a la científica!"
 
 export class Enemy extends Character {
 
@@ -24,7 +25,7 @@ export class Enemy extends Character {
      * @param {WebSocket} socket
      */
 
-    constructor(scene, coordinates, keyManager, reciveInfo, sendInfo, socket) {
+    constructor(scene, coordinates, keyManager, reciveInfo, sendInfo, socket) { // recive info es si la seta es la otra persona, send info es si la seta eres tu
 
         super(scene, coordinates, keyManager);    //constructor de character
         this._speed = 6;
@@ -72,6 +73,10 @@ export class Enemy extends Character {
             frameRate: 15,
             repeat: -1
         });
+
+        if (sendInfo) {
+            popUpText(scene, PLAYING_ENEMY, 1000);
+        }
     }
 
     update(timer, delta) {

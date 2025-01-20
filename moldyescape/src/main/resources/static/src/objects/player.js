@@ -1,6 +1,6 @@
 // se puede importar un archivo de config para ajustar los valores
 
-import { Coordinates, DIRECTION } from "../types/typedef.js";
+import { Coordinates, DIRECTION, popUpText } from "../types/typedef.js";
 import { GameScreen } from "../scenes/gamescreen.js";
 import { Character } from "./character.js";
 import { PlayerType, InfoType, Sprint, Movement } from "../types/messages.js";
@@ -8,6 +8,7 @@ import { PlayerType, InfoType, Sprint, Movement } from "../types/messages.js";
 const slowTime = 5000;
 const slowAmount = 0.5;
 const animatorTimer = 500;
+const PLAYING_PLAYER = "Controlas a la científica, ¡Que no te atrapen!";
 
 export class Player extends Character {
 
@@ -69,6 +70,10 @@ export class Player extends Character {
             frameRate: 8,
             repeat: -1
         });
+
+        if (sendInfo) {
+            popUpText(scene, PLAYING_PLAYER, 1000);
+        }
     }
 
     slow() {

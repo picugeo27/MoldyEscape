@@ -34,6 +34,7 @@ export class InputManager {
      */
     constructor(scene) {
         this.reset();
+        this.#inputLock = true;
         //Flechas de cursor para Player
         this.#cursorKeys = scene.input.keyboard.createCursorKeys() // createCursorKeys es metodo de Phaser para gestionar el input (por defecto coge flechas)
         //WASD para Enemy
@@ -48,6 +49,10 @@ export class InputManager {
         this.#keyE = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
 
 
+    }
+
+    unlockControls() {
+        this.#inputLock = false;
     }
 
     set lockInput(val) {    // sirve para evitar que se mueva algo, creo que nos sera util
