@@ -130,19 +130,25 @@ export class StartScreen extends Phaser.Scene {
             });
         });
 
-        var boton_local = this.add.image(480, 300, "boton_local").setScale(1.3)
+        const boton_flecha = this.add.image(605, 300, "boton_flecha").setScale(1.2)
+            .setInteractive()
+            .on('pointerdown', () => {
+                boton_flecha_click.play();
+                this.switchBoton(boton_local, boton_red);
+            });
+
+        boton_flecha.flipX = true;
+
+        const boton_flecha_2 = this.add.image(355, 300, "boton_flecha").setScale(1.2)
             .setInteractive()
             .on('pointerdown', () => {
                 boton_flecha_click.play();
                 this.switchBoton(boton_local, boton_red)
             });
 
-        var boton_red = this.add.image(480, 300, "boton_en_red").setVisible(false).setScale(1.3)
-            .setInteractive()
-            .on('pointerdown', () => {
-                boton_flecha_click.play();
-                this.switchBoton(boton_local, boton_red)
-            });
+        var boton_local = this.add.image(480, 300, "boton_local").setScale(1.3)
+
+        var boton_red = this.add.image(480, 300, "boton_en_red").setVisible(false).setScale(1.3);
     }
 
     switchBoton(boton_local, boton_red) {

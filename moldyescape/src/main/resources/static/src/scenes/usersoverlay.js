@@ -15,64 +15,54 @@ export class UsersOverlay extends Phaser.Scene {
     _maxPages;
     connectedUsersSet;
     connectedUsers;
-    preload() {
-
-    }
 
     async create() {
-        this.scene.bringToTop();
+        if (connectedUser.logged) {
 
-        this.connectedUsersSet = new Set();
-        this.connectedUsers = [];
+            this.scene.bringToTop();
 
-        // Crear un fondo semi-transparente
-        this.overlay = this.add.rectangle(
-            this.cameras.main.centerX,
-            this.cameras.main.centerY,
-            this.cameras.main.width * 0.8,
-            this.cameras.main.height * 0.6,
-            0x000000,
-            0.8 // Opacidad
-        );
-        this.overlay.setOrigin(0.5, 0.5);
-        this.overlay.setVisible(false);
+            this.connectedUsersSet = new Set();
+            this.connectedUsers = [];
 
-        this.leftArrowButton = this.add.image(this.cameras.main.centerX - 250, this.cameras.main.centerY, "boton_flecha").setScale(0.9);
-        this.leftArrowButton.setInteractive().setVisible(false)
-            .on('pointerdown', () => {
-                this.changePages(0);
-            });
+            // Crear un fondo semi-transparente
+            this.overlay = this.add.rectangle(
+                this.cameras.main.centerX,
+                this.cameras.main.centerY,
+                this.cameras.main.width * 0.8,
+                this.cameras.main.height * 0.6,
+                0x000000,
+                0.8 // Opacidad
+            );
+            this.overlay.setOrigin(0.5, 0.5);
+            this.overlay.setVisible(false);
 
-        this.rightArrowButton = this.add.image(this.cameras.main.centerX + 250, this.cameras.main.centerY, "boton_flecha").setScale(0.9)
-        this.rightArrowButton.flipX = true;
-        this.rightArrowButton.setInteractive().setVisible(false)
-            .on('pointerdown', () => {
-                this.changePages(1);
-            });
+            this.leftArrowButton = this.add.image(this.cameras.main.centerX - 250, this.cameras.main.centerY, "boton_flecha").setScale(0.9);
+            this.leftArrowButton.setInteractive().setVisible(false)
+                .on('pointerdown', () => {
+                    this.changePages(0);
+                });
+
+            this.rightArrowButton = this.add.image(this.cameras.main.centerX + 250, this.cameras.main.centerY, "boton_flecha").setScale(0.9)
+            this.rightArrowButton.flipX = true;
+            this.rightArrowButton.setInteractive().setVisible(false)
+                .on('pointerdown', () => {
+                    this.changePages(1);
+                });
 
 
+
+            await this.getConnectedUsers();
+
+            this.intervalo = setInterval(() => this.getConnectedUsers(), 10 * 1000);
+        }
         this.overlayKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB);
 
 
-        // Mostrar y ocultar
-        // this.input.keyboard.on('keydown-TAB', () => {
-        //     if (this.overlay.visible) {
-        //         this.toggleOverlay(false);
-        //     }
-        //     else {
-        //         this.toggleOverlay(true);
-        //     }
-        // });
-
-        await this.getConnectedUsers();
-
-        this.intervalo = setInterval(() => this.getConnectedUsers(), 10 * 1000);
     }
 
     update() {
         if (Phaser.Input.Keyboard.JustDown(this.overlayKey)) {
             if (connectedUser.logged) {
-                console.log("usuario conectado")
                 if (this.overlay.visible) {
                     this.toggleOverlay(false);
                 }

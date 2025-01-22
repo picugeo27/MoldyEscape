@@ -1,4 +1,6 @@
-import { setupButton } from "../types/typedef.js";
+import { popUpText, setupButton } from "../types/typedef.js";
+
+const NO_DISPONIBLE = "Esta función solo está disponible con conexión";
 
 export class SettingsScreen extends Phaser.Scene {
     constructor() {
@@ -115,39 +117,45 @@ export class SettingsScreen extends Phaser.Scene {
         });
 
         setupButton(boton_borrar_usuario, () => {
-            boton_click.play();
-
-
-            // Confirmación (opcional)
-            const usernameToDelete = connectedUser.username; // Obtener el nombre de usuario conectado
-            if (!usernameToDelete) {
-                console.error("No hay un usuario conectado para borrar.");
+            if (!connectedUser.logged) {
+                popUpText(this, NO_DISPONIBLE);
                 return;
-            }
+            } else {
 
-            // Enviar la petición DELETE
-            $.ajax({
-                method: "DELETE",
-                url: `/users`,
-                contentType: 'application/json',
-                data: usernameToDelete
-            })
-                .done((data) => {
-                    console.log(data);
+                boton_click.play();
 
-                    // Realizar logout
-                    connectedUser.logOut();
 
-                    // Redirigir a la pantalla de login
-                    this.cameras.main.fadeOut(500, 0, 0, 0);
-                    this.cameras.main.once('camerafadeoutcomplete', () => {
-                        this.scene.stop("SettingsScreen");
-                        this.scene.start("LoginScreen");
-                    });
+                // Confirmación (opcional)
+                const usernameToDelete = connectedUser.username; // Obtener el nombre de usuario conectado
+                if (!usernameToDelete) {
+                    console.error("No hay un usuario conectado para borrar.");
+                    return;
+                }
+
+                // Enviar la petición DELETE
+                $.ajax({
+                    method: "DELETE",
+                    url: `/users`,
+                    contentType: 'application/json',
+                    data: usernameToDelete
                 })
-                .fail(() => {
-                    console.error(`Error al borrar el usuario`);
-                });
+                    .done((data) => {
+                        console.log(data);
+
+                        // Realizar logout
+                        connectedUser.logOut();
+
+                        // Redirigir a la pantalla de login
+                        this.cameras.main.fadeOut(500, 0, 0, 0);
+                        this.cameras.main.once('camerafadeoutcomplete', () => {
+                            this.scene.stop("SettingsScreen");
+                            this.scene.start("LoginScreen");
+                        });
+                    })
+                    .fail(() => {
+                        console.error(`Error al borrar el usuario`);
+                    });
+            }
         })
 
     };
